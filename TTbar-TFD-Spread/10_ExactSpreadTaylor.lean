@@ -51,7 +51,6 @@ theorem p22 (x y g h q : ℝ) : path x y g h q 2 2 = 1 := by
   simp [path, action, start]
 theorem p23 (x y g h q : ℝ) : path x y g h q 3 2 = x+y := by
   simp [path, action, start]
-  ring
 theorem p24 (x y g h q : ℝ) :
     path x y g h q 4 2 = g+h+q+x^2+x*y+y^2 := by
   simp [path, action, start]
@@ -83,7 +82,6 @@ noncomputable def c6 (x y g h q : ℝ) : ℝ :=
 /-- Universal time coefficients proved by path enumeration. -/
 theorem c2_universal (x y g h q : ℝ) : c2 x y g h q = g := by
   simp [c2, evenSite, path, action, start, Finset.sum_range_succ]
-  ring
 
 theorem c4_universal (x y g h q : ℝ) :
     c4 x y g h q = -g*(4*g-2*h+x^2)/12 := by
