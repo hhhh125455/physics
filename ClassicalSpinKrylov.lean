@@ -1,4 +1,5 @@
 import Mathlib
+import HoravaQNM
 
 /-!
 # Low-order classical spin Krylov consistency checks
