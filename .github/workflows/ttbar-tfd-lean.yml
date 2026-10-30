@@ -36,3 +36,4 @@ jobs:
           lake env lean TTbar-TFD-Spread/06d_OneTraceConvergence.lean
           lake env lean TTbar-TFD-Spread/07_AnalyticLanczos.lean
           lake env lean TTbar-TFD-Spread/08_LahToda.lean
+          lake env lean TTbar-TFD-Spread/09_LahAnalyticCoefficients.lean
