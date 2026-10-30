@@ -79,4 +79,26 @@ theorem negative_center_initial_kick
   have hBs : 0 < B ^ 2 := sq_pos_of_ne_zero hB
   positivity
 
+/-- The linearized area evolution equation at the initial symmetric
+    center forces the time and space second variations to coincide.
+    If the initial area and conformal factor are fixed there (Y=Z=0),
+    the negative initial spatial kick is also the time kick. -/
+theorem negative_initial_time_kick
+    (X0 E q2 k A B Ytt Yxx Y Z : ℝ)
+    (hX0 : X0 ≠ 0)
+    (hY : Y = 0) (hZ : Z = 0)
+    (harea :
+      2 * X0 ^ 2 * (Ytt - Yxx) +
+        2 * E * q2 * Y + 4 * E * X0 * Z * (q2 - X0) = 0)
+    (hxx : Yxx = -(2 * k * X0 * B ^ 2 * A)) :
+    Ytt = -(2 * k * X0 * B ^ 2 * A) := by
+  have hprod : (2 * X0 ^ 2) * (Ytt - Yxx) = 0 := by
+    simpa only [hY, hZ, mul_zero, zero_mul, add_zero] using harea
+  have hcoef : 2 * X0 ^ 2 ≠ 0 :=
+    mul_ne_zero (by norm_num) (pow_ne_zero 2 hX0)
+  have hdiff : Ytt - Yxx = 0 :=
+    (mul_eq_zero.mp hprod).resolve_left hcoef
+  linarith [hxx]
+
+
 end GammaHalf
