@@ -47,19 +47,24 @@ theorem modular_vacuum_with_correction
 theorem leadingLogZ_hasDerivAt (A β : ℝ) (hβ : β ≠ 0) :
     HasDerivAt (leadingLogZ A) (-A / β ^ 2) β := by
   have h := ((hasDerivAt_id β).inv hβ).const_mul A
-  convert h using 1 <;> simp only [leadingLogZ, div_eq_mul_inv] <;> ring
+  have h' : HasDerivAt (leadingLogZ A) (A * (-1 / β ^ 2)) β := by
+    simpa only [leadingLogZ, id_eq, div_eq_mul_inv] using h
+  convert h' using 1 <;> ring
 
 /-- Derivative of the exact leading approximation Z_0=exp(A/beta). -/
 theorem leadingZ_hasDerivAt (A β : ℝ) (hβ : β ≠ 0) :
     HasDerivAt (leadingZ A)
       (leadingZ A β * (-A / β ^ 2)) β := by
   have h := (leadingLogZ_hasDerivAt A β hβ).exp
-  simpa only [leadingZ, Function.comp_def] using h
+  change HasDerivAt (fun x : ℝ => Real.exp (leadingLogZ A x))
+    (Real.exp (leadingLogZ A β) * (-A / β ^ 2)) β
+  exact h
 
 /-- E_0 = -d(log Z_0)/d beta, under the leading approximation. -/
 theorem energy_from_logZ (A β : ℝ) :
     -(-A / β ^ 2) = leadingEnergy A β := by
-  simp [leadingEnergy]
+  unfold leadingEnergy
+  ring
 
 /-- S_0=(1-beta d_beta)log Z_0. -/
 theorem entropy_from_logZ (A β : ℝ) (hβ : β ≠ 0) :
@@ -74,14 +79,12 @@ theorem free_energy_from_logZ (A β : ℝ) (hβ : β ≠ 0) :
     -(leadingLogZ A β / β) = leadingFreeEnergy A β := by
   unfold leadingLogZ leadingFreeEnergy
   field_simp [hβ]
-  ring
 
 /-- F_0=-A T^2, where T is inverse temperature. -/
 theorem free_energy_temperature (A T : ℝ) (hT : T ≠ 0) :
     leadingFreeEnergy A (1 / T) = -A * T ^ 2 := by
   unfold leadingFreeEnergy
   field_simp [hT]
-  ring
 
 /-- Canonical thermal relation S_0=beta*(E_0-F_0). -/
 theorem entropy_energy_free_energy (A β : ℝ) (hβ : β ≠ 0) :
@@ -99,7 +102,6 @@ theorem cardy_entropy_elimination (A β : ℝ)
   have hs : (A / β) ^ 2 = A * leadingEnergy A β := by
     unfold leadingEnergy
     field_simp [ne_of_gt hβ]
-    ring
   rw [← hs, Real.sqrt_sq_eq_abs]
   rw [abs_of_nonneg (div_nonneg hA (le_of_lt hβ))]
   unfold leadingEntropy
