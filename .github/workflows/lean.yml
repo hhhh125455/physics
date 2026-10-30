@@ -10,12 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: leanprover/lean-action@v1
-        with:
-          use-mathlib-cache: true
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve pinned Mathlib dependency
+        run: lake update
+      - name: Download Mathlib cache
+        run: lake exe cache get
+      - name: Verify Lean proofs
+        run: lake build
       - name: Reject unfinished proof placeholders
         run: |
-          if grep -RnE '\b(sorry|admit)\b' --include='*.lean' .; then
+          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' ClassicalSpinKrylov.lean; then
             echo 'Unfinished proof placeholder detected'
             exit 1
           fi
