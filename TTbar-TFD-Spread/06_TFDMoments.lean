@@ -50,7 +50,8 @@ theorem trace_derivative_succ (N k : ℕ) (E : Fin N → ℝ) (β : ℝ) :
     apply HasDerivAt.fun_sum
     intro j hj
     have hl : HasDerivAt (fun x : ℝ => (-E j) * x) (-E j) β :=
-      (hasDerivAt_id β).const_mul (-E j)
+      by simpa only [id_eq, mul_one] using
+         (hasDerivAt_id β).const_mul (-E j)
     have he := hl.exp
     have hm := he.const_mul ((-E j) ^ k)
     convert hm using 1 <;> first | rfl | ring
@@ -166,7 +167,13 @@ theorem model_generating_derivative (A β s : ℝ)
       (A / (β-s)^2) s := by
       convert hm.sub_const (A / β) using 1 <;> first | rfl | ring
     simpa only [Function.comp_def] using hconst.exp
-  convert hd using 1 <;> first | rfl | rw [model_generating_exp] | ring
+  have hfunc :
+      modelGenerating A β =
+        (fun x : ℝ => Real.exp (A / (β - x) - A / β)) := by
+    funext x
+    exact model_generating_exp A β x
+  rw [hfunc]
+  convert hd using 1 <;> first | rfl | ring
 
 /-- The model moment polynomial for each fixed k, written as a finite sum.
     The manuscript's expression requires k>=1 and separate m_0=1. -/
