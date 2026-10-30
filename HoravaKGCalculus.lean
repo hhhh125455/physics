@@ -54,6 +54,18 @@ theorem covKG_eq_fourFlux
       kgFourFlux J tt tp pp rr aa phi x := by
   simp [covKG, kgFourFlux, sparseInv, Fin.sum_univ_four]
 
+
+/-- The true multivariable product rule for any scalar field on ℝ⁴. -/
+theorem pd_product (i : Fin 4) (f g : ScalarField) (x : Point)
+    (hf : DifferentiableAt ℝ f x) (hg : DifferentiableAt ℝ g x) :
+    pd i (fun y => f y * g y) x =
+      pd i f x * g x + f x * pd i g x := by
+  unfold pd
+  rw [fderiv_fun_mul hf hg]
+  simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply]
+  simp only [smul_eq_mul]
+  ring
+
 /-- General coordinate-line Leibniz rule, used in the non-constant coefficients. -/
 theorem derivative_product (f g : ℂ → ℂ) (z : ℂ)
     (hf : DifferentiableAt ℂ f z) (hg : DifferentiableAt ℂ g z) :
