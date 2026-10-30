@@ -7,6 +7,10 @@ on:
       - '.github/workflows/ttbar-tfd-lean.yml'
       - 'lakefile.toml'
       - 'lean-toolchain'
+  pull_request:
+    paths:
+      - 'TTbar-TFD-Spread/**'
+      - '.github/workflows/ttbar-tfd-lean.yml'
   workflow_dispatch:
 
 jobs:
