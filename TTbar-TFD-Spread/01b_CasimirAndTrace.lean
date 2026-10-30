@@ -136,4 +136,84 @@ theorem summable_density_energy_gap
         congr 1
         ring
 
+
+/- Integrate the two constant cylinder stress-tensor vacuum values.
+   This verifies the zero-mode normalization H=(1/2π)∫(T+Tbar)dx. -/
+theorem integrated_vacuum_stress (L cL cR : ℝ) (hL : L ≠ 0) :
+    (1 / (2 * Real.pi)) *
+      (∫ x in (0 : ℝ)..L,
+          (-(cL + cR) * (2 * Real.pi / L) ^ 2 / 24)) =
+      -(Real.pi * (cL + cR)) / (12 * L) := by
+  simp only [intervalIntegral.integral_const, sub_zero, smul_eq_mul]
+  field_simp [hL, Real.pi_ne_zero]
+  ring
+
+/- The abstract subexponential degeneracy criterion yields convergence
+   at EVERY positive inverse temperature, without a fixed Hagedorn threshold. -/
+theorem summable_subexponential_density
+    (d Δ : ℕ → ℝ) (gap : ℝ) (hgap : 0 < gap)
+    (hd0 : ∀ n : ℕ, 0 ≤ d n)
+    (hΔ : ∀ n : ℕ, gap * (n : ℝ) ≤ Δ n)
+    (hsub : ∀ ε : ℝ, 0 < ε →
+      ∃ C : ℝ, 0 ≤ C ∧
+        ∀ n : ℕ, d n ≤ C * Real.exp (ε * (n : ℝ)))
+    (β : ℝ) (hβ : 0 < β) :
+    Summable (fun n => d n * Real.exp (-β * Δ n)) := by
+  let ε : ℝ := β * gap / 2
+  have hε : 0 < ε := by
+    dsimp [ε]
+    positivity
+  obtain ⟨C, hC, hbound⟩ := hsub ε hε
+  apply summable_density_energy_gap d Δ β gap ε C hβ hgap
+    (by dsimp [ε]; nlinarith [mul_pos hβ hgap])
+    hC hd0 hbound hΔ
+
+/- Elementary upper bound used to absorb Cardy-type sqrt(n) degeneracy
+   into an arbitrarily small positive exponential envelope. -/
+theorem sqrt_young_bound (x B ε : ℝ) (hx : 0 ≤ x) (hε : 0 < ε) :
+    B * Real.sqrt x ≤ ε * x + B ^ 2 / (4 * ε) := by
+  have hroot : (Real.sqrt x) ^ 2 = x := Real.sq_sqrt hx
+  have hsq := sq_nonneg (2 * ε * Real.sqrt x - B)
+  have hden : 4 * ε ≠ 0 := by positivity
+  have hdiv : (4 * ε) * (B ^ 2 / (4 * ε)) = B ^ 2 := by
+    field_simp
+  have hmain : (4 * ε) * (B * Real.sqrt x) ≤
+      (4 * ε) * (ε * x + B ^ 2 / (4 * ε)) := by
+    nlinarith [hsq, hroot, hdiv]
+  exact (mul_le_mul_left (show 0 < (4 : ℝ) * ε by positivity)).mp hmain
+
+theorem cardy_bound_gives_subexponential
+    (d : ℕ → ℝ) (C₀ B : ℝ) (hC : 0 ≤ C₀)
+    (hCardy : ∀ n : ℕ,
+      d n ≤ C₀ * Real.exp (B * Real.sqrt (n : ℝ)))
+    (ε : ℝ) (hε : 0 < ε) :
+    ∃ C : ℝ, 0 ≤ C ∧
+      ∀ n : ℕ, d n ≤ C * Real.exp (ε * (n : ℝ)) := by
+  refine ⟨C₀ * Real.exp (B ^ 2 / (4 * ε)),
+    mul_nonneg hC (Real.exp_nonneg _), ?_⟩
+  intro n
+  calc
+    d n ≤ C₀ * Real.exp (B * Real.sqrt (n : ℝ)) := hCardy n
+    _ ≤ C₀ * Real.exp (ε * (n : ℝ) + B ^ 2 / (4 * ε)) := by
+      exact mul_le_mul_of_nonneg_left
+        (Real.exp_monotone (sqrt_young_bound (n : ℝ) B ε
+          (Nat.cast_nonneg n) hε)) hC
+    _ = (C₀ * Real.exp (B ^ 2 / (4 * ε))) *
+        Real.exp (ε * (n : ℝ)) := by
+      rw [Real.exp_add]
+      ring
+
+theorem summable_cardy_bounded_partition
+    (d Δ : ℕ → ℝ) (gap C₀ B β : ℝ)
+    (hgap : 0 < gap) (hβ : 0 < β) (hC : 0 ≤ C₀)
+    (hd0 : ∀ n : ℕ, 0 ≤ d n)
+    (hΔ : ∀ n : ℕ, gap * (n : ℝ) ≤ Δ n)
+    (hCardy : ∀ n : ℕ,
+      d n ≤ C₀ * Real.exp (B * Real.sqrt (n : ℝ))) :
+    Summable (fun n => d n * Real.exp (-β * Δ n)) := by
+  apply summable_subexponential_density d Δ gap hgap hd0 hΔ
+    (fun ε hε => cardy_bound_gives_subexponential d C₀ B hC hCardy ε hε)
+    β hβ
+
+
 end TTbarTFD
