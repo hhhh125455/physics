@@ -33,7 +33,7 @@ theorem partition_positive (μ A β : ℝ) : 0 < Z μ A β := by
 
 theorem generating_normalized (μ A β : ℝ) :
     G μ A β 0 = 1 := by
-  simp [G]
+  simp [G, Z]
 
 theorem generating_exp (μ A β s : ℝ) :
     G μ A β s =
@@ -160,11 +160,12 @@ theorem moment_second_variance (k₁ k₂ : ℝ) :
     (k₁^2 + k₂) - k₁^2 = k₂ := by
   ring
 
-theorem initial_lanczos_variance (A d : ℝ) :
-    (let m₁ : ℝ := 0
-     let m₂ : ℝ := m₁^2 + cumulantTwo A d
-     m₂ - m₁^2) = cumulantTwo A d := by
-  simp
+theorem initial_lanczos_variance (k₁ k₂ : ℝ) :
+    (let m₁ : ℝ := k₁
+     let m₂ : ℝ := k₁^2 + k₂
+     m₂ - m₁^2) = k₂ := by
+  dsimp
+  ring
 
 theorem cumulant_two_pos (A d : ℝ) (hA : 0 < A) (hd : 0 < d) :
     0 < cumulantTwo A d := by
