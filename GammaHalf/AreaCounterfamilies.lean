@@ -106,6 +106,36 @@ theorem quadratic_corner_radius (delta : ℝ)
   rw [Real.sqrt_sq_eq_abs]
   exact abs_of_nonneg hdelta
 
+theorem cubic_corner (delta : ℝ) :
+    counterArea delta 3 0 0 = delta ^ 3 := by
+  simp [counterArea]
+
+/-- Strict monotonicity of the cubic tip area on the subcritical side. -/
+theorem cubic_tip_strictly_increasing
+    (delta1 delta2 : ℝ)
+    (h1 : 0 ≤ delta1) (h12 : delta1 < delta2) :
+    counterArea delta1 3 0 0 < counterArea delta2 3 0 0 := by
+  rw [cubic_corner, cubic_corner]
+  have hdiff : 0 < delta2 - delta1 := sub_pos.mpr h12
+  have h2 : 0 < delta2 := lt_of_le_of_lt h1 h12
+  have hsq : 0 < delta2 ^ 2 := sq_pos_of_ne_zero (ne_of_gt h2)
+  have hsum : 0 < delta2 ^ 2 + delta1 * delta2 + delta1 ^ 2 := by
+    nlinarith [mul_nonneg h1 (le_of_lt h2), sq_nonneg delta1]
+  have hfactor := mul_pos hdiff hsum
+  nlinarith [hfactor]
+
+/-- Nevertheless, the derivative of that strictly increasing
+    area family vanishes at its critical endpoint. -/
+theorem cubic_tip_derivative_zero :
+    deriv (fun delta : ℝ => counterArea delta 3 0 0) 0 = 0 := by
+  have heq :
+      (fun delta : ℝ => counterArea delta 3 0 0) =
+        (fun delta : ℝ => delta ^ 3) := by
+    funext delta
+    exact cubic_corner delta
+  rw [heq]
+  simpa using ((hasDerivAt_id (0 : ℝ)).pow 3).deriv
+
 /-- An exactly even-in-x scalar ansatz depending only on U+V cannot
     satisfy a nontrivial odd-in-x reflection condition. -/
 theorem odd_sum_profile_vanishes
