@@ -29,3 +29,4 @@ jobs:
           lake env lean TTbar-TFD-Spread/02_TorusCoordinates.lean
           lake env lean TTbar-TFD-Spread/03_OperatorAndModularS.lean
           lake env lean TTbar-TFD-Spread/04_ModularGroup.lean
+          lake env lean TTbar-TFD-Spread/05_HighTemperatureCardy.lean
