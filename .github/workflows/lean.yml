@@ -10,25 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Extract original paper source equations
-        run: |
-          curl -LfS --retry 3 --max-time 90 https://arxiv.org/pdf/2610.38428 -o /tmp/paper.pdf
-          pdftotext -layout /tmp/paper.pdf /tmp/paper.txt
-          echo '===== SOURCE EQUATIONS ====='
-          sed -n '1,650p' /tmp/paper.txt
       - name: Install Lean 4
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check theorem-to-document mapping
+        run: python3 scripts/check_traceability.py
       - name: Resolve pinned Mathlib dependency
         run: lake update
       - name: Download Mathlib cache
         run: lake exe cache get
       - name: Verify Lean proofs
         run: lake build
-      - name: Reject unfinished proof placeholders
+      - name: Reject unfinished proofs and new axioms
         run: |
-          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' ClassicalSpinKrylov.lean HoravaQNM.lean; then
-            echo 'Unfinished proof placeholder detected'
-            exit 1
+          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' ClassicalSpinKrylov.lean HoravaQNM.lean HoravaMetricKG.lean; then
+            echo 'Unfinished proof placeholder detected'; exit 1
+          fi
+          if grep -RnE '^[[:space:]]*(axiom|constant)[[:space:]]' --include='*.lean' ClassicalSpinKrylov.lean; then
+            echo 'Unexpected new axiom or constant detected'; exit 1
           fi
