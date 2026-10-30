@@ -43,3 +43,4 @@ jobs:
           lake env lean TTbar-TFD-Spread/13_TTbarDeformedMoments.lean
           lake env lean TTbar-TFD-Spread/14_TTbarMomentPowerSeries.lean
           lake env lean TTbar-TFD-Spread/15_TTbarDeformedCalculus.lean
+          lake env lean TTbar-TFD-Spread/16_GegenbauerAllOrders.lean
