@@ -86,7 +86,6 @@ theorem rectangular_S (β : ℝ) (hβ : β ≠ 0) :
   push_cast
   field_simp [hβc, hπc, Complex.I_ne_zero]
   rw [Complex.I_sq]
-  ring
 
 /-- S is an involution on positive inverse temperatures. -/
 theorem dual_inverse_involutive (β : ℝ) (hβ : β ≠ 0) :
@@ -94,7 +93,6 @@ theorem dual_inverse_involutive (β : ℝ) (hβ : β ≠ 0) :
   have hπ : Real.pi ≠ 0 := Real.pi_ne_zero
   unfold dualInverseTemperature
   field_simp [hβ, hπ]
-  ring
 
 /-- Modular invariance is kept as an explicit hypothesis. -/
 def ModularSInvariant (Z : ℂ → ℂ) : Prop :=
