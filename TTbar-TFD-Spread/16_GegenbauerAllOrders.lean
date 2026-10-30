@@ -65,9 +65,7 @@ theorem cumulant_all_orders (n : ℕ) (A β d : ℝ) (hd : d ≠ 0) :
     rw [he1, pow_add]
   have hp2 : d^(2*(n+2)+3) = d^(2*n+3)*d^4 := by
     rw [he2, pow_add]
-  rw [hp1, hp2]
-  field_simp [hd]
-  ring
+  simp only [hp1, hp2] <;> field_simp [hd] <;> ring
 
 /-- A check that the recurrence produces the fourth cumulant exactly. -/
 theorem cumulant_four (A β d : ℝ) (hd : d ≠ 0) :
