@@ -24,9 +24,9 @@ jobs:
         run: lake build
       - name: Reject unfinished proofs and new axioms
         run: |
-          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' ClassicalSpinKrylov.lean HoravaQNM.lean HoravaMetricKG.lean; then
+          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' ClassicalSpinKrylov.lean HoravaQNM.lean HoravaMetricKG.lean HoravaKGCalculus.lean; then
             echo 'Unfinished proof placeholder detected'; exit 1
           fi
-          if grep -RnE '^[[:space:]]*(axiom|constant)[[:space:]]' --include='*.lean' ClassicalSpinKrylov.lean HoravaQNM.lean HoravaMetricKG.lean; then
+          if grep -RnE '^[[:space:]]*(axiom|constant)[[:space:]]' --include='*.lean' ClassicalSpinKrylov.lean HoravaQNM.lean HoravaMetricKG.lean HoravaKGCalculus.lean; then
             echo 'Unexpected new axiom or constant detected'; exit 1
           fi
