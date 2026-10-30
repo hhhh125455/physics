@@ -31,3 +31,4 @@ jobs:
           lake env lean TTbar-TFD-Spread/04_ModularGroup.lean
           lake env lean TTbar-TFD-Spread/05_HighTemperatureCardy.lean
           lake env lean TTbar-TFD-Spread/06_TFDMoments.lean
+          lake env lean TTbar-TFD-Spread/06b_InfiniteSpectrum.lean
