@@ -133,7 +133,6 @@ theorem basis_modulus (a b c d : ℤ) (τ v₂ : ℂ)
       ((c : ℂ)*(τ*v₂)+(d : ℂ)*v₂) = mobius a b c d τ := by
   unfold mobius
   field_simp [hv₂, hden]
-  ring
 
 /-- The T-induced spectral phase cancels for an integer-spin state. -/
 theorem integer_spin_T_phase (β θ E : ℝ) (j : ℤ) :
@@ -154,6 +153,7 @@ theorem integer_spin_T_phase (β θ E : ℝ) (j : ℤ) :
 /-- A half-integer spin supplies a counterexample to unconditional T invariance. -/
 theorem half_spin_T_failure :
     Complex.exp ((Real.pi : ℂ) * Complex.I) ≠ Complex.exp (0 : ℂ) := by
-  simp
+  simpa only [Complex.exp_pi_mul_I, Complex.exp_zero] using
+    (show (-1 : ℂ) ≠ 1 by norm_num)
 
 end TTbarTFD
