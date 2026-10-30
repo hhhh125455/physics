@@ -78,10 +78,21 @@ theorem weighted_wronskian_hasDerivAt
     have hbasic := (hu.mul hYp).sub (hup.mul hY)
     have huval : deriv u x = up := hu.deriv
     have hYval : deriv Y x = Yp := hY.deriv
-    convert hbasic using 1
-    · rfl
-    · rw [huval, hYval]
+    have hcoeff :
+        up * deriv Y x + u x*Ypp -
+          (upp*Y x + deriv u x*Yp) =
+            u x*Ypp - upp*Y x := by
+      rw [huval, hYval]
       ring
+    have hbasic' : HasDerivAt
+        (fun t => u t*deriv Y t - deriv u t*Y t)
+        (up * deriv Y x + u x*Ypp -
+          (upp*Y x + deriv u x*Yp)) x := by
+      simpa only [Pi.sub_apply, Pi.mul_apply] using hbasic
+    change HasDerivAt
+        (fun t => u t*deriv Y t - deriv u t*Y t)
+        (u x*Ypp - upp*Y x) x
+    simpa only [hcoeff] using hbasic'
   have hGW : HasDerivAt (weightedWronskian u Y mu)
       ((P*mu x)*wronskian u Y x +
          mu x*(u x*Ypp-upp*Y x)) x := by
