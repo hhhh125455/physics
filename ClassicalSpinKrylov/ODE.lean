@@ -60,7 +60,8 @@ theorem evolve_solves_y (χ t : ℝ) (s : Spin) :
 theorem evolve_solves_z (χ t : ℝ) (s : Spin) :
     HasDerivAt (fun u : ℝ => (evolve χ u s).z)
       (vectorField χ (evolve χ t s)).z t := by
-  have h : HasDerivAt (fun _ : ℝ => s.z) 0 t := by fun_prop
+  have h : HasDerivAt (fun _ : ℝ => s.z) 0 t := by
+    exact hasDerivAt_const t s.z
   simpa only [evolve, vectorField_z] using h
 
 end ClassicalSpinKrylov
