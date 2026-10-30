@@ -82,6 +82,7 @@ theorem weighted_wronskian_deriv
   rw [hfunc]
   have hbasic := (hmu.mul ((hu.mul hYp).sub (hup.mul hY))).deriv
   rw [hbasic]
+  simp only [Pi.sub_apply, Pi.mul_apply]
   rw [hu.deriv, hY.deriv]
   have hid := forced_wronskian_identity (u x) up upp (Y x)
     Yp Ypp P Q F hhom hforced
