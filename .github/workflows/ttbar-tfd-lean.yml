@@ -27,3 +27,4 @@ jobs:
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' TTbar-TFD-Spread; then exit 1; fi
           lake env lean TTbar-TFD-Spread/01_CylinderPartition.lean
           lake env lean TTbar-TFD-Spread/02_TorusCoordinates.lean
+          lake env lean TTbar-TFD-Spread/03_OperatorAndModularS.lean
