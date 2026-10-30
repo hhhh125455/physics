@@ -36,6 +36,8 @@ jobs:
         run: lake env lean GammaHalf/BlowupRigidity.lean
       - name: Compile exact charged-area counterfamilies
         run: lake env lean GammaHalf/AreaCounterfamilies.lean
+      - name: Compile odd angular scalar boundary no-go
+        run: lake env lean GammaHalf/OddAngularBoundary.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
