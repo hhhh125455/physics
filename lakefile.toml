@@ -1,6 +1,6 @@
 name = "ClassicalSpinKrylov"
 version = "0.1.0"
-defaultTargets = ["ClassicalSpinKrylov", "HoravaQNM", "HoravaMetricKG"]
+defaultTargets = ["ClassicalSpinKrylov", "HoravaQNM", "HoravaMetricKG", "HoravaKGCalculus"]
 
 [[require]]
 name = "mathlib"
@@ -15,3 +15,6 @@ name = "HoravaQNM"
 
 [[lean_lib]]
 name = "HoravaMetricKG"
+
+[[lean_lib]]
+name = "HoravaKGCalculus"
