@@ -106,7 +106,7 @@ theorem formal_model_coeff_all (u : ℝ) (m : ℕ) :
     have hfac : (algebraMap ℚ ℝ) (((Nat.factorial j : ℚ))⁻¹) =
         ((Nat.factorial j : ℝ))⁻¹ := by
       simp
-    simp only [smul_eq_mul, div_eq_mul_inv]
+    simp only [smul_eq_mul, div_eq_mul_inv, one_mul]
     rw [hfac]
     ring
 
