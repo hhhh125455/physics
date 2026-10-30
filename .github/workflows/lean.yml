@@ -22,6 +22,8 @@ jobs:
         run: lake exe cache get
       - name: Verify Lean proofs
         run: lake build
+      - name: Verify correlation integral theorems
+        run: lake build ClassicalSpinKrylov.Correlation
       - name: Reject unfinished proofs and new axioms
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' ClassicalSpinKrylov.lean ClassicalSpinKrylov; then

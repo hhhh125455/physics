@@ -30,6 +30,17 @@
 
 | D7 | 显式轨道的实际时间导数 | `rotation_x_hasDerivAt`, `rotation_y_hasDerivAt`, `evolve_solves_x`, `evolve_solves_y`, `evolve_solves_z` | 必须由 Lean 检查后才能标记为已验证；见动力学 LaTeX §6 |
 
+## C. 关联函数的积分数学命题
+
+中文详细推导：[correlation_zh.tex](correlation_zh.tex)；Lean 文件：[Correlation.lean](../ClassicalSpinKrylov/Correlation.lean)。
+
+| 编号 | 数学命题 | Lean 定理 | 边界 |
+|---|---|---|---|
+| C1 | 权重积分为 4/3 | `reduced_weight_integral` | 由 M2（n=0）证明 |
+| C2 | 关联函数 C(0)=1 | `correlation_zero` | 使用真正定积分定义 |
+| C3 | C(-t)=C(t) | `correlation_even` | 余弦的偶性 |
+| C4 | c=0 时 C(t)=1 | `correlation_zero_frequency` | 静止情形 |
+
 ## 尚未 Lean 验证
 
 - P1（剩余）：完整 Poisson 代数 Jacobi 结构；显式轨道满足 Hamilton ODE 的逐分量证明见 D7

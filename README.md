@@ -6,6 +6,7 @@ Lean 4 / Mathlib v4.32.0 project for progressively verifying the classical-spin 
 
 - [Detailed, step-by-step LaTeX](docs/detailed_zh.tex) — shows every essential calculation **of the verified moment-integral portion**, plus explicitly tagged unverified physical steps.
 - [Concise paper-style LaTeX](docs/paper_zh.tex) — suitable as a draft for a physics paper.
+- [Correlation normalization and parity](ClassicalSpinKrylov/Correlation.lean) with [Chinese LaTeX](docs/correlation_zh.tex).
 - [Proof traceability map](docs/PROOF_MAP.md) — matches each important mathematical claim to its Lean theorem and human-language explanation.
 - [Stepwise dynamics proof](ClassicalSpinKrylov/Dynamics.lean) and [ODE proof](ClassicalSpinKrylov/ODE.lean) — spin-coordinate Lie–Poisson identities, Hamilton equations, and conservation.
 - [Dynamics derivation (Chinese LaTeX)](docs/dynamics_zh.tex) — human-readable trace with precise limitations.

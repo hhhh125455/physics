@@ -7,8 +7,10 @@ root = Path(__file__).resolve().parents[1]
 moment_source = (root / "ClassicalSpinKrylov.lean").read_text(encoding="utf-8")
 spin_source = (root / "ClassicalSpinKrylov/Dynamics.lean").read_text(encoding="utf-8")
 ode_source = (root / "ClassicalSpinKrylov/ODE.lean").read_text(encoding="utf-8")
+correlation_source = (root / "ClassicalSpinKrylov/Correlation.lean").read_text(encoding="utf-8")
 moment_text = (root / "docs/detailed_zh.tex").read_text(encoding="utf-8")
 spin_text = (root / "docs/dynamics_zh.tex").read_text(encoding="utf-8")
+correlation_text = (root / "docs/correlation_zh.tex").read_text(encoding="utf-8")
 paper = (root / "docs/paper_zh.tex").read_text(encoding="utf-8")
 mapping = (root / "docs/PROOF_MAP.md").read_text(encoding="utf-8")
 
@@ -27,6 +29,10 @@ spin_theorems = [
 ode_theorems = [
     "rotation_x_hasDerivAt", "rotation_y_hasDerivAt",
     "evolve_solves_x", "evolve_solves_y", "evolve_solves_z",
+]
+correlation_theorems = [
+    "reduced_weight_integral", "correlation_zero", "correlation_even",
+    "correlation_zero_frequency",
 ]
 for symbol in moment_theorems:
     if not re.search(rf"\b(?:private\s+)?theorem\s+{symbol}\b", moment_source):
@@ -52,9 +58,18 @@ for symbol in ode_theorems:
     if symbol not in mapping:
         raise SystemExit(f"Missing ODE mapping: {symbol}")
 
+for symbol in correlation_theorems:
+    if not re.search(rf"\b(?:private\s+)?theorem\s+{symbol}\b", correlation_source):
+        raise SystemExit(f"Missing correlation Lean theorem: {symbol}")
+    if symbol.replace("_", "\\_") not in correlation_text:
+        raise SystemExit(f"Missing correlation human proof: {symbol}")
+    if symbol not in mapping:
+        raise SystemExit(f"Missing correlation mapping: {symbol}")
+
 for term in ["尚未", "积分", "Lanczos"]:
     if term not in moment_text or term not in paper:
         raise SystemExit(f"Missing review-status marker: {term}")
 
 print(f"Traceability PASS: {len(moment_theorems)} moments + "
-      f"{len(spin_theorems)} dynamics + {len(ode_theorems)} ODE theorems mapped.")
+      f"{len(spin_theorems)} dynamics + {len(ode_theorems)} ODE + "
+      f"{len(correlation_theorems)} correlation theorems mapped.")
