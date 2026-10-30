@@ -103,8 +103,8 @@ All expressions have the same meaning as the paper's ADM inverse metric.
 -/
 
 def bhR (x : Point) : ℂ := (x 1 : ℂ)
-def bhSin (x : Point) : ℂ := (Real.sin (x 2) : ℂ)
-def bhCos (x : Point) : ℂ := (Real.cos (x 2) : ℂ)
+noncomputable def bhSin (x : Point) : ℂ := (Real.sin (x 2) : ℂ)
+noncomputable def bhCos (x : Point) : ℂ := (Real.cos (x 2) : ℂ)
 
 def bhD (a : ℂ) (x : Point) : ℂ :=
   bhR x ^ 2 + a ^ 2
@@ -112,13 +112,13 @@ def bhD (a : ℂ) (x : Point) : ℂ :=
 def bhDelta (M a : ℂ) (x : Point) : ℂ :=
   bhD a x - 2 * M * bhR x
 
-def bhRho (a : ℂ) (x : Point) : ℂ :=
+noncomputable def bhRho (a : ℂ) (x : Point) : ℂ :=
   bhR x ^ 2 + a ^ 2 * bhCos x ^ 2
 
-def bhSigma (M a : ℂ) (x : Point) : ℂ :=
+noncomputable def bhSigma (M a : ℂ) (x : Point) : ℂ :=
   bhD a x ^ 2 - a ^ 2 * bhDelta M a x * bhSin x ^ 2
 
-def bhJ (a : ℂ) (x : Point) : ℂ :=
+noncomputable def bhJ (a : ℂ) (x : Point) : ℂ :=
   bhRho a x * bhSin x
 
 noncomputable def bhTT (M a : ℂ) (x : Point) : ℂ :=
