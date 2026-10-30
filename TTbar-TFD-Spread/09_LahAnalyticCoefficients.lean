@@ -131,4 +131,29 @@ theorem correction_known :
     largeCorr 4=3 ∧ largeCorr 5=15/2 := by
   norm_num [smallCorr,largeCorr]
 
+/-- The SECOND relative large-u correction, coefficient of 1/u^2.
+    It is a degree-six polynomial in the index n. -/
+noncomputable def largeCorr2 (n : ℕ) : ℚ :=
+  (n : ℚ)*((n : ℚ)-3)*((n : ℚ)-2)*
+   ((n : ℚ)-1)^2*((n : ℚ)+1)/128
+
+/-- Toda coefficient matching at the next order forces this all-index
+    second finite-difference equation; the proposed closed polynomial
+    passes the identity for every natural index. -/
+theorem large_second_correction_recurrence (k : ℕ) :
+    largeCorr2 (k+3)+largeCorr2 (k+1)-2*largeCorr2 (k+2) =
+       largeCorr (k+2)^2 -
+       largeCorr (k+3)*largeCorr (k+1) +
+       (3/2 : ℚ)*((k : ℚ)+1)*largeCorr (k+2) := by
+  unfold largeCorr2 largeCorr
+  push_cast
+  ring
+
+theorem large_second_correction_known :
+    largeCorr2 2 = 0 ∧ largeCorr2 3 = 0 ∧
+    largeCorr2 4 = 45/16 ∧ largeCorr2 5 = 45/2 ∧
+    largeCorr2 6 = 525/4 := by
+  norm_num [largeCorr2]
+
+
 end TTbarLahAnalytic
