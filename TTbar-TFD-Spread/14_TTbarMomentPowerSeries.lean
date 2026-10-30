@@ -26,12 +26,10 @@ theorem coefficient_identity_all
     (n : ℕ) :
     d * (PowerSeries.coeff (n+1)) K =
       ((if n = 0 then F else 0) + (PowerSeries.coeff n) K) +
-        μ * (∑ p ∈ Finset.antidiagonal (n+1),
-          (PowerSeries.coeff p.1) K * (PowerSeries.coeff p.2) K) := by
+        μ * (PowerSeries.coeff (n+1)) (K*K) := by
   have hc := congrArg
     (fun P : PowerSeries ℚ => (PowerSeries.coeff (n+1)) P) h
   simpa only [map_add, PowerSeries.coeff_C_mul,
-    PowerSeries.coeff_succ_X_mul, PowerSeries.coeff_mul,
-    PowerSeries.coeff_C] using hc
+    PowerSeries.coeff_succ_X_mul, PowerSeries.coeff_C] using hc
 
 end TTbarMomentPowerSeries
