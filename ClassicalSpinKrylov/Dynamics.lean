@@ -52,7 +52,7 @@ def hamiltonian (χ : ℝ) (s : Spin) : ℝ := χ * s.z ^ 2
 /-- Derivative with respect to z of the actual Hamiltonian polynomial. -/
 theorem hamiltonian_z_derivative (χ z : ℝ) :
     HasDerivAt (fun u : ℝ => χ * u ^ 2) (2 * χ * z) z := by
-  convert ((hasDerivAt_id z).pow 2).const_mul χ using 1 <;> (simp only [id_eq]; ring)
+  convert ((hasDerivAt_id z).pow 2).const_mul χ using 1 <;> (first | rfl | ring)
 
 /-- Gradient of H, obtained from the z derivative and independence from x,y. -/
 def gradH (χ : ℝ) (s : Spin) : Spin := ⟨0, 0, 2 * χ * s.z⟩
