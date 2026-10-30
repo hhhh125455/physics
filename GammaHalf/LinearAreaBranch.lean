@@ -38,8 +38,7 @@ theorem toy_area_deriv_u (u v : ℝ) :
     funext t
     rfl
   rw [hfun]
-  simpa only [Nat.reduceSub, pow_one, mul_one] using
-    (hlin.add (hlin.pow 2)).deriv
+  simpa using (hlin.add (hlin.pow 2)).deriv
 
 /-- Unlike the toy source identity, this verifies an actual mixed derivative. -/
 theorem toy_area_mixed (u v : ℝ) :
