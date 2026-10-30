@@ -103,7 +103,11 @@ theorem formal_model_coeff_all (u : ℝ) (m : ℕ) :
     rw [rational_argument_power_coeff u m j hjpos]
     rw [if_pos hjle]
     simp only [PowerSeries.coeff_exp, if_neg hj0]
-    simp only [smul_eq_mul, map_div, map_inv, map_one, map_natCast, div_eq_mul_inv]
+    have hfac : (algebraMap ℚ ℝ) (((Nat.factorial j : ℚ))⁻¹) =
+        ((Nat.factorial j : ℝ))⁻¹ := by
+      simp
+    simp only [smul_eq_mul, div_eq_mul_inv]
+    rw [hfac]
     ring
 
 
@@ -127,7 +131,7 @@ theorem formal_model_coeff_positive (u : ℝ) (m : ℕ) (hm : 0 < m) :
     omega
   rw [hset, Finset.sum_insert (by simp)]
   have hm0 : m ≠ 0 := by omega
-  simp only [if_pos rfl, if_neg hm0, zero_add]
+  simp only [ite_true, if_neg hm0, zero_add]
   apply Finset.sum_congr rfl
   intro j hj
   have hj0 : j ≠ 0 := by
