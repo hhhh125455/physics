@@ -1,5 +1,6 @@
 import Mathlib
 import HoravaQNM
+import HoravaMetricKG
 
 /-!
 # Low-order classical spin Krylov consistency checks
