@@ -89,14 +89,13 @@ theorem negative_initial_time_kick
     (hX0 : X0 ≠ 0)
     (hY : Y = 0) (hZ : Z = 0)
     (harea :
-      2 * X0 ^ 2 * (Ytt - Yxx) +
+      X0 ^ 2 * (Ytt - Yxx) +
         2 * E * q2 * Y + 4 * E * X0 * Z * (q2 - X0) = 0)
     (hxx : Yxx = -(2 * k * X0 * B ^ 2 * A)) :
     Ytt = -(2 * k * X0 * B ^ 2 * A) := by
-  have hprod : (2 * X0 ^ 2) * (Ytt - Yxx) = 0 := by
+  have hprod : (X0 ^ 2) * (Ytt - Yxx) = 0 := by
     simpa only [hY, hZ, mul_zero, zero_mul, add_zero] using harea
-  have hcoef : 2 * X0 ^ 2 ≠ 0 :=
-    mul_ne_zero (by norm_num) (pow_ne_zero 2 hX0)
+  have hcoef : X0 ^ 2 ≠ 0 := pow_ne_zero 2 hX0
   have hdiff : Ytt - Yxx = 0 :=
     (mul_eq_zero.mp hprod).resolve_left hcoef
   linarith [hxx]
