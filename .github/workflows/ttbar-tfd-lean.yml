@@ -1,0 +1,28 @@
+name: TTbar TFD incremental Lean verification
+
+on:
+  push:
+    paths:
+      - 'TTbar-TFD-Spread/**'
+      - '.github/workflows/ttbar-tfd-lean.yml'
+      - 'lakefile.toml'
+      - 'lean-toolchain'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve Mathlib
+        run: lake update
+      - name: Get Mathlib cache
+        run: lake exe cache get
+      - name: Check incremental proofs
+        run: |
+          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' TTbar-TFD-Spread; then exit 1; fi
+          lake env lean TTbar-TFD-Spread/01_CylinderPartition.lean
