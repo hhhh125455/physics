@@ -29,8 +29,11 @@ theorem energy_polynomial_exponential_bound
   have hfac : 0 < (Nat.factorial k : ℝ) := by positivity
   have hx : 0 ≤ δ*E := mul_nonneg (le_of_lt hδ) hE
   have hh := Real.pow_div_factorial_le_exp (δ*E) hx k
-  have hp : (δ*E)^k ≤ (Nat.factorial k : ℝ) * Real.exp (δ*E) :=
-    (div_le_iff₀ hfac).mp hh
+  have hp : (δ*E)^k ≤ (Nat.factorial k : ℝ) * Real.exp (δ*E) := by
+    calc
+      (δ*E)^k ≤ Real.exp (δ*E) * (Nat.factorial k : ℝ) :=
+        (div_le_iff₀ hfac).mp hh
+      _ = (Nat.factorial k : ℝ) * Real.exp (δ*E) := by ring
   have heq : Real.exp (δ*E) * Real.exp (-E*β) =
       Real.exp (-E*a) := by
     rw [← Real.exp_add]
