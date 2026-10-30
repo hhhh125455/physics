@@ -17,7 +17,7 @@ abbrev Point := Fin 4 → ℝ
 abbrev ScalarField := Point → ℂ
 
 /-- Actual i-th Fréchet coordinate derivative of a scalar field. -/
-def pd (i : Fin 4) (f : ScalarField) (x : Point) : ℂ :=
+noncomputable def pd (i : Fin 4) (f : ScalarField) (x : Point) : ℂ :=
   (fderiv ℝ f x) (Pi.single i (1 : ℝ))
 
 /-- Contravariant rotating metric with only six independent nonzero entries. -/
@@ -32,13 +32,13 @@ def sparseInv (tt tp pp rr aa : ScalarField)
   else 0
 
 /-- Full covariant scalar d'Alembertian: 1/J ∂μ(J g^μν ∂ν Φ). -/
-def covKG (J : ScalarField) (g : Fin 4 → Fin 4 → ScalarField)
+noncomputable def covKG (J : ScalarField) (g : Fin 4 → Fin 4 → ScalarField)
     (phi : ScalarField) (x : Point) : ℂ :=
   ((∑ i : Fin 4,
     pd i (fun y => J y * (∑ j : Fin 4, g i j y * pd j phi y)) x)) / J x
 
 /-- Fully expanded four-direction operator, before using stationarity. -/
-def kgFourFlux (J tt tp pp rr aa : ScalarField)
+noncomputable def kgFourFlux (J tt tp pp rr aa : ScalarField)
     (phi : ScalarField) (x : Point) : ℂ :=
    (pd 0 (fun y => J y * (tt y * pd 0 phi y +
      tp y * pd 3 phi y)) x +
@@ -91,10 +91,15 @@ theorem second_derivative_product
   have hadd : deriv (fun w => deriv f w * g w + f w * deriv g w) z =
       deriv (fun w => deriv f w * g w) z +
       deriv (fun w => f w * deriv g w) z := by
-    simpa only [Pi.add_apply] using
+    simpa only [Pi.add_apply, Pi.mul_apply] using
       (deriv_add (hdf.mul (hg z)) ((hf z).mul hdg))
-  rw [hadd]
-  rw [deriv_mul hdf (hg z), deriv_mul (hf z) hdg]
+  have hm1 : deriv (fun w => deriv f w * g w) z =
+      deriv (deriv f) z * g z + deriv f z * deriv g z := by
+    simpa only [Pi.mul_apply] using (deriv_mul hdf (hg z))
+  have hm2 : deriv (fun w => f w * deriv g w) z =
+      deriv f z * deriv g z + f z * deriv (deriv g) z := by
+    simpa only [Pi.mul_apply] using (deriv_mul (hf z) hdg)
+  rw [hadd, hm1, hm2]
   ring
 
 end HoravaKGCalculus
