@@ -23,7 +23,8 @@ theorem geometric_pow_coeff (n j : ℕ) (hj : 0 < j) :
       (Nat.choose (j - 1 + n) (j - 1) : ℝ) := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : j ≠ 0)
   have h := PowerSeries.mk_one_pow_eq_mk_choose_add ℝ k
-  simpa only [geometric, Nat.succ_eq_add_one, Nat.add_sub_cancel_left] using
+  simpa [geometric, Nat.succ_eq_add_one, Nat.add_comm,
+    Nat.add_left_comm, Nat.add_assoc] using
     congrArg (fun p : PowerSeries ℝ => (coeff n) p) h
 
 theorem rational_argument_constant_zero (u : ℝ) :
