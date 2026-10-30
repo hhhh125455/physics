@@ -152,7 +152,7 @@ theorem large_second_correction_recurrence (k : ℕ) :
 theorem large_second_correction_known :
     largeCorr2 2 = 0 ∧ largeCorr2 3 = 0 ∧
     largeCorr2 4 = 45/16 ∧ largeCorr2 5 = 45/2 ∧
-    largeCorr2 6 = 525/4 := by
+    largeCorr2 6 = 1575/16 := by
   norm_num [largeCorr2]
 
 
