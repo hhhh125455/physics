@@ -42,8 +42,9 @@ theorem concavity_yields_linear_lower_area
     dsimp [theta]
     exact (div_le_one hd).mpr (by linarith)
   have hcombo : theta*A0 + (1-theta)*Astar = A := by
+    have hden : Astar-A0 ≠ 0 := ne_of_gt (sub_pos.mpr h0)
     dsimp [theta,d]
-    field_simp
+    field_simp [hden]
     ring
   have hcc := hconc A0 Astar theta
     le_rfl (le_of_lt h0) (le_of_lt h0) le_rfl ht0 ht1
@@ -54,7 +55,9 @@ theorem concavity_yields_linear_lower_area
     dsimp [theta]
     field_simp
   have hrel : (theta*f A0)*d = f A0*(Astar-A) := by
-    rw [mul_left_comm theta (f A0) d, htheta]
+    calc
+      (theta*f A0)*d = f A0*(theta*d) := by ring
+      _ = f A0*(Astar-A) := by rw [htheta]
   rw [hrel] at hscale
   simpa only [d] using hscale
 
@@ -124,7 +127,6 @@ theorem sqrt_endpoint_has_no_uniform_linear_upper
   have hx2 : B*x^2 = x/2 := by
     dsimp [x]
     field_simp
-    ring
   rw [hx2]
   linarith [hpos]
 
