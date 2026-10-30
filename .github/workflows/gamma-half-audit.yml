@@ -40,6 +40,10 @@ jobs:
         run: lake env lean GammaHalf/OddAngularBoundary.lean
       - name: Compile full Einstein constraint obstruction
         run: lake env lean GammaHalf/FullConstraintObstruction.lean
+      - name: Compile full coupled Einstein-scalar first variations
+        run: lake env lean GammaHalf/CoupledFirstJets.lean
+      - name: Compile initial constraint amplitude response
+        run: lake env lean GammaHalf/InitialConstraintResponse.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
