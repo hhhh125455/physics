@@ -60,9 +60,10 @@ theorem response_ratio_hasDerivAt
   unfold responseRatio
   exact hY.div hu hux
 
-/-- Full calculus bridge from the initial Jacobi ODE and the
-    integrating-factor ODE to the weighted Wronskian derivative. -/
-theorem weighted_wronskian_hasDerivAt
+/-- The genuine weighted Wronskian derivative, derived directly
+    from both second-order ODEs and the integrating factor equation.
+    This is a full real-calculus identity, not only an algebraic jet. -/
+theorem weighted_wronskian_deriv
     (u Y mu : ℝ → ℝ) (x up upp Yp Ypp P Q F : ℝ)
     (hu : HasDerivAt u up x)
     (hup : HasDerivAt (fun t => deriv u t) upp x)
@@ -71,43 +72,23 @@ theorem weighted_wronskian_hasDerivAt
     (hmu : HasDerivAt mu (P*mu x) x)
     (hhom : upp + P*up + Q*u x = 0)
     (hforced : Ypp + P*Yp + Q*Y x + F = 0) :
-    HasDerivAt (weightedWronskian u Y mu)
-      (-(mu x*u x*F)) x := by
-  have hW : HasDerivAt (wronskian u Y)
-      (u x*Ypp - upp*Y x) x := by
-    have hbasic := (hu.mul hYp).sub (hup.mul hY)
-    have huval : deriv u x = up := hu.deriv
-    have hYval : deriv Y x = Yp := hY.deriv
-    have hcoeff :
-        up * deriv Y x + u x*Ypp -
-          (upp*Y x + deriv u x*Yp) =
-            u x*Ypp - upp*Y x := by
-      rw [huval, hYval]
-      ring
-    have hfunc :
-        (u * (fun t => deriv Y t)) -
-          ((fun t => deriv u t) * Y) = wronskian u Y := by
-      funext t
-      simp [wronskian]
-    rw [hfunc] at hbasic
-    rw [hcoeff] at hbasic
-    exact hbasic
-  have hGW : HasDerivAt (weightedWronskian u Y mu)
-      ((P*mu x)*wronskian u Y x +
-         mu x*(u x*Ypp-upp*Y x)) x := by
-    exact hmu.mul hW
+    deriv (weightedWronskian u Y mu) x =
+      -(mu x*u x*F) := by
+  have hfunc : weightedWronskian u Y mu =
+      mu * ((u * (fun t => deriv Y t)) -
+        ((fun t => deriv u t) * Y)) := by
+    funext t
+    simp [weightedWronskian, wronskian]
+  rw [hfunc]
+  have hbasic := (hmu.mul ((hu.mul hYp).sub (hup.mul hY))).deriv
+  rw [hbasic]
+  rw [hu.deriv, hY.deriv]
   have hid := forced_wronskian_identity (u x) up upp (Y x)
-     Yp Ypp P Q F hhom hforced
-  have hcoef : (P*mu x)*wronskian u Y x +
-       mu x*(u x*Ypp-upp*Y x) = -(mu x*u x*F) := by
-    rw [show wronskian u Y x = u x*Yp-up*Y x by
-      simp [wronskian, hu.deriv, hY.deriv]]
-    calc
-      _ = mu x*(u x*Ypp-upp*Y x+
+    Yp Ypp P Q F hhom hforced
+  calc
+    _ = mu x*(u x*Ypp-upp*Y x+
           P*(u x*Yp-up*Y x)) := by ring
-      _ = -(mu x*u x*F) := by rw [hid]; ring
-  rw [←hcoef]
-  exact hGW
+    _ = -(mu x*u x*F) := by rw [hid]; ring
 
 /-- This theorem is a rigorous *conditional* Green certificate.
     The derivative hypotheses are explicit; no monotonicity or
