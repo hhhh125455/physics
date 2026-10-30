@@ -74,4 +74,44 @@ theorem toda_step_4 : D5*D3 = TodaRHS 4 D4 := by
     derivative_pow, derivative_X, derivative_C]
   polynomial
 
+/-- All-index algebraic reduction of the shifted-Hankel Jacobi
+    coefficient to the logarithmic derivative of Delta_(n+1)/Delta_n.
+    Assumes the shifted-Hankel determinant identity (shown below for
+    small n and derived from Wronskian gauge analytically).
+-/
+theorem alpha_from_delta_algebra
+    (n : ℕ) (u p q dp dq : ℚ)
+    (hp : p ≠ 0) (hq : q ≠ 0) :
+    ((((n : ℚ)+1)*u+((n : ℚ)+1)*(n : ℚ))*p+u*dp)/p -
+      (((n : ℚ)*u+(n : ℚ)*((n : ℚ)-1))*q+u*dq)/q =
+    u+2*(n : ℚ)+u*(dp/p-dq/q) := by
+  field_simp [hp,hq] <;> ring
+
+/-- Shifted Lah determinant at size 1. -/
+theorem shifted_identity_1 :
+    X = X*D1 := by
+  simp [D1]
+
+/-- Shifted-Hankel identity at size 2:
+    tildeDelta_2 = 2u(2u+3). -/
+theorem shifted_identity_2 :
+    2*X*(2*X+3) = (2*X+2)*D2+X*(derivative D2) := by
+  simp [D2, derivative_mul, derivative_pow, derivative_X, derivative_C]
+  polynomial
+
+/-- Shifted-Hankel identity at size 3. -/
+theorem shifted_identity_3 :
+    12*X^2*(4*X^2+15*X+8) =
+      (3*X+6)*D3+X*(derivative D3) := by
+  simp [D3, derivative_mul, derivative_pow, derivative_X, derivative_C]
+  polynomial
+
+/-- Shifted-Hankel identity at size 4. -/
+theorem shifted_identity_4 :
+    192*X^3*(16*X^4+120*X^3+249*X^2+192*X+45) =
+      (4*X+12)*D4+X*(derivative D4) := by
+  simp [D4, derivative_mul, derivative_pow, derivative_X, derivative_C]
+  polynomial
+
+
 end TTbarLahToda
