@@ -103,7 +103,7 @@ theorem formal_model_coeff_all (u : ℝ) (m : ℕ) :
     rw [rational_argument_power_coeff u m j hjpos]
     rw [if_pos hjle]
     simp only [PowerSeries.coeff_exp, if_neg hj0]
-    simp only [smul_eq_mul, map_div, map_one, map_natCast, div_eq_mul_inv]
+    simp only [smul_eq_mul, map_div, map_inv, map_one, map_natCast, div_eq_mul_inv]
     ring
 
 
