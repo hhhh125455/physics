@@ -58,6 +58,10 @@ jobs:
         run: lake env lean GammaHalf/TransversalityBarrier.lean
       - name: Compile second amplitude variation and initial concavity
         run: lake env lean GammaHalf/SecondVariation.lean
+      - name: Compile full initial constraint response ODE
+        run: lake env lean GammaHalf/InitialResponseODE.lean
+      - name: Compile concavity bounds and counterexample
+        run: lake env lean GammaHalf/ConcavityDoesNotFixGamma.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
