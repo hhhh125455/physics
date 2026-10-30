@@ -34,7 +34,6 @@ theorem homog_rec (n : ℕ) (β d : ℝ) :
       (2*(n:ℝ)+5)*β*homog (n+1) β d -
         ((n:ℝ)+1)*((n:ℝ)+3)*d^2*homog n β d := by
   simp only [homog]
-  ring
 
 /-- Unnormalized cumulant (n+2), without an artificial mu denominator. -/
 noncomputable def cumulantShift (A β d : ℝ) (n : ℕ) : ℝ :=
@@ -59,7 +58,7 @@ theorem cumulant_all_orders (n : ℕ) (A β d : ℝ) (hd : d ≠ 0) :
       (2*(n:ℝ)+5)*β*cumulantShift A β d (n+1) -
         ((n:ℝ)+1)*((n:ℝ)+3)*cumulantShift A β d n := by
   rw [cumulantShift, cumulantShift, cumulantShift, homog_rec]
-  -- Different denominator powers differ by precisely d^2 and d^4.
+  -- Rewrite the exponent shifts explicitly, and clear nonzero denominators.
   have he1 : 2*(n+1)+3 = (2*n+3)+2 := by omega
   have he2 : 2*(n+2)+3 = (2*n+3)+4 := by omega
   have hp1 : d^(2*(n+1)+3) = d^(2*n+3)*d^2 := by
