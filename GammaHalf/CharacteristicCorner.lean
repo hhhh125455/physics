@@ -55,7 +55,12 @@ theorem corner_supermodular
         (deriv (fun t => X t 0) z) z := (hX 0 z).hasDerivAt
     have heq : deriv (fun t => X t v - X t 0) z =
         deriv (fun t => X t v) z - deriv (fun t => X t 0) z := by
-      simpa only [Pi.sub_apply] using (hdv.sub hd0).deriv
+      have hfun : (fun t => X t v - X t 0) =
+          (fun t => X t v) - (fun t => X t 0) := by
+        funext t
+        rfl
+      rw [hfun]
+      exact (hdv.sub hd0).deriv
     rw [heq]
     linarith
   have hmonou : Monotone (fun z => X z v - X z 0) :=
@@ -77,8 +82,7 @@ theorem rescaled_charged_source
     on the areal radius. This does not establish the PDE hypotheses. -/
 theorem area_to_radius_sandwich
     (delta r low high : ℝ)
-    (hdelta : 0 ≤ delta) (hr : 0 ≤ r)
-    (hlow : 0 ≤ low) (hhigh : 0 ≤ high)
+    (hr : 0 ≤ r)
     (h1 : low * delta ≤ r ^ 2)
     (h2 : r ^ 2 ≤ high * delta) :
     Real.sqrt (low * delta) ≤ r ∧
