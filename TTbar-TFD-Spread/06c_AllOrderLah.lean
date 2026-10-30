@@ -58,4 +58,55 @@ theorem rational_argument_power_coeff
     ring
   · ring
 
+/- The full generating function is the exponential formal series composed
+   with uX/(1-X); coefficients are computed at EVERY order m, not merely
+   m=1,2,3. -/
+noncomputable def formalModelGenerating (u : ℝ) : PowerSeries ℝ :=
+  subst (rationalArgument u) (PowerSeries.exp ℝ)
+
+theorem formal_model_coeff_all (u : ℝ) (m : ℕ) :
+    (coeff m) (formalModelGenerating u) =
+      ∑ j ∈ Finset.range (m+1),
+        if j = 0 then (if m = 0 then (1 : ℝ) else 0)
+        else (u^j / (Nat.factorial j : ℝ)) *
+             (Nat.choose (m-1) (j-1) : ℝ) := by
+  classical
+  unfold formalModelGenerating
+  rw [PowerSeries.coeff_subst' (rational_argument_substitutable u)
+       (PowerSeries.exp ℝ) m]
+  have hs : Function.support
+      (fun j : ℕ => (coeff j) (PowerSeries.exp ℝ) •
+        (coeff m) ((rationalArgument u)^j)) ⊆
+      ↑(Finset.range (m+1)) := by
+    intro j hj
+    by_contra hmem
+    have hgt : m < j := by
+      simp only [Finset.mem_coe, Finset.mem_range] at hmem
+      omega
+    have hzero : (coeff m) ((rationalArgument u)^j) = 0 := by
+      rw [rational_argument_power_coeff u m j (by omega)]
+      simp [not_le.mpr hgt]
+    have hz : ((coeff j) (PowerSeries.exp ℝ) •
+      (coeff m) ((rationalArgument u)^j)) = 0 := by
+      simp [hzero]
+    exact (Function.mem_support.mp hj) hz
+  rw [finsum_eq_finsetSum_of_support_subset _ hs]
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hjle : j ≤ m := by
+    have h := Finset.mem_range.mp hj
+    omega
+  by_cases hj0 : j = 0
+  · subst j
+    simp [PowerSeries.coeff_exp]
+  · have hjpos : 0 < j := by omega
+    rw [rational_argument_power_coeff u m j hjpos]
+    rw [if_pos hjle]
+    simp only [PowerSeries.coeff_exp, if_neg hj0]
+    simp only [smul_eq_mul]
+    congr 1
+    · norm_cast
+    · ring
+
+
 end TTbarTFDAllOrder
