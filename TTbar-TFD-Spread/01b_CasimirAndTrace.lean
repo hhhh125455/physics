@@ -177,10 +177,16 @@ theorem sqrt_young_bound (x B ε : ℝ) (hx : 0 ≤ x) (hε : 0 < ε) :
   have hden : 4 * ε ≠ 0 := by positivity
   have hdiv : (4 * ε) * (B ^ 2 / (4 * ε)) = B ^ 2 := by
     field_simp
-  have hmain : (4 * ε) * (B * Real.sqrt x) ≤
+  have hbasic : (4 * ε) * (B * Real.sqrt x) ≤
+      4 * ε ^ 2 * (Real.sqrt x) ^ 2 + B ^ 2 := by
+    nlinarith [hsq]
+  have hbridge : 4 * ε ^ 2 * (Real.sqrt x) ^ 2 + B ^ 2 =
       (4 * ε) * (ε * x + B ^ 2 / (4 * ε)) := by
-    nlinarith [hsq, hroot, hdiv]
-  exact (mul_le_mul_left (show 0 < (4 : ℝ) * ε by positivity)).mp hmain
+    rw [hroot, mul_add, hdiv]
+    ring
+  have hmain := hbasic.trans_eq hbridge
+  exact (mul_le_mul_iff_of_pos_left
+    (show 0 < (4 : ℝ) * ε by positivity)).mp hmain
 
 theorem cardy_bound_gives_subexponential
     (d : ℕ → ℝ) (C₀ B : ℝ) (hC : 0 ≤ C₀)
