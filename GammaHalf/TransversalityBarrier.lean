@@ -35,19 +35,31 @@ private theorem affine_interval_monotone
       (Set.Ioo a b) := by
     intro x hx
     have hf : HasDerivAt f (deriv f x) x := (hdiff x hx).hasDerivAt
-    have hlin : HasDerivAt (fun t : ℝ => C*t) C x :=
-      (hasDerivAt_id x).const_mul C
-    exact (hf.add hlin).differentiableWithinAt
+    have hlin : HasDerivAt (fun t : ℝ => C*t) C x := by
+      simpa only [id_eq, mul_one] using
+        (hasDerivAt_id x).const_mul C
+    have hfun : (fun t : ℝ => f t + C*t) =
+        f + (fun t : ℝ => C*t) := by
+      funext t
+      rfl
+    rw [hfun]
+    exact (hf.add hlin).differentiableAt.differentiableWithinAt
   apply monotoneOn_of_deriv_nonneg (convex_Icc a b) hgcont
   · simpa only [interior_Icc] using hgdiff
   · intro x hx
     have hx' : x ∈ Set.Ioo a b := by
       simpa only [interior_Icc] using hx
     have hf : HasDerivAt f (deriv f x) x := (hdiff x hx').hasDerivAt
-    have hlin : HasDerivAt (fun t : ℝ => C*t) C x :=
-      (hasDerivAt_id x).const_mul C
-    have heq : deriv (fun t => f t + C*t) x = deriv f x + C :=
-      (hf.add hlin).deriv
+    have hlin : HasDerivAt (fun t : ℝ => C*t) C x := by
+      simpa only [id_eq, mul_one] using
+        (hasDerivAt_id x).const_mul C
+    have hfun : (fun t : ℝ => f t + C*t) =
+        f + (fun t : ℝ => C*t) := by
+      funext t
+      rfl
+    have heq : deriv (fun t => f t + C*t) x = deriv f x + C := by
+      rw [hfun]
+      exact (hf.add hlin).deriv
     rw [heq]
     exact hderiv x hx'
 
