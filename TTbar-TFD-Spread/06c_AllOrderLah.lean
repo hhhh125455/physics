@@ -107,4 +107,52 @@ theorem formal_model_coeff_all (u : ℝ) (m : ℕ) :
     ring
 
 
+/-- Exact coefficient at degree zero in the formal generating series. -/
+theorem formal_model_coeff_zero (u : ℝ) :
+    (coeff 0) (formalModelGenerating u) = 1 := by
+  simp [formal_model_coeff_all]
+
+/-- For every positive degree, the zero-index term vanishes and the
+    ALL-ORDER coefficient is the claimed finite Lah-number sum. -/
+theorem formal_model_coeff_positive (u : ℝ) (m : ℕ) (hm : 0 < m) :
+    (coeff m) (formalModelGenerating u) =
+      ∑ j ∈ Finset.Icc 1 m,
+        (u ^ j / (Nat.factorial j : ℝ)) *
+          (Nat.choose (m - 1) (j - 1) : ℝ) := by
+  rw [formal_model_coeff_all]
+  have hset : Finset.range (m + 1) =
+      insert 0 (Finset.Icc 1 m) := by
+    ext j
+    simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Icc]
+    omega
+  rw [hset, Finset.sum_insert (by simp)]
+  have hm0 : m ≠ 0 := by omega
+  simp only [if_pos rfl, if_neg hm0, zero_add]
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hj0 : j ≠ 0 := by
+    have h := (Finset.mem_Icc.mp hj).1
+    omega
+  simp only [if_neg hj0]
+
+/-- Inverse-temperature rescaling reproduces EXACTLY the manuscript's
+    arbitrary-order finite Lah formula for the *model* moment.
+    m is arbitrary, not checked only up to three. -/
+theorem formal_model_moment_all
+    (A β : ℝ) (hβ : β ≠ 0) (m : ℕ) (hm : 0 < m) :
+    ((Nat.factorial m : ℝ) / β ^ m) *
+      (coeff m) (formalModelGenerating (A / β)) =
+        ∑ j ∈ Finset.Icc 1 m,
+          ((Nat.factorial m : ℝ) / (Nat.factorial j : ℝ)) *
+          (Nat.choose (m - 1) (j - 1) : ℝ) *
+          A ^ j / β ^ (m + j) := by
+  rw [formal_model_coeff_positive (A / β) m hm]
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro j hj
+  have hf : (Nat.factorial j : ℝ) ≠ 0 := by positivity
+  rw [div_pow, pow_add]
+  field_simp [hβ, hf] <;> ring
+
+
 end TTbarTFDAllOrder
