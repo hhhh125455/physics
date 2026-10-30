@@ -224,6 +224,8 @@ theorem scaled_P3_gram_recurrence (u : ℝ) :
       Polynomial.C (4*u^2+27*u+15)) * P2 u -
       Polynomial.C ((4*u+3)^2)*P1 u = Q3 u := by
   unfold P1 P2 Q3 q0 q1 q2 q3
+  simp only [map_add, map_mul, map_pow, map_sub, map_neg, map_one,
+    map_natCast]
   ring
 
 /-- The seven independent moment entries of the P3 norm. In
