@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - research/gamma-half-lean-audit-20261031
-  pull_request:
-    paths:
-      - 'GammaHalf/**'
-      - '.github/workflows/gamma-half-audit.yml'
+
+concurrency:
+  group: gamma-half-audit-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   formal-check:
@@ -22,6 +22,8 @@ jobs:
         run: |
           lake update
           lake exe cache get
+      - name: Compile positive Green-Wronskian comparison theorem
+        run: lake env lean GammaHalf/InitialGreenWronskian.lean
       - name: Compile black-hole inner-family audit
         run: lake env lean GammaHalf/InnerFamily.lean
       - name: Compile characteristic-corner calculus theorems
@@ -62,8 +64,6 @@ jobs:
         run: lake env lean GammaHalf/InitialResponseODE.lean
       - name: Compile concavity bounds and counterexample
         run: lake env lean GammaHalf/ConcavityDoesNotFixGamma.lean
-      - name: Compile positive Green-Wronskian comparison theorem
-        run: lake env lean GammaHalf/InitialGreenWronskian.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
