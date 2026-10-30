@@ -17,18 +17,20 @@ theorem cylinderMap_first (κ w : ℂ) :
     HasDerivAt (cylinderMap κ) (κ * cylinderMap κ w) w := by
   have hlin : HasDerivAt (fun z : ℂ => κ * z) κ w := by
     simpa using (hasDerivAt_id w).const_mul κ
-  simpa [cylinderMap, mul_comm, mul_left_comm, mul_assoc] using
-    (Complex.hasDerivAt_exp (κ * w)).comp w hlin
+  change HasDerivAt (fun z : ℂ => Complex.exp (κ * z))
+    (κ * Complex.exp (κ * w)) w
+  convert hlin.cexp using 1 <;> ring
 
 theorem cylinderMap_second (κ w : ℂ) :
     HasDerivAt (fun z : ℂ => κ * cylinderMap κ z)
       (κ ^ 2 * cylinderMap κ w) w := by
-  convert (cylinderMap_first κ w).const_mul κ using 1 <;> ring
+  simpa only [pow_two, mul_assoc] using
+    (cylinderMap_first κ w).const_mul κ
 
 theorem cylinderMap_third (κ w : ℂ) :
     HasDerivAt (fun z : ℂ => κ ^ 2 * cylinderMap κ z)
       (κ ^ 3 * cylinderMap κ w) w := by
-  convert (cylinderMap_first κ w).const_mul (κ ^ 2) using 1 <;> ring
+  convert (cylinderMap_first κ w).const_mul (κ ^ 2) using 1 <;> try ring
 
 noncomputable def schwarzianJets (d₁ d₂ d₃ : ℂ) : ℂ :=
   d₃ / d₁ - (3 / 2 : ℂ) * (d₂ / d₁) ^ 2
@@ -108,9 +110,9 @@ theorem summable_density_energy_gap
     (d Δ : ℕ → ℝ) (β gap α C : ℝ)
     (hβ : 0 < β) (hgap : 0 < gap)
     (hα : α < β * gap) (hC : 0 ≤ C)
-    (hd0 : ∀ n, 0 ≤ d n)
-    (hd : ∀ n, d n ≤ C * Real.exp (α * (n : ℝ)))
-    (hΔ : ∀ n, gap * (n : ℝ) ≤ Δ n) :
+    (hd0 : ∀ n : ℕ, 0 ≤ d n)
+    (hd : ∀ n : ℕ, d n ≤ C * Real.exp (α * (n : ℝ)))
+    (hΔ : ∀ n : ℕ, gap * (n : ℝ) ≤ Δ n) :
     Summable (fun n => d n * Real.exp (-β * Δ n)) := by
   have hc : α - β * gap < 0 := by linarith
   have hs : Summable (fun n : ℕ => C * Real.exp ((n : ℝ) * (α - β * gap))) :=
