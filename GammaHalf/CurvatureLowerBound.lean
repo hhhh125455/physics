@@ -28,7 +28,7 @@ scaling implications, with no proof placeholders.
 
 namespace GammaHalf
 
-private def geometricK (W e s : ℝ) : ℝ :=
+private noncomputable def geometricK (W e s : ℝ) : ℝ :=
   48 * W ^ 2 + 8 * e ^ 2 - 32 * e * s +
      (320 / 3 : ℝ) * s ^ 2
 
