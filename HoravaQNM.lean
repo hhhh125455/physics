@@ -100,3 +100,5 @@ theorem horizon_potential_is_square (D a m η ω : ℂ) (hD : D ≠ 0) :
   ring
 
 end HoravaQNM
+
+/- Verification extension uses the source PDF and checks equation chains. -/
