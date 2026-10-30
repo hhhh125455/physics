@@ -54,6 +54,8 @@ jobs:
         run: lake env lean GammaHalf/NullFluxTransport.lean
       - name: Compile invariant charged curvature and critical scaling bounds
         run: lake env lean GammaHalf/CurvatureLowerBound.lean
+      - name: Compile one-sided response barrier and square-root theorem
+        run: lake env lean GammaHalf/TransversalityBarrier.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
