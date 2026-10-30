@@ -29,7 +29,7 @@ using calculus/SymPy; they are not yet formalized in Lean.
 
 namespace GammaHalf
 
-def oddConstraintResidual (X P : ℝ) : ℝ :=
+noncomputable def oddConstraintResidual (X P : ℝ) : ℝ :=
   -(1 / (2 * X * (1 - X)) -
         P ^ 2 * (1 - 2 * X) / (2 * X ^ 2 * (1 - X) ^ 2)) -
   (1 / (2 * X) - P ^ 2 / (4 * X ^ 2)) +
