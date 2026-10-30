@@ -124,4 +124,32 @@ theorem eq40_geometric_potential_complex
   field_simp
   ring
 
+
+-- Source (13)--(19): exact complete Fourier-mode KG coefficient.
+-- D=r²+a², Delta=D-2Mr, rho=ρ²=D-a²s, Sigma=Σ²=D²-a²Delta s.
+-- All fields, including the QNM frequency omega, may be complex.
+theorem full_KG_mode_coefficient
+    (M r a eta omega m s D Delta rho Sigma : ℂ)
+    (hDelta : Delta ≠ 0) (hs : s ≠ 0)
+    (hSigma : Sigma ≠ 0)
+    (hDeltaEq : Delta = D - 2 * M * r)
+    (hRhoEq : rho = D - a ^ 2 * s)
+    (hSigmaEq : Sigma = D ^ 2 - a ^ 2 * Delta * s) :
+    Sigma * omega ^ 2 / Delta -
+      4 * M * a * r * (1 + eta) * omega * m / Delta -
+      rho ^ 2 * m ^ 2 / (Sigma * s) +
+      4 * M ^ 2 * a ^ 2 * r ^ 2 * (1 + eta) ^ 2 * m ^ 2 /
+        (Delta * Sigma) =
+    D ^ 2 * omega ^ 2 / Delta - a ^ 2 * omega ^ 2 * s -
+      4 * M * a * r * omega * m / Delta +
+      a ^ 2 * m ^ 2 / Delta - m ^ 2 / s -
+      4 * eta * M * a * r * omega * m / Delta +
+      4 * eta * (eta + 2) * M ^ 2 * a ^ 2 * r ^ 2 * m ^ 2 /
+        (Delta * Sigma) := by
+  subst rho
+  subst Sigma
+  subst Delta
+  field_simp
+  ring
+
 end HoravaMetricKG
