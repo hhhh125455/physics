@@ -52,7 +52,7 @@ def hamiltonian (χ : ℝ) (s : Spin) : ℝ := χ * s.z ^ 2
 /-- Derivative with respect to z of the actual Hamiltonian polynomial. -/
 theorem hamiltonian_z_derivative (χ z : ℝ) :
     HasDerivAt (fun u : ℝ => χ * u ^ 2) (2 * χ * z) z := by
-  convert ((hasDerivAt_id z).pow 2).const_mul χ using 1 <;> ring
+  convert ((hasDerivAt_id z).pow 2).const_mul χ using 1 <;> (simp only [id_eq]; ring)
 
 /-- Gradient of H, obtained from the z derivative and independence from x,y. -/
 def gradH (χ : ℝ) (s : Spin) : Spin := ⟨0, 0, 2 * χ * s.z⟩
@@ -98,7 +98,7 @@ theorem energy_derivative_zero (χ : ℝ) (s : Spin) :
   ring
 
 /-- Explicit time-dependent rotation at frequency ω=2χ S_z(0). -/
-def evolve (χ t : ℝ) (s : Spin) : Spin :=
+noncomputable def evolve (χ t : ℝ) (s : Spin) : Spin :=
   let θ := 2 * χ * s.z * t
   ⟨s.x * Real.cos θ - s.y * Real.sin θ,
    s.x * Real.sin θ + s.y * Real.cos θ,
