@@ -31,10 +31,11 @@ noncomputable def toyConformal (u v : ℝ) : ℝ :=
 theorem toy_area_deriv_u (u v : ℝ) :
     deriv (fun t : ℝ => toyArea t v) u = 1 + 2 * (u + v) := by
   have hlin : HasDerivAt (fun t : ℝ => t + v) 1 u := by
-    convert (hasDerivAt_id u).add_const v using 1
+    simpa only [id_eq] using (hasDerivAt_id u).add_const v
   have h :
       HasDerivAt (fun t : ℝ => toyArea t v) (1 + 2 * (u + v)) u := by
-    convert (hlin.add (hlin.pow 2)) using 1
+    simpa only [toyArea, Nat.reduceSub, pow_one, mul_one] using
+      (hlin.add (hlin.pow 2))
   exact h.deriv
 
 /-- Unlike the toy source identity, this verifies an actual mixed derivative. -/
@@ -47,8 +48,8 @@ theorem toy_area_mixed (u v : ℝ) :
     exact toy_area_deriv_u u y
   rw [hext]
   have hy : HasDerivAt (fun y : ℝ => 1 + 2 * (u + y)) 2 v := by
-    convert ((hasDerivAt_id v).const_add u |>.const_mul 2 |>.const_add 1)
-      using 1
+    simpa only [id_eq, mul_one] using
+      ((hasDerivAt_id v).const_add u |>.const_mul 2 |>.const_add 1)
   exact hy.deriv
 
 /-- An exact *algebraic* charged source with q^2=1, not a coupled solution. -/
