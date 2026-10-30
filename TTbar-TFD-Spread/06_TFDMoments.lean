@@ -156,7 +156,7 @@ theorem model_generating_derivative (A β s : ℝ)
     HasDerivAt (modelGenerating A β)
       (modelGenerating A β s * A / (β-s)^2) s := by
   have hl : HasDerivAt (fun x : ℝ => β-x) (-1) s := by
-    simpa only [id_eq, sub_eq_add_neg] using (hasDerivAt_id s).neg.const_add β
+    exact (hasDerivAt_id s).const_sub β
   have hi := hl.inv h
   have hm := hi.const_mul A
   have hex := hm.exp
