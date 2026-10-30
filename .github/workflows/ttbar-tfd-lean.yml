@@ -39,3 +39,4 @@ jobs:
           lake env lean TTbar-TFD-Spread/09_LahAnalyticCoefficients.lean
           lake env lean TTbar-TFD-Spread/10_ExactSpreadTaylor.lean
           lake env lean TTbar-TFD-Spread/11_ExactSpreadTaylor8.lean
+          lake env lean TTbar-TFD-Spread/12_ArbitraryLahFiniteSum.lean
