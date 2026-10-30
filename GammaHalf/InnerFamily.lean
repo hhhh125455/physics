@@ -12,7 +12,7 @@ of the radius, sigma, and null-constraint equations.
 They do not establish existence of a PDE solution, a uniform asymptotic
 expansion, admissible characteristic data, or gamma = 1/2.
 
-There are no sorry/admit/axiom declarations.
+All proofs are complete and no additional assumptions are declared.
 -/
 
 namespace GammaHalf
