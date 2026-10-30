@@ -54,7 +54,7 @@ theorem angular_gradient_sequence_unbounded
   have hm : M < a * (n : ℝ) / 2 := by
     have h' : 2 * max M 0 / a < (n : ℝ) := by linarith
     have h'' : 2 * max M 0 < a * (n : ℝ) := by
-      exact (div_lt_iff₀ ha).mp h'
+      nlinarith [(div_lt_iff₀ ha).mp h']
     have hM : M ≤ max M 0 := le_max_left _ _
     linarith
   have hhalfn : (0 : ℝ) ≤ a * (n : ℝ) / 2 := by positivity
