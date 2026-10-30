@@ -1,0 +1,133 @@
+\documentclass[UTF8,11pt]{ctexart}
+\usepackage{amsmath,amssymb,geometry,hyperref}
+\geometry{a4paper,margin=25mm}
+\title{经典自旋的泊松动力学：从定义到 Lean 定理的逐步核验}
+\date{}
+\begin{document}
+\maketitle
+
+\section{物理对象及其形式化边界}
+经典自旋记为 $s=(S_x,S_y,S_z)\in\mathbb R^3$，
+哈密顿量为
+\[
+ H(s)=\chi S_z^2.
+\]
+在局部坐标中，我们采用标准自旋 Lie--Poisson 公式
+\[
+ \{f,g\}(s)=s\cdot(\nabla f\times\nabla g).
+\]
+Lean 当前把等式右侧形式化为
+\texttt{poissonAt s df dg}，即\emph{在给定点处对梯度的双线性代数式}。
+完整的光滑函数空间 Poisson 代数（包括 Jacobi 恒等式）尚未形式化，
+因此不能称整个抽象 Poisson 几何已经通过检查。
+
+\section{第一段：结构常数}
+记单位梯度
+\[
+ \nabla S_x=(1,0,0),\qquad \nabla S_y=(0,1,0),
+ \qquad \nabla S_z=(0,0,1).
+\]
+代入
+\[
+ \{f,g\}
+ =S_x(f_y g_z-f_zg_y)
+ +S_y(f_zg_x-f_xg_z)
+ +S_z(f_xg_y-f_yg_x)
+\]
+可得
+\[
+ \{S_x,S_y\}=S_z,\quad
+ \{S_y,S_z\}=S_x,\quad
+ \{S_z,S_x\}=S_y.
+\]
+Lean 对应：
+\texttt{bracket\_xy}, \texttt{bracket\_yz},
+\texttt{bracket\_zx}。
+交换两个梯度后，每个乘积差变号，因此
+$\{f,g\}=-\{g,f\}$；对应 \texttt{bracket\_antisymm}。
+
+\section{第二段：哈密顿量求导}
+由于 $H(s)=\chi S_z^2$ 与 $S_x,S_y$ 无关，
+\[
+ \nabla H=(0,0,2\chi S_z).
+\]
+这里非平凡的一元导数关系
+\[
+ \frac{d}{du}(\chi u^2)\bigg|_{u=S_z}=2\chi S_z
+\]
+对应 Lean 定理 \texttt{hamiltonian\_z\_derivative}。
+梯度的 $x,y$ 分量为零来自该函数的显式定义；
+三个分量组成的 \texttt{gradH} 在当前形式化中给定。
+
+\section{第三段：三条哈密顿方程}
+动力学定义为坐标函数与 $H$ 的泊松括号。
+例如
+\[
+ \begin{aligned}
+ \dot S_x
+ &=\{S_x,H\}\\
+ &=S_x(0\cdot 2\chi S_z-0\cdot 0)
+ +S_y(0\cdot0-1\cdot2\chi S_z)
+ +S_z(1\cdot0-0\cdot0)\\
+ &=-2\chi S_zS_y.
+ \end{aligned}
+\]
+同理，
+\[
+ \dot S_y=\{S_y,H\}
+ =S_x(1\cdot2\chi S_z-0)+0+0
+ =2\chi S_zS_x,
+\qquad
+\dot S_z=\{S_z,H\}=0.
+\]
+Lean 对应：\texttt{vectorField\_x},
+\texttt{vectorField\_y}, \texttt{vectorField\_z}。
+这三个定理的结论是由已定义的梯度泊松张量推得，
+而不是将最终动力学方程作为公理。
+
+\section{第四段：守恒量检验}
+平方自旋长度 $R^2=S_x^2+S_y^2+S_z^2$ 满足
+\[
+ \begin{aligned}
+ \frac{dR^2}{dt}
+ &=2S_x\dot S_x+2S_y\dot S_y+2S_z\dot S_z\\
+ &=-4\chi S_xS_yS_z+4\chi S_xS_yS_z+0
+ =0.
+ \end{aligned}
+\]
+对应 Lean 定理 \texttt{lengthSq\_derivative\_zero}。
+能量沿运动的导数为
+\[
+ \frac{dH}{dt}=2\chi S_z\dot S_z=0,
+\]
+对应 \texttt{energy\_derivative\_zero}。
+
+\section{第五段：显式轨道的代数检验}
+令 $s(0)=(x_0,y_0,z_0)$，
+$\omega=2\chi z_0$。候选轨道为
+\[
+ \begin{split}
+ S_x(t)&=x_0\cos(\omega t)-y_0\sin(\omega t),\\
+ S_y(t)&=x_0\sin(\omega t)+y_0\cos(\omega t),\\
+ S_z(t)&=z_0.
+ \end{split}
+\]
+对应 \texttt{evolve}。目前已形式化的检查包含：
+\begin{enumerate}
+ \item $s(0)=s_0$，对应 \texttt{evolve\_zero}；
+ \item $S_z(t)=z_0$，对应 \texttt{evolve\_z}；
+ \item 用 $\sin^2+\cos^2=1$ 证明
+ $S_x(t)^2+S_y(t)^2=x_0^2+y_0^2$，
+ 对应 \texttt{planar\_rotation\_length}；
+ \item $R^2(t)=R^2(0)$ 及 $H(t)=H(0)$，
+ 对应 \texttt{evolve\_lengthSq}、\texttt{evolve\_hamiltonian}。
+\end{enumerate}
+\textbf{重要：}只有把显式轨道的时间导数与
+\texttt{vectorField} 比较，才真正证明它满足 Hamilton 微分方程。
+因此若尚未加入相应导数定理，不能仅凭守恒量宣称轨道已被严格验证。
+
+\section{后续待验证}
+完整时间演化的微分等式、球面测度与相关函数、
+从谱矩到 Lanczos 系数的算符构造，以及任意阶
+Gegenbauer 递推关系，仍须逐步形式化。
+\end{document}
