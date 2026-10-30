@@ -1,4 +1,6 @@
 import Mathlib
+import ClassicalSpinKrylov.Dynamics
+import ClassicalSpinKrylov.ODE
 
 /-!
 # Classical spin Krylov: moment integrals and low-order Lanczos relations
