@@ -1,0 +1,156 @@
+\documentclass[UTF8,11pt]{ctexart}
+\usepackage{amsmath,amssymb,mathtools,geometry,hyperref}
+\geometry{a4paper,margin=24mm}
+\newcommand{\LeanRef}[1]{\texttt{\detokenize{#1}}}
+\title{经典自旋的关联函数与偶数矩：逐步推导及 Lean 对照}
+\author{Classical Spin Krylov — 可追溯证明示范}
+\date{}
+\begin{document}
+\maketitle
+\noindent\textbf{状态说明：}本文区分\textbf{已形式化的数学步骤}与\textbf{尚未形式化的物理步骤}。
+对应 Lean 文件为 \texttt{ClassicalSpinKrylov.lean}。是否通过检查以 GitHub Actions 最新的 \texttt{lake build} 结果为准。
+完整的任意阶 Lanczos 系数通项\textbf{尚未}由 Lean 证明。
+
+\section{物理模型（尚未在 Lean 中形式化）}
+设固定长度 $S>0$ 的经典自旋满足
+\[
+ S_x^2+S_y^2+S_z^2=S^2,\quad
+ \{S_i,S_j\}=\epsilon_{ijk}S_k,\quad H=\chi S_z^2.
+\]
+由 $\dot S_i=\{S_i,H\}$ 得
+\[
+ \dot S_x=-2\chi S_zS_y,\qquad
+ \dot S_y= 2\chi S_zS_x,\qquad \dot S_z=0.
+\]
+定义 $z=S_z/S\in[-1,1]$，令
+$S_x=S\sqrt{1-z^2}\cos\phi$，
+$S_y=S\sqrt{1-z^2}\sin\phi$。
+因为 $\dot z=0$ 且 $\dot\phi=2\chi Sz$，记 $c=2\chi S$，
+\[
+ S_x(t)=S\sqrt{1-z^2}\cos(\phi+czt).
+\]
+本段为物理解释，暂未绑定到 Lean 中的泊松几何。
+
+\section{归一化关联函数（尚未在 Lean 中形式化）}
+均匀球面测度写为 $d\mu=dz\,d\phi/(4\pi)$，初始观测量 $A=S_x$。
+首先
+\[
+ \langle S_x^2\rangle=
+ \frac{S^2}{4\pi}\int_{-1}^{1}(1-z^2)\,dz
+ \int_0^{2\pi}\cos^2\phi\,d\phi
+ =\frac{S^2}{4\pi}\frac43\pi=\frac{S^2}{3}.
+\]
+另一方面
+\[
+ \begin{aligned}
+ \langle S_x(0)S_x(t)\rangle
+ &=\frac{S^2}{4\pi}\int_{-1}^1(1-z^2)\,dz
+  \int_0^{2\pi}\cos\phi\cos(\phi+czt)\,d\phi\\
+ &=\frac{S^2}{4}\int_{-1}^1(1-z^2)\cos(czt)\,dz,
+ \end{aligned}
+\]
+最后一步由
+$\cos\phi\cos(\phi+a)=\tfrac12[\cos a+\cos(2\phi+a)]$，
+及第二项沿 $\phi$ 积分为零给出。因而
+\[
+ C(t)=\frac{\langle S_x(0)S_x(t)\rangle}{\langle S_x^2\rangle}
+ =\frac34\int_{-1}^1(1-z^2)\cos(czt)\,dz.
+\]
+对上式做初等积分，还可得
+$C(t)=3(\sin(ct)-ct\cos(ct))/(ct)^3$（$ct\ne0$），
+在 $ct=0$ 时由极限定义 $C(0)=1$。
+\textbf{注意：}这条三角积分恒等式目前尚未 Lean 证明。
+
+\section{偶数矩：本文重点形式化的数学结论}
+定义归一化权重 $\rho(z)=\tfrac34(1-z^2)$ 以及
+\[
+ \mu_{2n}:=\frac34\,c^{2n}\int_{-1}^1(1-z^2)z^{2n}\,dz,
+ \qquad n=0,1,2,\dots.
+\]
+这是 Lean 中 \LeanRef{evenMoment} 的\textbf{直接定义}，
+不是先输入解析答案。
+
+\paragraph{步骤 M1：偶次幂积分。}
+对任意非负整数 $n$，
+\[
+ \begin{aligned}
+ I_n&=\int_{-1}^1 z^{2n}\,dz
+ =\left[\frac{z^{2n+1}}{2n+1}\right]_{z=-1}^{z=1}\\
+ &=\frac{1^{2n+1}-(-1)^{2n+1}}{2n+1}
+ =\frac{1-(-1)}{2n+1}
+ =\frac{2}{2n+1}.
+ \end{aligned}
+\]
+Lean 对应：\LeanRef{odd_power_neg_one} 和
+\LeanRef{even_power_integral}，底层依赖 Mathlib 的
+\texttt{intervalIntegral.integral\_pow}。
+
+\paragraph{步骤 M2：分解权重并分别积分。}
+由点态恒等式
+\[
+ (1-z^2)z^{2n}=z^{2n}-z^{2n+2}
+\]
+及定积分线性性，
+\[
+ \begin{aligned}
+ J_n&:=\int_{-1}^1(1-z^2)z^{2n}\,dz\\
+ &=\int_{-1}^1z^{2n}\,dz-\int_{-1}^1z^{2n+2}\,dz\\
+ &=\frac2{2n+1}-\frac2{2n+3}\\
+ &=\frac{2[(2n+3)-(2n+1)]}{(2n+1)(2n+3)}\\
+ &=\boxed{\frac4{(2n+1)(2n+3)}}.
+ \end{aligned}
+\]
+Lean 对应：\LeanRef{spin_weight_integral}；代码逐项调用
+积分同余、积分相减与 M1 的结果。
+
+\paragraph{步骤 M3：代入矩的定义。}
+由上式逐项得到
+\[
+ \begin{aligned}
+ \mu_{2n}
+ &=\frac34 c^{2n}J_n\\
+ &=\frac34 c^{2n}\frac4{(2n+1)(2n+3)}\\
+ &=\boxed{\frac{3c^{2n}}{(2n+1)(2n+3)}}.
+ \end{aligned}
+\]
+Lean 对应：\LeanRef{evenMoment_formula}。本定理对所有
+$n\in\mathbb N$ 和全部实数 $c$ 都有效（包括 $c=0$）。
+
+\paragraph{步骤 M4：归一化和低阶矩。}
+\[
+ \begin{aligned}
+ \mu_0&=\frac3{1\cdot3}=1,\\
+ \mu_2&=\frac{3c^2}{3\cdot5}=\frac{c^2}{5},\\
+ \mu_4&=\frac{3c^4}{5\cdot7}=\frac{3c^4}{35}.
+ \end{aligned}
+\]
+Lean 对应：\LeanRef{moment_normalized}、
+\LeanRef{moment_two}、\LeanRef{moment_four}。
+
+\section{低阶 Lanczos 系数：形式化范围与边界}
+对于零对角元的 Lanczos 链，标准矩关系为
+$\mu_2=b_1^2$，$\mu_4=b_1^4+b_1^2b_2^2$。
+\textbf{该关系尚未从 Lanczos 算符的定义在 Lean 中形式化}；
+当前 Lean 仅验证将下述候选式代入后代数恒等式成立。
+当 $c\neq0$ 时，
+\[
+ \begin{aligned}
+ b_1^2&=\mu_2=\frac{c^2}{5},\\
+ b_2^2&=\frac{\mu_4-b_1^4}{b_1^2}
+  =\frac{\frac{3c^4}{35}-\frac{c^4}{25}}{\frac{c^2}{5}}\\
+ &=\frac{\frac{15c^4-7c^4}{175}}{\frac{c^2}{5}}
+  =\frac{8c^2}{35}.
+ \end{aligned}
+\]
+Lean 对应的\textbf{仅代数}检验是
+\LeanRef{fourth_moment_identity} 及
+\LeanRef{second_lanczos_identity}。
+若 $c=0$，动力学静止，Krylov 链在起点终止，不能对
+$b_1^2$ 做除法。
+
+\section{待完成的正式验证}
+完整形式化还须补足：自旋泊松括号到 $S_x(t)$、球面测度的投影、
+三角积分给出的 $C(t)$、从 Liouville 算符定义到 Lanczos 矩关系、
+Gegenbauer 正交性与任意阶 $b_n$。
+以上尚未证明的步骤\textbf{不应}被称为已通过 Lean 检查。
+\end{document}

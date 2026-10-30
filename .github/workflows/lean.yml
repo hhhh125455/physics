@@ -14,15 +14,19 @@ jobs:
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Check theorem-to-document mapping
+        run: python3 scripts/check_traceability.py
       - name: Resolve pinned Mathlib dependency
         run: lake update
       - name: Download Mathlib cache
         run: lake exe cache get
       - name: Verify Lean proofs
         run: lake build
-      - name: Reject unfinished proof placeholders
+      - name: Reject unfinished proofs and new axioms
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' ClassicalSpinKrylov.lean; then
-            echo 'Unfinished proof placeholder detected'
-            exit 1
+            echo 'Unfinished proof placeholder detected'; exit 1
+          fi
+          if grep -RnE '^[[:space:]]*(axiom|constant)[[:space:]]' --include='*.lean' ClassicalSpinKrylov.lean; then
+            echo 'Unexpected new axiom or constant detected'; exit 1
           fi
