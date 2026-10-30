@@ -10,6 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Extract original paper source equations
+        run: |
+          curl -LfS --retry 3 --max-time 90 https://arxiv.org/pdf/2610.38428 -o /tmp/paper.pdf
+          pdftotext -layout /tmp/paper.pdf /tmp/paper.txt
+          echo '===== SOURCE EQUATIONS ====='
+          sed -n '1,650p' /tmp/paper.txt
       - name: Install Lean 4
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
