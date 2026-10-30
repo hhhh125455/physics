@@ -47,8 +47,9 @@ theorem modular_vacuum_with_correction
 theorem leadingLogZ_hasDerivAt (A β : ℝ) (hβ : β ≠ 0) :
     HasDerivAt (leadingLogZ A) (-A / β ^ 2) β := by
   have h := ((hasDerivAt_id β).inv hβ).const_mul A
+  simp only [id_eq] at h
   change HasDerivAt (fun y : ℝ => A * y⁻¹) (-A / β ^ 2) β
-  convert h using 1 <;> simp only [id_eq, div_eq_mul_inv] <;> ring
+  convert h using 1 <;> first | rfl | ring
 
 /-- Derivative of the exact leading approximation Z_0=exp(A/beta). -/
 theorem leadingZ_hasDerivAt (A β : ℝ) (hβ : β ≠ 0) :
