@@ -132,8 +132,13 @@ theorem area_variation_regular (X Xuv E q2 Y Yuv Z : ℝ)
     Yuv + E * q2 / (2 * X ^ 2) * Y =
       -(E * (q2 / X - 1) * Z) := by
   unfold areaL at hlin
-  apply (div_eq_iff (by positivity : (2 * X ^ 2 : ℝ) ≠ 0)).mpr
-  field_simp at *
-  nlinarith [hlin, harea]
+  have hareaY : 2 * X * Xuv * Y = E * (q2 - X) * Y := by
+    simpa only [mul_assoc] using congrArg (fun t : ℝ => t * Y) harea
+  have hlinX :
+      X * (2 * Y * Xuv + 2 * X * Yuv + E * Y +
+        2 * E * Z * (q2 - X)) = 0 := by
+    simpa using congrArg (fun t : ℝ => X * t) hlin
+  field_simp [hX]
+  nlinarith [hareaY, hlinX]
 
 end GammaHalf
