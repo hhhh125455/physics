@@ -44,6 +44,7 @@ theorem high_step (n : ℕ) :
     highCoeff (n+1) = highCoeff n *
       (2 : ℚ)^n * (Nat.factorial n : ℚ) := by
   simp [highCoeff, Finset.prod_range_succ]
+  ring
 
 /-- The small-u product coefficients satisfy the exact nonlinear
     Toda leading-order recurrence at ALL n>=2. -/
@@ -97,6 +98,7 @@ theorem small_correction_recurrence (k : ℕ) :
   have h2 : ((k : ℚ)+2) ≠ 0 := by positivity
   have h3 : ((k : ℚ)+3) ≠ 0 := by positivity
   field_simp [h1,h2,h3]
+  push_cast
   ring
 
 /-- Exact all-index recurrence of the FIRST correction to the
@@ -106,6 +108,7 @@ theorem large_correction_recurrence (k : ℕ) :
       2*largeCorr (k+2) =
       3*((k : ℚ)+1)/4 := by
   unfold largeCorr
+  push_cast
   ring
 
 /-- Exact check of the low-u coefficient products at n=2..5. -/
