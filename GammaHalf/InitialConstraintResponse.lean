@@ -77,7 +77,8 @@ theorem negative_center_initial_kick
     (hA : 0 < A) :
     -(2 * k * X0 * B ^ 2 * A) < 0 := by
   have hBs : 0 < B ^ 2 := sq_pos_of_ne_zero hB
-  positivity
+  have hpos : 0 < 2 * k * X0 * B ^ 2 * A := by positivity
+  linarith
 
 /-- The linearized area evolution equation at the initial symmetric
     center forces the time and space second variations to coincide.
