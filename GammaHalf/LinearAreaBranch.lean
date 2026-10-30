@@ -32,11 +32,14 @@ theorem toy_area_deriv_u (u v : ℝ) :
     deriv (fun t : ℝ => toyArea t v) u = 1 + 2 * (u + v) := by
   have hlin : HasDerivAt (fun t : ℝ => t + v) 1 u := by
     simpa only [id_eq] using (hasDerivAt_id u).add_const v
-  have h :
-      HasDerivAt (fun t : ℝ => toyArea t v) (1 + 2 * (u + v)) u := by
-    simpa only [toyArea, Nat.reduceSub, pow_one, mul_one] using
-      (hlin.add (hlin.pow 2))
-  exact h.deriv
+  have hfun :
+      (fun t : ℝ => toyArea t v) =
+        (fun t : ℝ => t + v) + (fun t : ℝ => t + v) ^ 2 := by
+    funext t
+    rfl
+  rw [hfun]
+  simpa only [Nat.reduceSub, pow_one, mul_one] using
+    (hlin.add (hlin.pow 2)).deriv
 
 /-- Unlike the toy source identity, this verifies an actual mixed derivative. -/
 theorem toy_area_mixed (u v : ℝ) :
