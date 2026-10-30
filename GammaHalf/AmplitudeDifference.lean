@@ -20,7 +20,7 @@ does not prove transversality with respect to the amplitude.
 
 namespace GammaHalf
 
-def chargedAreaSource (X E q : ℝ) : ℝ :=
+noncomputable def chargedAreaSource (X E q : ℝ) : ℝ :=
   E / 2 * (q ^ 2 / X - 1)
 
 /-- Exact nonlinear source difference; no linearization or smallness. -/
