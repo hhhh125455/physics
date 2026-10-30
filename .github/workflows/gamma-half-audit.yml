@@ -24,6 +24,8 @@ jobs:
           lake exe cache get
       - name: Compile black-hole inner-family audit
         run: lake env lean GammaHalf/InnerFamily.lean
+      - name: Compile characteristic-corner calculus theorems
+        run: lake env lean GammaHalf/CharacteristicCorner.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
