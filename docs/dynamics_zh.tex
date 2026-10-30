@@ -124,7 +124,31 @@ $\omega=2\chi z_0$。候选轨道为
 \end{enumerate}
 \textbf{重要：}只有把显式轨道的时间导数与
 \texttt{vectorField} 比较，才真正证明它满足 Hamilton 微分方程。
-因此若尚未加入相应导数定理，不能仅凭守恒量宣称轨道已被严格验证。
+该关键导数步骤现独立列于下一节；不能仅凭守恒量宣称轨道已被严格验证。
+
+\section{第六段：候选解确实满足 ODE}
+只证明旋转轨道守恒长度并不足以证明它是 Hamilton 方程的解。
+还需要逐项求导。由于 $\omega=2\chi z_0$ 不随 $t$ 变化，
+\[
+ \begin{aligned}
+ \frac{dS_x(t)}{dt}
+ &=-\omega x_0\sin(\omega t)-\omega y_0\cos(\omega t)\\
+ &=-\omega S_y(t)=-2\chi z_0 S_y(t)
+ =-2\chi S_z(t)S_y(t),\\
+ \frac{dS_y(t)}{dt}
+ &=\omega x_0\cos(\omega t)-\omega y_0\sin(\omega t)\\
+ &=\omega S_x(t)=2\chi S_z(t)S_x(t),\\
+ \frac{dS_z(t)}{dt}&=0.
+ \end{aligned}
+\]
+对应 Lean \texttt{ODE.lean} 中的
+\texttt{rotation\_x\_hasDerivAt}, \texttt{rotation\_y\_hasDerivAt},
+\texttt{evolve\_solves\_x}, \texttt{evolve\_solves\_y},
+\texttt{evolve\_solves\_z}。这些定理使用真实的
+\texttt{HasDerivAt} 导数断言，非参数代换验证。
+此处只证明给定初值下显式轨道满足微分方程，
+尚未形式化 ODE 解的唯一性定理。
+状态以该分支最新 GitHub Actions 为准。
 
 \section{后续待验证}
 完整时间演化的微分等式、球面测度与相关函数、

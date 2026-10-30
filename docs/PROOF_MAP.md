@@ -28,14 +28,16 @@
 | D5 | 候选轨道初值、z 不变 | `evolve_zero`, `evolve_z` | 轨道满足 ODE 还需微分验证 |
 | D6 | 候选轨道保持长度及能量 | `planar_rotation_length`, `evolve_lengthSq`, `evolve_hamiltonian` | 旋转代数，不代表已经证明轨道满足 ODE |
 
+| D7 | 显式轨道的实际时间导数 | `rotation_x_hasDerivAt`, `rotation_y_hasDerivAt`, `evolve_solves_x`, `evolve_solves_y`, `evolve_solves_z` | 必须由 Lean 检查后才能标记为已验证；见动力学 LaTeX §6 |
+
 ## 尚未 Lean 验证
 
-- P1（剩余）：显式轨道的时间导数与 Hamilton 方程对应、完整 Poisson 代数 Jacobi 结构
+- P1（剩余）：完整 Poisson 代数 Jacobi 结构；显式轨道满足 Hamilton ODE 的逐分量证明见 D7
 - P2：球面测度、方位角积分和 (C(t)) 的三角函数闭式
 - P3：Liouville 算符的 Krylov 基定义与矩—Lanczos 恒等式
 - P4：Gegenbauer 正交性与**全部** (b_n) 通项
 
-**重要区别：** 通过 CI 只意味着 **M1–M4、L1 和 D1–D6** 的准确断言获 Lean 接受；无法据此宣布整条物理证明链已完成。
+**重要区别：** 通过 CI 只意味着 **M1–M4、L1 和 D1–D7** 的准确断言获 Lean 接受；无法据此宣布整条物理证明链已完成。
 
 ## 当前假设
 

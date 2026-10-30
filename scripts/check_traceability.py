@@ -6,6 +6,7 @@ import re
 root = Path(__file__).resolve().parents[1]
 moment_source = (root / "ClassicalSpinKrylov.lean").read_text(encoding="utf-8")
 spin_source = (root / "ClassicalSpinKrylov/Dynamics.lean").read_text(encoding="utf-8")
+ode_source = (root / "ClassicalSpinKrylov/ODE.lean").read_text(encoding="utf-8")
 moment_text = (root / "docs/detailed_zh.tex").read_text(encoding="utf-8")
 spin_text = (root / "docs/dynamics_zh.tex").read_text(encoding="utf-8")
 paper = (root / "docs/paper_zh.tex").read_text(encoding="utf-8")
@@ -23,6 +24,10 @@ spin_theorems = [
     "evolve_zero", "evolve_z", "planar_rotation_length",
     "evolve_lengthSq", "evolve_hamiltonian",
 ]
+ode_theorems = [
+    "rotation_x_hasDerivAt", "rotation_y_hasDerivAt",
+    "evolve_solves_x", "evolve_solves_y", "evolve_solves_z",
+]
 for symbol in moment_theorems:
     if not re.search(rf"\b(?:private\s+)?theorem\s+{symbol}\b", moment_source):
         raise SystemExit(f"Missing Lean moment theorem: {symbol}")
@@ -39,9 +44,17 @@ for symbol in spin_theorems:
     if symbol not in mapping:
         raise SystemExit(f"Missing dynamics mapping: {symbol}")
 
+for symbol in ode_theorems:
+    if not re.search(rf"\\b(?:private\\s+)?theorem\\s+{symbol}\\b", ode_source):
+        raise SystemExit(f"Missing Lean ODE theorem: {symbol}")
+    if symbol.replace("_", "\\\\_") not in spin_text:
+        raise SystemExit(f"Missing human derivation for ODE theorem: {symbol}")
+    if symbol not in mapping:
+        raise SystemExit(f"Missing ODE mapping: {symbol}")
+
 for term in ["尚未", "积分", "Lanczos"]:
     if term not in moment_text or term not in paper:
         raise SystemExit(f"Missing review-status marker: {term}")
 
 print(f"Traceability PASS: {len(moment_theorems)} moments + "
-      f"{len(spin_theorems)} dynamics theorems mapped to human-readable steps.")
+      f"{len(spin_theorems)} dynamics + {len(ode_theorems)} ODE theorems mapped.")
