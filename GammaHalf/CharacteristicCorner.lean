@@ -29,7 +29,6 @@ theorem charged_source_positive (X E q : ℝ)
     div_pos (sub_pos.mpr hcharge) hX
   have heq : q ^ 2 / X - 1 = (q ^ 2 - X) / X := by
     field_simp
-    ring
   rw [heq]
   exact mul_pos (div_pos hE (by norm_num)) hpos
 
@@ -54,7 +53,10 @@ theorem corner_supermodular
         (deriv (fun t => X t v) z) z := (hX v z).hasDerivAt
     have hd0 : HasDerivAt (fun t => X t 0)
         (deriv (fun t => X t 0) z) z := (hX 0 z).hasDerivAt
-    rw [(hdv.sub hd0).deriv]
+    have heq : deriv (fun t => X t v - X t 0) z =
+        deriv (fun t => X t v) z - deriv (fun t => X t 0) z := by
+      simpa only [Pi.sub_apply] using (hdv.sub hd0).deriv
+    rw [heq]
     linarith
   have hmonou : Monotone (fun z => X z v - X z 0) :=
     monotone_of_deriv_nonneg ((hX v).sub (hX 0)) hD
@@ -70,7 +72,6 @@ theorem rescaled_charged_source
     eps * (E / 2 * (q ^ 2 / X - 1)) =
        E / 2 * (q ^ 2 / (X / eps) - eps) := by
   field_simp
-  ring
 
 /-- Conditional bounds on the characteristic area produce sqrt-bounds
     on the areal radius. This does not establish the PDE hypotheses. -/
