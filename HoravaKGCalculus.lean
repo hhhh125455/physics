@@ -4,22 +4,21 @@ import HoravaMetricKG
 /-!
 # Four-dimensional KG operator with genuine Fréchet partial derivatives
 
-For analytic scalar fields on a complexified Boyer--Lindquist coordinate chart,
-`partial i f x` is a genuine analytic partial derivative, not a jet variable.
+For arbitrary C² complex scalar fields on real Boyer--Lindquist coordinates,
+`partial i f x` is a genuine real Fréchet partial derivative, not a jet variable.
 We prove the divergence of the sparse inverse-metric tensor is precisely its
-four component differential operator. The real smooth case has the same
-coordinate formula and follows by replacing ℂ-derivatives with ℝ-derivatives.
+four component differential operator. This is the physical real-coordinate/complex-field differential setting.
 No proof placeholders or extra axioms.
 -/
 
 namespace HoravaKGCalculus
 
-abbrev Point := Fin 4 → ℂ
+abbrev Point := Fin 4 → ℝ
 abbrev ScalarField := Point → ℂ
 
 /-- Actual i-th Fréchet coordinate derivative of a scalar field. -/
 def partial (i : Fin 4) (f : ScalarField) (x : Point) : ℂ :=
-  (fderiv ℂ f x) (Pi.single i (1 : ℂ))
+  (fderiv ℝ f x) (Pi.single i (1 : ℝ))
 
 /-- Contravariant rotating metric with only six independent nonzero entries. -/
 def sparseInv (tt tp pp rr aa : ScalarField)
