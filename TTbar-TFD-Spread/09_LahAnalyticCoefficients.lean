@@ -156,4 +156,27 @@ theorem large_second_correction_known :
   norm_num [largeCorr2]
 
 
+/-- The coefficient of 1/u in the high-u expansion of b_n^2
+    vanishes identically at every n>=2. No numerical fit is used. -/
+theorem lanczos_b_inverse_u_cancel (k : ℕ) :
+    largeCorr2 (k+3)+largeCorr2 (k+1)-2*largeCorr2 (k+2) +
+    largeCorr (k+3)*largeCorr (k+1) -
+    2*largeCorr (k+2)*(largeCorr (k+3)+largeCorr (k+1)) +
+    3*(largeCorr (k+2))^2 = 0 := by
+  unfold largeCorr2 largeCorr
+  push_cast
+  ring
+
+/-- Universal 1/u^2 correction for diagonal Jacobi a_n, n>=2. -/
+theorem lanczos_a_second_inverse_u (k : ℕ) :
+    -2*((largeCorr2 (k+3) -
+          (largeCorr (k+3))^2/2) -
+        (largeCorr2 (k+2) -
+          (largeCorr (k+2))^2/2)) =
+     3*((k : ℚ)+2)*((k : ℚ)+1)*(2*((k : ℚ)+2)-1)/32 := by
+  unfold largeCorr2 largeCorr
+  push_cast
+  ring
+
+
 end TTbarLahAnalytic
