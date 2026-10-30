@@ -1,0 +1,70 @@
+\documentclass[UTF8,11pt]{ctexart}
+\usepackage{amsmath,amssymb,geometry}
+\geometry{a4paper,margin=25mm}
+\title{经典自旋关联函数：积分定义、归一化与对称性}
+\date{}
+\begin{document}
+\maketitle
+
+\noindent 本节仅证明给定权重函数后的数学积分性质。
+\textbf{注意：}从自旋球面测度及动力学推导这个权重的步骤、
+以及 $\sin$--$\cos$ 的闭式积分，仍未纳入本节形式化。
+
+\section{定义}
+令 $c\in\mathbb R$，并定义
+\[
+ C_c(t)=\frac{3}{4}\int_{-1}^{1}(1-z^2)\cos(czt)\,dz.
+\]
+Lean 定义：\texttt{correlation}；没有把归一化结论放入定义。
+
+\section{步骤 C1：权重归一化}
+利用已经验证的多项式积分通项，取 $n=0$：
+\[
+ \begin{aligned}
+ \int_{-1}^{1}(1-z^2)\,dz
+ &=\int_{-1}^{1}(1-z^2)z^{0}\,dz\\
+ &=\frac{4}{(2\cdot0+1)(2\cdot0+3)}
+ =\frac43.
+ \end{aligned}
+\]
+对应 \texttt{reduced\_weight\_integral}，直接使用
+\texttt{spin\_weight\_integral}，而不是把 $4/3$ 作为假设。
+
+\section{步骤 C2：初始归一化}
+由于 $\cos 0=1$，
+\[
+ \begin{aligned}
+ C_c(0)
+ &=\frac34\int_{-1}^{1}(1-z^2)\cos(cz\cdot0)\,dz\\
+ &=\frac34\int_{-1}^{1}(1-z^2)\,dz\\
+ &=\frac34\frac43=1.
+ \end{aligned}
+\]
+对应 \texttt{correlation\_zero}。
+
+\section{步骤 C3：时间反演对称性}
+由 $\cos(-x)=\cos x$，
+\[
+ \begin{aligned}
+ C_c(-t)
+ &=\frac34\int_{-1}^{1}(1-z^2)\cos(-czt)\,dz\\
+ &=\frac34\int_{-1}^{1}(1-z^2)\cos(czt)\,dz\\
+ &=C_c(t).
+ \end{aligned}
+\]
+对应 \texttt{correlation\_even}，Lean 逐点验证余弦恒等式，
+再调用定积分的被积函数一致性规则。
+
+\section{步骤 C4：零频率极限}
+若 $c=0$，$\cos(0\cdot zt)=1$，
+所以在任意时间
+\[
+ C_0(t)=\frac34\int_{-1}^{1}(1-z^2)\,dz=1.
+\]
+对应 \texttt{correlation\_zero\_frequency}。
+
+\section{明确的未完成项}
+$\frac{3}{4}(1-z^2)$ 如何由均匀球面测度和初始观测量 $S_x$
+产生，仍须形式化；一般 $t$ 下的正弦余弦闭式积分、
+与 Liouville 算符矩的联系亦尚待完成。
+\end{document}
