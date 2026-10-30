@@ -29,7 +29,8 @@ noncomputable def G (μ A β s : ℝ) : ℝ :=
   Z μ A (β-s) / Z μ A β
 
 theorem partition_positive (μ A β : ℝ) : 0 < Z μ A β := by
-  simp [Z]
+  unfold Z
+  exact Real.exp_pos _
 
 theorem generating_normalized (μ A β : ℝ) :
     G μ A β 0 = 1 := by
