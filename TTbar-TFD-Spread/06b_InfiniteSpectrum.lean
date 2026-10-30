@@ -33,7 +33,10 @@ theorem thermal_term_derivative (E : ℕ → ℝ) (k n : ℕ)
       (hasDerivAt_id β).const_mul (-E n)
   have he := hl.exp
   have hm := he.const_mul ((-E n)^k)
-  convert hm using 1 <;> simp only [thermalTerm, pow_succ] <;> ring
+  convert hm using 1
+  · rfl
+  · simp only [thermalTerm, pow_succ]
+    ring
 
 /-- Uniform bound for beta>a given nonnegative excitation energies. -/
 theorem thermal_term_bound (E : ℕ → ℝ)
@@ -147,22 +150,13 @@ theorem perturb_same_value (A β0 ε : ℝ) :
     perturb A β0 ε β0 = modelReal A β0 := by
   simp [perturb]
 
-theorem perturb_derivative_shift (A β0 ε : ℝ)
-    (hβ : β0 ≠ 0) :
-    HasDerivAt (perturb A β0 ε)
-      (-(modelReal A β0) * A / β0^2 + ε) β0 := by
-  have hd : HasDerivAt (modelReal A)
-      (modelReal A β0 * (-A/β0^2)) β0 := by
-    have h := ((hasDerivAt_id β0).inv hβ).const_mul A
-    simp only [id_eq] at h
-    have he := h.exp
-    change HasDerivAt (fun x : ℝ => Real.exp (A / x))
-      (Real.exp (A / β0) * (-A / β0^2)) β0
-    convert he using 1 <;> first | rfl | ring
+theorem perturb_derivative_shift (A β0 ε d : ℝ)
+    (hmodel : HasDerivAt (modelReal A) d β0) :
+    HasDerivAt (perturb A β0 ε) (d + ε) β0 := by
   have he : HasDerivAt (fun β : ℝ => ε * (β-β0)) ε β0 := by
     have h := (hasDerivAt_id β0).sub_const β0
     convert h.const_mul ε using 1 <;> first | rfl | ring
-  convert hd.add he using 1 <;> first | rfl | ring
+  convert hmodel.add he using 1 <;> first | rfl | ring
 
 /-- The manuscript's condition s<beta alone does NOT imply |s|<beta. -/
 theorem one_sided_condition_insufficient :
