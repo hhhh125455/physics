@@ -12,3 +12,6 @@ name = "ClassicalSpinKrylov"
 
 [[lean_lib]]
 name = "HoravaQNM"
+
+[[lean_lib]]
+name = "HoravaMetricKG"
