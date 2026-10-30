@@ -67,18 +67,18 @@ theorem pd_product (i : Fin 4) (f g : ScalarField) (x : Point)
   ring
 
 /-- General coordinate-line Leibniz rule, used in the non-constant coefficients. -/
-theorem derivative_product (f g : ℂ → ℂ) (z : ℂ)
-    (hf : DifferentiableAt ℂ f z) (hg : DifferentiableAt ℂ g z) :
+theorem derivative_product (f g : ℝ → ℂ) (z : ℝ)
+    (hf : DifferentiableAt ℝ f z) (hg : DifferentiableAt ℝ g z) :
     deriv (fun w => f w * g w) z =
       deriv f z * g z + f z * deriv g z := by
   exact deriv_mul hf hg
 
 /-- Genuine second derivative of an arbitrary C² product. -/
 theorem second_derivative_product
-    (f g : ℂ → ℂ) (z : ℂ)
-    (hf : Differentiable ℂ f) (hg : Differentiable ℂ g)
-    (hdf : DifferentiableAt ℂ (deriv f) z)
-    (hdg : DifferentiableAt ℂ (deriv g) z) :
+    (f g : ℝ → ℂ) (z : ℝ)
+    (hf : Differentiable ℝ f) (hg : Differentiable ℝ g)
+    (hdf : DifferentiableAt ℝ (deriv f) z)
+    (hdg : DifferentiableAt ℝ (deriv g) z) :
     deriv (fun w => deriv (fun v => f v * g v) w) z =
       deriv (deriv f) z * g z +
       2 * deriv f z * deriv g z +
