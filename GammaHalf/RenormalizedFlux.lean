@@ -25,7 +25,6 @@ namespace GammaHalf
 theorem charged_source_regularized (X E q2 : ℝ) (hX : X ≠ 0) :
     E / 2 * (q2 / X - 1) = (E / X) / 2 * (q2 - X) := by
   field_simp
-  ring
 
 /-- Exact source difference in the regularized variables H_i=E_i/X_i. -/
 theorem charged_source_difference_regularized
@@ -99,7 +98,7 @@ theorem linear_area_requires_nonsmall_channel
     Xu ^ 2 ≤ |4 * X * Xu * Rhou| ∨
     Xu ^ 2 ≤ |4 * k * X ^ 2 * Pu ^ 2| := by
   by_contra h
-  push_neg at h
+  push Not at h
   rcases h with ⟨ha, hb, hc⟩
   have hla : 2 * X * Xuu ≤ |2 * X * Xuu| := le_abs_self _
   have hlb : 4 * X * Xu * Rhou ≤ |4 * X * Xu * Rhou| :=
