@@ -50,6 +50,8 @@ jobs:
         run: lake env lean GammaHalf/FluxScaling.lean
       - name: Compile explicit fractional charged area correction
         run: lake env lean GammaHalf/FractionalChargeCorrection.lean
+      - name: Compile null charge-flux transport equation
+        run: lake env lean GammaHalf/NullFluxTransport.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
