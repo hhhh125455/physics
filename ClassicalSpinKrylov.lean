@@ -28,7 +28,7 @@ theorem even_power_integral (n : ℕ) :
   rw [integral_pow]
   rw [odd_power_neg_one n]
   simp only [one_pow, sub_neg_eq_add]
-  have hc : ((2 * n + 1 : ℕ) : ℝ) = 2 * (n : ℝ) + 1 := by
+  have hc : (↑(2 * n) : ℝ) + 1 = 2 * (n : ℝ) + 1 := by
     push_cast
     ring
   rw [hc]
