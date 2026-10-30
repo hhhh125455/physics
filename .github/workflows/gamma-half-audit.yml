@@ -28,6 +28,8 @@ jobs:
         run: lake env lean GammaHalf/CharacteristicCorner.lean
       - name: Compile local singular-corner rectangle theorem
         run: lake env lean GammaHalf/LocalRectangle.lean
+      - name: Compile linear-area and coupled-leading balances
+        run: lake env lean GammaHalf/LinearAreaBranch.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
