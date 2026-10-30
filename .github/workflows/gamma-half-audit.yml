@@ -1,0 +1,31 @@
+name: Gamma-half inner-family Lean audit
+
+on:
+  push:
+    branches:
+      - research/gamma-half-lean-audit-20261031
+  pull_request:
+    paths:
+      - 'GammaHalf/**'
+      - '.github/workflows/gamma-half-audit.yml'
+
+jobs:
+  formal-check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Download Mathlib
+        run: |
+          lake update
+          lake exe cache get
+      - name: Compile black-hole inner-family audit
+        run: lake env lean GammaHalf/InnerFamily.lean
+      - name: Reject proof holes
+        run: |
+          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
+            echo 'Unfinished proof placeholder detected'; exit 1
+          fi
