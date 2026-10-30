@@ -60,6 +60,45 @@ theorem response_ratio_hasDerivAt
   unfold responseRatio
   exact hY.div hu hux
 
+/-- Full calculus bridge from the initial Jacobi ODE and the
+    integrating-factor ODE to the weighted Wronskian derivative. -/
+theorem weighted_wronskian_hasDerivAt
+    (u Y mu : ℝ → ℝ) (x up upp Yp Ypp P Q F : ℝ)
+    (hu : HasDerivAt u up x)
+    (hup : HasDerivAt (fun t => deriv u t) upp x)
+    (hY : HasDerivAt Y Yp x)
+    (hYp : HasDerivAt (fun t => deriv Y t) Ypp x)
+    (hmu : HasDerivAt mu (P*mu x) x)
+    (hhom : upp + P*up + Q*u x = 0)
+    (hforced : Ypp + P*Yp + Q*Y x + F = 0) :
+    HasDerivAt (weightedWronskian u Y mu)
+      (-(mu x*u x*F)) x := by
+  have hW : HasDerivAt (wronskian u Y)
+      (u x*Ypp - upp*Y x) x := by
+    have hbasic := (hu.mul hYp).sub (hup.mul hY)
+    have huval : deriv u x = up := hu.deriv
+    have hYval : deriv Y x = Yp := hY.deriv
+    convert hbasic using 1
+    · rfl
+    · rw [huval, hYval]
+      ring
+  have hGW : HasDerivAt (weightedWronskian u Y mu)
+      ((P*mu x)*wronskian u Y x +
+         mu x*(u x*Ypp-upp*Y x)) x := by
+    exact hmu.mul hW
+  have hid := forced_wronskian_identity (u x) up upp (Y x)
+     Yp Ypp P Q F hhom hforced
+  have hcoef : (P*mu x)*wronskian u Y x +
+       mu x*(u x*Ypp-upp*Y x) = -(mu x*u x*F) := by
+    rw [show wronskian u Y x = u x*Yp-up*Y x by
+      simp [wronskian, hu.deriv, hY.deriv]]
+    calc
+      _ = mu x*(u x*Ypp-upp*Y x+
+          P*(u x*Yp-up*Y x)) := by ring
+      _ = -(mu x*u x*F) := by rw [hid]; ring
+  rw [←hcoef]
+  exact hGW
+
 /-- This theorem is a rigorous *conditional* Green certificate.
     The derivative hypotheses are explicit; no monotonicity or
     positivity is inferred by an unproved differential comparison. -/
