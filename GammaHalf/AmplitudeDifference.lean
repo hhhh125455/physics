@@ -52,7 +52,9 @@ theorem difference_potential_positive
     (hE2 : 0 < E2) (hq : q ≠ 0) :
     0 < q ^ 2 * E2 / (2 * X1 * X2) := by
   have hq2 : 0 < q ^ 2 := sq_pos_of_ne_zero hq
-  exact div_pos (mul_pos hq2 hE2)
-    (mul_pos (by norm_num : (0:ℝ) < 2) (mul_pos hX1 hX2))
+  have htwo : (0 : ℝ) < 2 := by norm_num
+  have hden : 0 < 2 * X1 * X2 :=
+    mul_pos (mul_pos htwo hX1) hX2
+  exact div_pos (mul_pos hq2 hE2) hden
 
 end GammaHalf
