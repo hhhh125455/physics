@@ -33,7 +33,7 @@ theorem thermal_term_derivative (E : ℕ → ℝ) (k n : ℕ)
       (hasDerivAt_id β).const_mul (-E n)
   have he := hl.exp
   have hm := he.const_mul ((-E n)^k)
-  convert hm using 1 <;> first | rfl | ring
+  convert hm using 1 <;> simp only [thermalTerm, pow_succ] <;> ring
 
 /-- Uniform bound for beta>a given nonnegative excitation energies. -/
 theorem thermal_term_bound (E : ℕ → ℝ)
@@ -154,10 +154,11 @@ theorem perturb_derivative_shift (A β0 ε : ℝ)
   have hd : HasDerivAt (modelReal A)
       (modelReal A β0 * (-A/β0^2)) β0 := by
     have h := ((hasDerivAt_id β0).inv hβ).const_mul A
+    simp only [id_eq] at h
     have he := h.exp
     change HasDerivAt (fun x : ℝ => Real.exp (A / x))
       (Real.exp (A / β0) * (-A / β0^2)) β0
-    convert he using 1 <;> first | rfl | simp only [id_eq] | ring
+    convert he using 1 <;> first | rfl | ring
   have he : HasDerivAt (fun β : ℝ => ε * (β-β0)) ε β0 := by
     have h := (hasDerivAt_id β0).sub_const β0
     convert h.const_mul ε using 1 <;> first | rfl | ring
