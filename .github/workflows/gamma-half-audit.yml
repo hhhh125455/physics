@@ -32,6 +32,8 @@ jobs:
         run: lake env lean GammaHalf/LinearAreaBranch.lean
       - name: Compile exact finite-amplitude comparison identity
         run: lake env lean GammaHalf/AmplitudeDifference.lean
+      - name: Compile homogeneous blowup rigidity theorem
+        run: lake env lean GammaHalf/BlowupRigidity.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
