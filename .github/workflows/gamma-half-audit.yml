@@ -62,6 +62,8 @@ jobs:
         run: lake env lean GammaHalf/InitialResponseODE.lean
       - name: Compile concavity bounds and counterexample
         run: lake env lean GammaHalf/ConcavityDoesNotFixGamma.lean
+      - name: Compile positive Green-Wronskian comparison theorem
+        run: lake env lean GammaHalf/InitialGreenWronskian.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
