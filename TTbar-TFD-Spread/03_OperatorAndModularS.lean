@@ -106,4 +106,35 @@ theorem thermal_S_duality (Z : ℂ → ℂ) (hS : ModularSInvariant Z)
   rw [hS (rectangularTau β)]
   rw [rectangular_S β (ne_of_gt hβ)]
 
+
+/- The step missing from the prose: after exchanging cycles, the
+   thermal Hamiltonian for a spatial circle of length beta has
+   eigenvalues (2*pi/beta)*(h+hbar-(cL+cR)/24).
+   This spectrum assignment is a CFT input; the next two theorems
+   check its exact algebraic consequences. -/
+
+noncomputable def hamiltonianForLength (L h hbar cL cR : ℝ) : ℝ :=
+  (2 * Real.pi / L) * cylinderEnergy h hbar cL cR
+
+theorem rotated_channel_exponent
+    (β h hbar cL cR : ℝ) (hβ : β ≠ 0) :
+    -(2 * Real.pi) * hamiltonianForLength β h hbar cL cR =
+      -(dualInverseTemperature β) * cylinderEnergy h hbar cL cR := by
+  unfold hamiltonianForLength dualInverseTemperature
+  field_simp [hβ] <;> ring
+
+theorem finite_rotated_trace
+    (N : ℕ) (hs hbars : Fin N → ℝ)
+    (β cL cR : ℝ) (hβ : β ≠ 0) :
+    (∑ n : Fin N, Real.exp
+      (-(2 * Real.pi) *
+        hamiltonianForLength β (hs n) (hbars n) cL cR)) =
+    (∑ n : Fin N, Real.exp
+      (-(dualInverseTemperature β) *
+        cylinderEnergy (hs n) (hbars n) cL cR)) := by
+  apply Finset.sum_congr rfl
+  intro n _
+  congr 1
+  exact rotated_channel_exponent β (hs n) (hbars n) cL cR hβ
+
 end TTbarTFD
