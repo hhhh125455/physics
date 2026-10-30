@@ -127,7 +127,7 @@ theorem radial_weighted_second_derivative
     change deriv (delta * (fun z => deriv (fun w => scale w * u w) z)) r = _
     exact deriv_mul (hdelta r) hRdiff
   rw [houter]
-  rw [deriv_mul (hscale r) (hu r),
+  rw [congrFun hR r,
       second_derivative_product scale u r hscale hu hdscale hdu]
 
 /-! ### Physical rotating Hořava metric coefficients
