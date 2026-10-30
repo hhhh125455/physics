@@ -19,7 +19,7 @@ theorem cylinderMap_first (κ w : ℂ) :
     simpa using (hasDerivAt_id w).const_mul κ
   change HasDerivAt (fun z : ℂ => Complex.exp (κ * z))
     (κ * Complex.exp (κ * w)) w
-  convert hlin.cexp using 1 <;> ring
+  convert hlin.cexp using 1 <;> first | rfl | ring
 
 theorem cylinderMap_second (κ w : ℂ) :
     HasDerivAt (fun z : ℂ => κ * cylinderMap κ z)
@@ -30,7 +30,7 @@ theorem cylinderMap_second (κ w : ℂ) :
 theorem cylinderMap_third (κ w : ℂ) :
     HasDerivAt (fun z : ℂ => κ ^ 2 * cylinderMap κ z)
       (κ ^ 3 * cylinderMap κ w) w := by
-  convert (cylinderMap_first κ w).const_mul (κ ^ 2) using 1 <;> try ring
+  convert (cylinderMap_first κ w).const_mul (κ ^ 2) using 1 <;> first | rfl | ring
 
 noncomputable def schwarzianJets (d₁ d₂ d₃ : ℂ) : ℂ :=
   d₃ / d₁ - (3 / 2 : ℂ) * (d₂ / d₁) ^ 2
