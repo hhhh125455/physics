@@ -33,10 +33,10 @@ theorem thermal_term_derivative (E : ℕ → ℝ) (k n : ℕ)
       (hasDerivAt_id β).const_mul (-E n)
   have he := hl.exp
   have hm := he.const_mul ((-E n)^k)
-  convert hm using 1
-  · rfl
-  · simp only [thermalTerm, pow_succ]
-    ring
+  change HasDerivAt
+    (fun y : ℝ => (-E n)^k * Real.exp (-E n * y))
+    ((-E n)^(k+1) * Real.exp (-E n * β)) β
+  convert hm using 1 <;> first | rfl | (rw [pow_succ]; ring)
 
 /-- Uniform bound for beta>a given nonnegative excitation energies. -/
 theorem thermal_term_bound (E : ℕ → ℝ)
