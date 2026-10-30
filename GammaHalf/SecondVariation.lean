@@ -39,7 +39,7 @@ private def firstAreaJet
     (X Xuv E q2 Y Yuv Z : ℝ) : ℝ :=
   2 * Y * Xuv + 2 * X * Yuv + E * Y + 2 * E * Z * (q2-X)
 
-private def halfSecondAreaJet
+private noncomputable def halfSecondAreaJet
     (X Xuv E q2 Y Yuv V Vuv Z T : ℝ) : ℝ :=
   X * Vuv + V * Xuv + 2 * Y * Yuv +
   E * (V / 2 - 2 * Z * Y - (2 * Z^2 - T) * (q2-X))
