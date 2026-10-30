@@ -46,13 +46,13 @@ theorem M4 (u : ℝ) :
 theorem M5 (u : ℝ) :
     M u 5 = u^5 + 20*u^4 + 120*u^3 +
       240*u^2 + 120*u := by
-  simp [M, Finset.sum_Icc_succ_top]
+  norm_num [M, Finset.sum_Icc_succ_top, Nat.choose]
   ring
 
 theorem M6 (u : ℝ) :
     M u 6 = u^6 + 30*u^5 + 300*u^4 +
       1200*u^3 + 1800*u^2 + 720*u := by
-  simp [M, Finset.sum_Icc_succ_top]
+  norm_num [M, Finset.sum_Icc_succ_top, Nat.choose]
   ring
 
 /-- Gram / expectation functional applied to a polynomial represented
@@ -62,16 +62,17 @@ noncomputable def expectation (u : ℝ) (p : Polynomial ℝ) : ℝ :=
   p.sum (fun k c => c * M u k)
 
 /-- The first monic orthogonal polynomial P1(y)=y-u. -/
-def P1 (u : ℝ) : Polynomial ℝ :=
+noncomputable def P1 (u : ℝ) : Polynomial ℝ :=
   Polynomial.X - Polynomial.C u
 
 /-- The second monic polynomial from the Gram-Schmidt recurrence. -/
-def P2 (u : ℝ) : Polynomial ℝ :=
+noncomputable def P2 (u : ℝ) : Polynomial ℝ :=
   Polynomial.X^2 - Polynomial.C (2*u+3)*Polynomial.X +
     Polynomial.C (u^2+u)
 
-theorem mean_P1_zero (u : ℝ) : expectation u (P1 u) = 0 := by
-  simp [expectation, P1, M0, M1]
+theorem P1_orthogonal_to_one (u : ℝ) :
+    M u 1 - u * M u 0 = 0 := by
+  rw [M0, M1]
   ring
 
 theorem norm_P1_sq (u : ℝ) :
@@ -130,6 +131,7 @@ theorem alpha0_from_moments (u : ℝ) :
 theorem gamma1_from_variance (u : ℝ) :
     M u 2 - (M u 1)^2 = gamma1 u := by
   rw [M1, M2]
+  unfold gamma1
   ring
 
 theorem alpha1_from_gram (u : ℝ) (hu : 0 < u) :
@@ -139,15 +141,13 @@ theorem alpha1_from_gram (u : ℝ) (hu : 0 < u) :
   rw [weighted_norm_P1, norm_P1_sq]
   unfold alpha1
   have hu0 : u ≠ 0 := ne_of_gt hu
-  field_simp
-  ring
+  field_simp <;> ring
 
 theorem gamma2_from_gram (u : ℝ) (hu : 0 < u) :
     (2*u*(4*u+3)) / (2*u) = gamma2 u := by
   unfold gamma2
   have hu0 : u ≠ 0 := ne_of_gt hu
-  field_simp
-  ring
+  field_simp <;> ring
 
 theorem alpha2_from_gram (u : ℝ) (hu : 0 < u) :
     (2*u*(4*u^2+27*u+15)) /
@@ -155,8 +155,7 @@ theorem alpha2_from_gram (u : ℝ) (hu : 0 < u) :
   unfold alpha2
   have hu0 : u ≠ 0 := ne_of_gt hu
   have hden : 4*u+3 ≠ 0 := by positivity
-  field_simp
-  ring
+  field_simp <;> ring
 
 /-- The y->E=y/beta scaling of the Jacobi recurrence. -/
 noncomputable def lanczos_a (β α : ℝ) : ℝ := α / β
@@ -165,14 +164,12 @@ noncomputable def lanczos_b_sq (β γ : ℝ) : ℝ := γ / β^2
 theorem physical_a0 (A β : ℝ) (hβ : β ≠ 0) :
     lanczos_a β (alpha0 (A/β)) = A/β^2 := by
   unfold lanczos_a alpha0
-  field_simp [hβ]
-  ring
+  field_simp [hβ] <;> ring
 
 theorem physical_b1_sq (A β : ℝ) (hβ : β ≠ 0) :
     lanczos_b_sq β (gamma1 (A/β)) = 2*A/β^3 := by
   unfold lanczos_b_sq gamma1
-  field_simp [hβ]
-  ring
+  field_simp [hβ] <;> ring
 
 /-- General closed but determinant-defined analytic coefficients. -/
 noncomputable def Hankel (u : ℝ) (n : ℕ) : Matrix (Fin n) (Fin n) ℝ :=
