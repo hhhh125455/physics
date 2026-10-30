@@ -196,4 +196,62 @@ noncomputable def determinantAlpha (u : ℝ) (n : ℕ) : ℝ :=
   ShiftDet u (n+1)/HankelDet u (n+1) -
     ShiftDet u n/HankelDet u n
 
+
+/-!
+Next nontrivial step. Define Q3=(4u+3)P3 so all its
+coefficients are honest polynomials in u, with no division.
+P3=(y-alpha2)P2-(4u+3)P1 is the exact monic Jacobi recurrence.
+-/
+
+noncomputable def q0 (u : ℝ) : ℝ :=
+  -u*(4*u^3+15*u^2+18*u+6)
+noncomputable def q1 (u : ℝ) : ℝ :=
+  3*(4*u^3+19*u^2+30*u+12)
+noncomputable def q2 (u : ℝ) : ℝ :=
+  -3*(4*u^2+15*u+8)
+noncomputable def q3 (u : ℝ) : ℝ := 4*u+3
+
+noncomputable def Q3 (u : ℝ) : Polynomial ℝ :=
+  Polynomial.C (q0 u) +
+    Polynomial.C (q1 u)*Polynomial.X +
+    Polynomial.C (q2 u)*Polynomial.X^2 +
+    Polynomial.C (q3 u)*Polynomial.X^3
+
+/-- Exact third-degree monic Gram-Schmidt step, after clearing
+    the rational alpha2 denominator. -/
+theorem scaled_P3_gram_recurrence (u : ℝ) :
+    (Polynomial.C (4*u+3)*Polynomial.X -
+      Polynomial.C (4*u^2+27*u+15)) * P2 u -
+      Polynomial.C ((4*u+3)^2)*P1 u = Q3 u := by
+  unfold P1 P2 Q3 q0 q1 q2 q3
+  ring
+
+/-- The seven independent moment entries of the P3 norm. In
+    particular, the complicated rational b3 expression is not a fit. -/
+theorem scaled_P3_norm (u : ℝ) :
+    (q0 u)^2 * M u 0 +
+    2*(q0 u)*(q1 u)*M u 1 +
+    ((q1 u)^2+2*(q0 u)*(q2 u))*M u 2 +
+    (2*(q0 u)*(q3 u)+2*(q1 u)*(q2 u))*M u 3 +
+    ((q2 u)^2+2*(q1 u)*(q3 u))*M u 4 +
+    2*(q2 u)*(q3 u)*M u 5 +
+    (q3 u)^2*M u 6 =
+      12*u*(4*u+3)*(16*u^3+48*u^2+45*u+12) := by
+  simp only [q0,q1,q2,q3, M0,M1,M2,M3,M4,M5,M6]
+  ring
+
+noncomputable def gamma3 (u : ℝ) : ℝ :=
+  6*(16*u^3+48*u^2+45*u+12)/(4*u+3)^2
+
+/-- The third off-diagonal coefficient is the ratio of two
+    consecutive Gram norms: norm(P3)/norm(P2). -/
+theorem gamma3_from_gram (u : ℝ) (hu : 0 < u) :
+    (12*u*(4*u+3)*(16*u^3+48*u^2+45*u+12) /
+       (4*u+3)^2) /
+      (2*u*(4*u+3)) = gamma3 u := by
+  unfold gamma3
+  have hu0 : u ≠ 0 := ne_of_gt hu
+  have hd : 4*u+3 ≠ 0 := by positivity
+  field_simp [hu0,hd] <;> ring
+
 end TTbarTFDLanczos
