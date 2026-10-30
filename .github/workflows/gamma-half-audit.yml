@@ -44,6 +44,8 @@ jobs:
         run: lake env lean GammaHalf/CoupledFirstJets.lean
       - name: Compile initial constraint amplitude response
         run: lake env lean GammaHalf/InitialConstraintResponse.lean
+      - name: Compile renormalized flux and constraint obstruction
+        run: lake env lean GammaHalf/RenormalizedFlux.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
