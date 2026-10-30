@@ -22,12 +22,14 @@ theorem integer_factors_of_one (x y : ℤ) (h : x * y = 1) :
     have hypos : 1 ≤ y := by nlinarith
     have haux : 0 ≤ x * (y - 1) :=
       mul_nonneg (by omega) (by omega)
+    have hxle : x ≤ 1 := by nlinarith [haux]
     left
     omega
   · have hxneg : x ≤ -1 := by omega
     have hyneg : y ≤ -1 := by nlinarith
     have haux : 0 ≤ (-x) * (-y - 1) :=
       mul_nonneg (by omega) (by omega)
+    have hxge : -1 ≤ x := by nlinarith [haux]
     right
     omega
 
