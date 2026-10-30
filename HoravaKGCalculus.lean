@@ -102,4 +102,65 @@ theorem second_derivative_product
   rw [hadd, hm1, hm2]
   ring
 
+
+/-! ### Physical rotating Hořava metric coefficients
+
+Coordinates are real (t,r,θ,φ), while the Klein--Gordon field is complex.
+All expressions have the same meaning as the paper's ADM inverse metric.
+-/
+
+def bhR (x : Point) : ℂ := (x 1 : ℂ)
+def bhSin (x : Point) : ℂ := (Real.sin (x 2) : ℂ)
+def bhCos (x : Point) : ℂ := (Real.cos (x 2) : ℂ)
+
+def bhD (a : ℂ) (x : Point) : ℂ :=
+  bhR x ^ 2 + a ^ 2
+
+def bhDelta (M a : ℂ) (x : Point) : ℂ :=
+  bhD a x - 2 * M * bhR x
+
+def bhRho (a : ℂ) (x : Point) : ℂ :=
+  bhR x ^ 2 + a ^ 2 * bhCos x ^ 2
+
+def bhSigma (M a : ℂ) (x : Point) : ℂ :=
+  bhD a x ^ 2 - a ^ 2 * bhDelta M a x * bhSin x ^ 2
+
+def bhJ (a : ℂ) (x : Point) : ℂ :=
+  bhRho a x * bhSin x
+
+noncomputable def bhTT (M a : ℂ) (x : Point) : ℂ :=
+  -bhSigma M a x / (bhDelta M a x * bhRho a x)
+
+noncomputable def bhTP (M a eta : ℂ) (x : Point) : ℂ :=
+  -(2 * M * a * bhR x * (1 + eta)) /
+    (bhDelta M a x * bhRho a x)
+
+noncomputable def bhPP (M a eta : ℂ) (x : Point) : ℂ :=
+  bhRho a x / (bhSigma M a x * bhSin x ^ 2) -
+    4 * M ^ 2 * a ^ 2 * bhR x ^ 2 * (1 + eta) ^ 2 /
+      (bhDelta M a x * bhRho a x * bhSigma M a x)
+
+noncomputable def bhRR (M a : ℂ) (x : Point) : ℂ :=
+  bhDelta M a x / bhRho a x
+
+noncomputable def bhAA (a : ℂ) (x : Point) : ℂ :=
+  1 / bhRho a x
+
+/-- The *actual* four-variable curved-space KG divergence for the paper's
+    exact metric, before separation or approximation. -/
+noncomputable def rotatingHoravaKG
+    (M a eta : ℂ) (phi : ScalarField) (x : Point) : ℂ :=
+  covKG (bhJ a)
+    (sparseInv (bhTT M a) (bhTP M a eta) (bhPP M a eta)
+      (bhRR M a) (bhAA a)) phi x
+
+/-- True Fréchet differential-operator identity for every complex field
+    on the real four-dimensional coordinate chart (not just mode ansätze). -/
+theorem rotatingHoravaKG_fourFlux
+    (M a eta : ℂ) (phi : ScalarField) (x : Point) :
+    rotatingHoravaKG M a eta phi x =
+      kgFourFlux (bhJ a) (bhTT M a) (bhTP M a eta)
+        (bhPP M a eta) (bhRR M a) (bhAA a) phi x := by
+  exact covKG_eq_fourFlux _ _ _ _ _ _ _ _
+
 end HoravaKGCalculus
