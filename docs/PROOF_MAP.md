@@ -9,7 +9,7 @@
 
 | 编号 | 数学环节 | Lean 定理 | 人类推导 | 验证边界 |
 |---|---|---|---|---|
-| M1 | 偶数次幂积分 | `even_power_integral` | 详细版 M1 | 实际积分，CI 构建 |
+| M1 | 偶数次幂积分 | `odd_power_neg_one`, `even_power_integral` | 详细版 M1 | 实际积分，CI 构建 |
 | M2 | 加权积分闭式 | `spin_weight_integral` | 详细版 M2 | 实际积分，CI 构建 |
 | M3 | 任意阶偶数矩 | `evenMoment_formula` | 详细版 M3 | 自积分定义得出 |
 | M4 | 归一化、二阶、四阶矩 | `moment_normalized`, `moment_two`, `moment_four` | 详细版 M4 | M3 的推论 |

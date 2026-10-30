@@ -27,7 +27,7 @@ for symbol in theorems:
         raise SystemExit(f"Missing Lean theorem: {symbol}")
     if f"\\LeanRef{{{symbol}}}" not in detailed:
         raise SystemExit(f"Missing detailed proof reference: {symbol}")
-    if f"\`{symbol}\`" not in mapping:
+    if symbol not in mapping:
         raise SystemExit(f"Missing mapping entry: {symbol}")
 
 for term in ["尚未", "积分", "Lanczos"]:

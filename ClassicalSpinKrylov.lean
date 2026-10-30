@@ -17,7 +17,7 @@ private theorem odd_power_neg_one (n : ℕ) :
     (-1 : ℝ) ^ (2 * n + 1) = -1 := by
   rw [pow_add]
   have h : (-1 : ℝ) ^ (2 * n) = 1 := by
-    rw [show 2 * n = n * 2 by omega, pow_mul]
+    rw [pow_mul]
     norm_num
   rw [h]
   norm_num
@@ -25,7 +25,7 @@ private theorem odd_power_neg_one (n : ℕ) :
 /-- Exact integral of every even monomial over [-1,1]. -/
 theorem even_power_integral (n : ℕ) :
     (∫ z : ℝ in -1..1, z ^ (2 * n)) = 2 / (2 * (n : ℝ) + 1) := by
-  rw [intervalIntegral.integral_pow]
+  rw [integral_pow]
   rw [odd_power_neg_one n]
   simp only [one_pow, sub_neg_eq_add]
   have hc : ((2 * n + 1 : ℕ) : ℝ) = 2 * (n : ℝ) + 1 := by
@@ -64,7 +64,7 @@ theorem spin_weight_integral (n : ℕ) :
           ring
 
 /-- Moments of the reduced classical-spin density ρ(z)=3/4(1-z²). -/
-def evenMoment (c : ℝ) (n : ℕ) : ℝ :=
+noncomputable def evenMoment (c : ℝ) (n : ℕ) : ℝ :=
   (3 / 4 : ℝ) * c ^ (2 * n) *
     (∫ z : ℝ in -1..1, (1 - z ^ 2) * z ^ (2 * n))
 
@@ -82,7 +82,7 @@ theorem moment_normalized (c : ℝ) : evenMoment c 0 = 1 := by
 
 theorem moment_two (c : ℝ) : evenMoment c 1 = c ^ 2 / 5 := by
   rw [evenMoment_formula]
-  norm_num
+  norm_num <;> ring
 
 theorem moment_four (c : ℝ) : evenMoment c 2 = 3 * c ^ 4 / 35 := by
   rw [evenMoment_formula]
