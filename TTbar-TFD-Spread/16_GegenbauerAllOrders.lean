@@ -60,12 +60,14 @@ theorem cumulant_all_orders (n : ℕ) (A β d : ℝ) (hd : d ≠ 0) :
         ((n:ℝ)+1)*((n:ℝ)+3)*cumulantShift A β d n := by
   rw [cumulantShift, cumulantShift, cumulantShift, homog_rec]
   -- Different denominator powers differ by precisely d^2 and d^4.
+  have he1 : 2*(n+1)+3 = (2*n+3)+2 := by omega
+  have he2 : 2*(n+2)+3 = (2*n+3)+4 := by omega
   have hp1 : d^(2*(n+1)+3) = d^(2*n+3)*d^2 := by
-    ring
+    rw [he1, pow_add]
   have hp2 : d^(2*(n+2)+3) = d^(2*n+3)*d^4 := by
-    ring
+    rw [he2, pow_add]
   rw [hp1, hp2]
-  field_simp
+  field_simp [hd]
   ring
 
 /-- A check that the recurrence produces the fourth cumulant exactly. -/
@@ -73,7 +75,7 @@ theorem cumulant_four (A β d : ℝ) (hd : d ≠ 0) :
     cumulantShift A β d 2 =
       6*A*(5*β^2-d^2)/d^7 := by
   simp [cumulantShift, homog]
-  field_simp
+  field_simp [hd]
   ring
 
 /-- Core Bell conversion for moment two; used to extract b_1². -/
