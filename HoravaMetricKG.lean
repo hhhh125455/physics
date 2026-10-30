@@ -3,7 +3,7 @@ import Mathlib
 /-!
 # ADM metric: Klein–Gordon coefficient algebra and radial Liouville transform
 
-The metric and the radial Sturm–Liouville ODE are explicit mathematical
+Source compared to arXiv:2610.38428v1, PDF pages 3–7.\nThe metric and the radial Sturm–Liouville ODE are explicit mathematical
 premises. These theorems certify their subsequent algebraic consequences;
 they do not automatically certify the paper's transcription or PDE calculus.
 Symbols: D=r²+a², Delta=r²-2Mr+a², rho=ρ², Sigma=Σ², s=sin²θ.
@@ -108,6 +108,20 @@ theorem radial_lv_potential_expansion
       eta * (-(4 * M * a * r * omega * m) / D ^ 2 +
         8 * M ^ 2 * a ^ 2 * r ^ 2 * m ^ 2 / D ^ 4) +
         eta ^ 2 * (4 * M ^ 2 * a ^ 2 * r ^ 2 * m ^ 2 / D ^ 4) := by
+  ring
+
+
+-- Paper (40)-(41): G=r Δ/D², dG/dr*=(Δ/D)dG/dr.
+-- All algebraic statements also hold for complex QNM variables.
+theorem eq40_geometric_potential_complex
+    (D Delta r DeltaP : ℂ) (hD : D ≠ 0) :
+    -(Delta / D) *
+        ((Delta + r * DeltaP) / D ^ 2 -
+          4 * r ^ 2 * Delta / D ^ 3) -
+        (r * Delta / D ^ 2) ^ 2 =
+      -(Delta * (r * DeltaP + Delta)) / D ^ 3 +
+        3 * r ^ 2 * Delta ^ 2 / D ^ 4 := by
+  field_simp
   ring
 
 end HoravaMetricKG
