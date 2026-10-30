@@ -38,6 +38,8 @@ jobs:
         run: lake env lean GammaHalf/AreaCounterfamilies.lean
       - name: Compile odd angular scalar boundary no-go
         run: lake env lean GammaHalf/OddAngularBoundary.lean
+      - name: Compile full Einstein constraint obstruction
+        run: lake env lean GammaHalf/FullConstraintObstruction.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
