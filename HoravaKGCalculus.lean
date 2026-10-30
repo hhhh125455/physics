@@ -88,18 +88,11 @@ theorem second_derivative_product
     funext w
     exact deriv_mul (hf w) (hg w)
   rw [hpoint]
-  have hadd : deriv (fun w => deriv f w * g w + f w * deriv g w) z =
-      deriv (fun w => deriv f w * g w) z +
-      deriv (fun w => f w * deriv g w) z := by
-    simpa only [Pi.add_apply, Pi.mul_apply] using
-      (deriv_add (hdf.mul (hg z)) ((hf z).mul hdg))
-  have hm1 : deriv (fun w => deriv f w * g w) z =
-      deriv (deriv f) z * g z + deriv f z * deriv g z := by
-    simpa only [Pi.mul_apply] using (deriv_mul hdf (hg z))
-  have hm2 : deriv (fun w => f w * deriv g w) z =
-      deriv f z * deriv g z + f z * deriv (deriv g) z := by
-    simpa only [Pi.mul_apply] using (deriv_mul (hf z) hdg)
-  rw [hadd, hm1, hm2]
+  change deriv (deriv f * g + f * deriv g) z =
+    deriv (deriv f) z * g z +
+      2 * deriv f z * deriv g z + f z * deriv (deriv g) z
+  rw [deriv_add (hdf.mul (hg z)) ((hf z).mul hdg)]
+  rw [deriv_mul hdf (hg z), deriv_mul (hf z) hdg]
   ring
 
 
