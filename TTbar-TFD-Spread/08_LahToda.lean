@@ -54,7 +54,7 @@ theorem gauge_transform_identity (s t u d dp dpp : ℚ) :
 /-- The n=1 Toda step produces Delta_2=2u. -/
 theorem toda_step_1 : D2*D0 = TodaRHS 1 D1 := by
   simp [D0,D1,D2,TodaRHS]
-  norm_num
+  exact (Polynomial.C_eq_natCast 2).symm
 
 /-- n=2 produces Delta_3=4u^2(4u+3). -/
 theorem toda_step_2 : D3*D1 = TodaRHS 2 D2 := by
