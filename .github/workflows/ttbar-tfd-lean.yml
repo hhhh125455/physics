@@ -41,3 +41,4 @@ jobs:
           lake env lean TTbar-TFD-Spread/11_ExactSpreadTaylor8.lean
           lake env lean TTbar-TFD-Spread/12_ArbitraryLahFiniteSum.lean
           lake env lean TTbar-TFD-Spread/13_TTbarDeformedMoments.lean
+          lake env lean TTbar-TFD-Spread/14_TTbarMomentPowerSeries.lean
