@@ -45,9 +45,9 @@ for symbol in spin_theorems:
         raise SystemExit(f"Missing dynamics mapping: {symbol}")
 
 for symbol in ode_theorems:
-    if not re.search(rf"\\b(?:private\\s+)?theorem\\s+{symbol}\\b", ode_source):
+    if not re.search(rf"\b(?:private\s+)?theorem\s+{symbol}\b", ode_source):
         raise SystemExit(f"Missing Lean ODE theorem: {symbol}")
-    if symbol.replace("_", "\\\\_") not in spin_text:
+    if symbol.replace("_", "\\_") not in spin_text:
         raise SystemExit(f"Missing human derivation for ODE theorem: {symbol}")
     if symbol not in mapping:
         raise SystemExit(f"Missing ODE mapping: {symbol}")
