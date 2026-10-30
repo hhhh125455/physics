@@ -51,7 +51,10 @@ theorem half_mode_angular_bound
     (eta : ℝ) (hl : -1 ≤ eta) (hu : eta ≤ 1) :
     |5 * eta ^ 2 - 1| ≤ 4 := by
   have hsq0 : 0 ≤ eta ^ 2 := sq_nonneg eta
-  have hsq1 : eta ^ 2 ≤ 1 := by nlinarith [sq_nonneg (eta-1), sq_nonneg (eta+1)]
+  have hsq1 : eta ^ 2 ≤ 1 := by
+    have hpos1 : 0 ≤ 1 - eta := by linarith
+    have hpos2 : 0 ≤ 1 + eta := by linarith
+    nlinarith [mul_nonneg hpos1 hpos2]
   apply abs_le.mpr
   constructor <;> nlinarith
 
