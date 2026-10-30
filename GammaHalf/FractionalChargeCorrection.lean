@@ -62,7 +62,6 @@ theorem half_mode_kernel_pointwise_bound
   have hrewrite : C / (4 * root) * (z ^ 2 * root) =
       C * z ^ 2 / 4 := by
     field_simp
-    ring
   rw [hrewrite]
   nlinarith [hco]
 
@@ -81,6 +80,5 @@ theorem fractional_correction_relative_scale
     (z coeff : ℝ) (hz : z ≠ 0) :
     (coeff * z * Real.sqrt z) / z = coeff * Real.sqrt z := by
   field_simp
-  ring
 
 end GammaHalf
