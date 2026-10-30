@@ -96,6 +96,40 @@ theorem second_derivative_product
   ring
 
 
+
+/-- The complete radial Sturm--Liouville differential product, with genuine
+    derivatives of arbitrary C² complex-valued profiles on the real r-axis. -/
+theorem radial_weighted_second_derivative
+    (delta scale u : ℝ → ℂ) (r : ℝ)
+    (hdelta : Differentiable ℝ delta)
+    (hscale : Differentiable ℝ scale)
+    (hu : Differentiable ℝ u)
+    (hdscale : DifferentiableAt ℝ (deriv scale) r)
+    (hdu : DifferentiableAt ℝ (deriv u) r) :
+    deriv (fun z => delta z *
+        deriv (fun w => scale w * u w) z) r =
+      deriv delta r * (deriv scale r * u r + scale r * deriv u r) +
+      delta r * (deriv (deriv scale) r * u r +
+        2 * deriv scale r * deriv u r +
+        scale r * deriv (deriv u) r) := by
+  have hR : (fun z => deriv (fun w => scale w * u w) z) =
+      (fun z => deriv scale z * u z + scale z * deriv u z) := by
+    funext z
+    exact deriv_mul (hscale z) (hu z)
+  have hRdiff : DifferentiableAt ℝ
+      (fun z => deriv (fun w => scale w * u w) z) r := by
+    rw [hR]
+    exact (hdscale.mul (hu r)).add ((hscale r).mul hdu)
+  have houter :
+      deriv (fun z => delta z * deriv (fun w => scale w * u w) z) r =
+        deriv delta r * deriv (fun w => scale w * u w) r +
+        delta r * deriv (fun z => deriv (fun w => scale w * u w) z) r := by
+    change deriv (delta * (fun z => deriv (fun w => scale w * u w) z)) r = _
+    exact deriv_mul (hdelta r) hRdiff
+  rw [houter]
+  rw [deriv_mul (hscale r) (hu r),
+      second_derivative_product scale u r hscale hu hdscale hdu]
+
 /-! ### Physical rotating Hořava metric coefficients
 
 Coordinates are real (t,r,θ,φ), while the Klein--Gordon field is complex.
