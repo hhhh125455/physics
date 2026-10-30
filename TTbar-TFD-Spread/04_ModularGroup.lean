@@ -11,7 +11,7 @@ namespace TTbarTFD
 
 def det2 (a b c d : ℤ) : ℤ := a * d - b * c
 
-/-- An integer inverse matrix forces determinant to be +/- one. -/
+/-- An integer inverse matrix forces determinant to be plus or minus one. -/
 theorem integer_factors_of_one (x y : ℤ) (h : x * y = 1) :
     x = 1 ∨ x = -1 := by
   have hx : x ≠ 0 := by
