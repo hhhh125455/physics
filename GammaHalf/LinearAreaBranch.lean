@@ -24,8 +24,32 @@ namespace GammaHalf
 def toyArea (u v : ℝ) : ℝ :=
   (u + v) + (u + v) ^ 2
 
-def toyConformal (u v : ℝ) : ℝ :=
+noncomputable def toyConformal (u v : ℝ) : ℝ :=
   4 * toyArea u v / (1 - toyArea u v)
+
+/-- The U derivative of the polynomial area profile, computed with real calculus. -/
+theorem toy_area_deriv_u (u v : ℝ) :
+    deriv (fun t : ℝ => toyArea t v) u = 1 + 2 * (u + v) := by
+  have hlin : HasDerivAt (fun t : ℝ => t + v) 1 u := by
+    convert (hasDerivAt_id u).add_const v using 1 <;> ring
+  have h :
+      HasDerivAt (fun t : ℝ => toyArea t v) (1 + 2 * (u + v)) u := by
+    convert (hlin.add (hlin.pow 2)) using 1 <;> simp [toyArea] <;> ring
+  exact h.deriv
+
+/-- Unlike the toy source identity, this verifies an actual mixed derivative. -/
+theorem toy_area_mixed (u v : ℝ) :
+    deriv (fun y : ℝ => deriv (fun x : ℝ => toyArea x y) u) v = 2 := by
+  have hext :
+      (fun y : ℝ => deriv (fun x : ℝ => toyArea x y) u) =
+      (fun y : ℝ => 1 + 2 * (u + y)) := by
+    funext y
+    exact toy_area_deriv_u u y
+  rw [hext]
+  have hy : HasDerivAt (fun y : ℝ => 1 + 2 * (u + y)) 2 v := by
+    convert ((hasDerivAt_id v).const_add u |>.const_mul 2 |>.const_add 1)
+      using 1 <;> ring
+  exact hy.deriv
 
 /-- An exact *algebraic* charged source with q^2=1, not a coupled solution. -/
 theorem toy_charged_source (u v : ℝ)
