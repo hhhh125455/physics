@@ -49,9 +49,9 @@ theorem original_double_commutator_off
 
 /-- Exact difference relation between consecutive b_n² under the sum rule. -/
 theorem original_freud_succ_difference
-    (c beta dn bn bnext Rn Rnext : ℝ)
-    (h1 : c * bn ^ 2 = dn - dn + beta * Rn + 0)
-    (h2 : c * bnext ^ 2 = dn + beta * Rnext)
+    (c beta Sprev dn bn bnext Rn Rnext : ℝ)
+    (h1 : c * bn ^ 2 = Sprev + beta * Rn)
+    (h2 : c * bnext ^ 2 = Sprev + dn + beta * Rnext)
     (hc : c ≠ 0) :
     bnext ^ 2 - bn ^ 2 = dn / c + (beta / c) * (Rnext - Rn) := by
   have h : c * (bnext ^ 2 - bn ^ 2) =
