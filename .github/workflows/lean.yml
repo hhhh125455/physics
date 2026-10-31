@@ -24,6 +24,8 @@ jobs:
         run: lake build
       - name: Verify TTbar spread normalization lemmas
         run: lake build ClassicalSpinKrylov.TTbarSpreadNorm
+      - name: Verify TTbar critical curvature theorems
+        run: lake build ClassicalSpinKrylov.TTbarCriticalSpread
       - name: Verify correlation integral theorems
         run: lake build ClassicalSpinKrylov.Correlation
       - name: Reject unfinished proofs and new axioms
