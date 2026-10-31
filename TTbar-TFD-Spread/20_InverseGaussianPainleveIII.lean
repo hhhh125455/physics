@@ -107,6 +107,17 @@ theorem sigma_n2 (z : ℚ) (hz : z ≠ 0) :
   unfold SigmaEquation H2 Hp2 Hpp2
   field_simp [hz] <;> ring
 
+/-- Denominator-cleared n=3 PIII sigma equation, a genuine polynomial
+    identity of degree up to eight; no parameter exclusions needed. -/
+theorem sigma_n3_polynomial (z : ℚ) :
+    let q := 2*z+3
+    let c := -6*(z+1)*(z+2)
+    let b := 3*(2*z^3+9*z^2+12*z+6)
+    b^2 = q^2*(3*z*q^2-(9/2:ℚ)*c)^2 -
+      4*c*(c-z*q^2)*(z*c+(3*z+5)*q^2-z*q) := by
+  dsimp
+  ring
+
 theorem sigma_n3 (z : ℚ) (hz : z ≠ 0) (hq : 2*z+3 ≠ 0) :
     SigmaEquation 3 z (H3 z) (Hp3 z) (Hpp3 z) := by
   have hq2 : 9+z*12+z^2*4 ≠ 0 := by
