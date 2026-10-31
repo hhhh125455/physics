@@ -133,14 +133,14 @@ theorem bounded_infinite_series_comparison
   have hsup : Summable (fun n : ℕ => (1 / m) * u n) :=
     hsum0.mul_left (1 / m)
   have hsum1 : Summable v :=
-    summable_of_nonneg_of_le hv0 hhi hsup
+    Summable.of_nonneg_of_le hv0 hhi hsup
   have hsub : Summable (fun n : ℕ => m * u n) :=
     hsum0.mul_left m
   have hleft : (∑' n : ℕ, m * u n) ≤ (∑' n : ℕ, v n) :=
-    tsum_le_tsum hlo hsub hsum1
+    hsub.tsum_le_tsum hlo hsum1
   have hright : (∑' n : ℕ, v n) ≤
       (∑' n : ℕ, (1 / m) * u n) :=
-    tsum_le_tsum hhi hsum1 hsup
+    hsum1.tsum_le_tsum hhi hsup
   refine ⟨hsum1, ?_, ?_⟩
   · simpa only [tsum_mul_left] using hleft
   · simpa only [tsum_mul_left] using hright
