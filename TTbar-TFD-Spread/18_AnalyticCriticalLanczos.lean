@@ -88,7 +88,9 @@ theorem exact_a2_cumulant_identity (A β d : ℝ)
       4*(k2 A d)^3*k3 A β d -
       2*k2 A d*k3 A β d*k4 A β d +
       (k3 A β d)^3 := by
-      field_simp [hden]
+      have hden' : (4*d*A+6*β^2-d^2*3) ≠ 0 := by
+        convert hH using 1 <;> ring
+      field_simp [hden, hden'] <;> ring
 
 /-- First shifted Jacobi diagonal in the centered variable. -/
 theorem exact_a1_from_variance (A β d : ℝ)
