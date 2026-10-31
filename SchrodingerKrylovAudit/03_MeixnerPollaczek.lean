@@ -34,7 +34,7 @@ theorem mp_recurrence_rescaled
   unfold mpDiagonal mpOffDiagonal
   push_cast
   field_simp [hs, hsn]
-  linear_combination (-Real.pi) * hrec
+  linear_combination (-1) * hrec
 
 noncomputable def mpAlpha (s sn : ℝ) : ℝ := Real.pi / (s * sn)
 noncomputable def mpGamma (s sn cs : ℝ) : ℝ := -2 * Real.pi * cs / (s * sn)
