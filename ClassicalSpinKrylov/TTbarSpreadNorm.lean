@@ -76,4 +76,23 @@ theorem finite_quadratic_ratio_bound (N : ℕ) (p : Fin N → ℝ) (t : ℝ)
   · exact (div_le_div_of_nonneg_right (finite_spread_bound N p hp hnorm)
       (sq_pos_of_pos ht))
 
+
+/-- An explicit large-time epsilon bound for finite normalized spread.
+This is the key inequality behind lim_{t→∞} C_N(t)/t² = 0. -/
+theorem finite_ratio_eventually_small (N : ℕ) (C t eps : ℝ)
+    (hC : C ≤ (N : ℝ)) (ht : 0 < t)
+    (hlarge : (N : ℝ) < eps * t^2) :
+    C / t^2 < eps := by
+  apply (div_lt_iff₀ (sq_pos_of_pos ht)).2
+  exact lt_of_le_of_lt hC hlarge
+
+/-- Exact algebraic t^4 coefficient of spread from the Jacobi
+Schrödinger series; independent differentiation is required to
+connect this equality to the physical Taylor expansion. -/
+theorem quartic_spread_coefficient (a0 a1 b1 b2 : ℝ) :
+    b1^2 * ((a0+a1)^2/4 -
+      (a0^2+a0*a1+a1^2+b1^2+b2^2)/3 + b2^2/2) =
+    b1^2 * (-(a1-a0)^2/12 - b1^2/3 + b2^2/6) := by
+  ring
+
 end TTbarSpreadNorm
