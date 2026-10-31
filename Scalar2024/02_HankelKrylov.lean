@@ -26,7 +26,6 @@ theorem massless_b3_hankel (A B C : ℝ)
         (A * (B - A ^ 2)) ^ 2 =
       (A * C - B ^ 2) / (A * (B - A ^ 2)) := by
   field_simp
-  <;> ring
 
 /-- Meixner-Pollaczek obstruction, at the first two Lanczos steps:
 for the actual 5D massless moment values B < 3*A²,
@@ -34,8 +33,9 @@ the squared coefficient ratio is smaller than two. -/
 theorem massless_not_symmetric_mp_if_kurtosis_small
     (A B : ℝ) (hA : 0 < A) (hB : B < 3 * A ^ 2) :
     B / A - A < 2 * A := by
-  apply (div_lt_iff₀ hA).mpr
-  nlinarith
+  have hquot : B / A < 3 * A :=
+    (div_lt_iff₀ hA).mpr (by nlinarith [hB])
+  linarith
 
 /-- Positive-parameter symmetric Meixner-Pollaczek coefficients have
 b_2² / b_1² = 2 + 1/lambda > 2, contradicting the preceding bound. -/
