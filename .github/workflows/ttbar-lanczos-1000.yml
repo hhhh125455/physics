@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'TTbar-TFD-Spread/scripts/certify_lanczos_1000.py'
+      - 'TTbar-TFD-Spread/17_LanczosWeightedMeasure.lean'
       - '.github/workflows/ttbar-lanczos-1000.yml'
   workflow_dispatch:
 jobs:
