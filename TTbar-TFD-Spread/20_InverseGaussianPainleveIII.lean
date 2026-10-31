@@ -109,8 +109,18 @@ theorem sigma_n2 (z : ℚ) (hz : z ≠ 0) :
 
 theorem sigma_n3 (z : ℚ) (hz : z ≠ 0) (hq : 2*z+3 ≠ 0) :
     SigmaEquation 3 z (H3 z) (Hp3 z) (Hpp3 z) := by
+  have hq2 : 9+z*12+z^2*4 ≠ 0 := by
+    have h : 9+z*12+z^2*4 = (2*z+3)^2 := by ring
+    rw [h]
+    exact pow_ne_zero 2 hq
+  have hq6 : 729+z*2916+z^2*4860+z^3*4320+z^4*2160+
+      z^5*576+z^6*64 ≠ 0 := by
+    have h : 729+z*2916+z^2*4860+z^3*4320+z^4*2160+
+      z^5*576+z^6*64 = (2*z+3)^6 := by ring
+    rw [h]
+    exact pow_ne_zero 6 hq
   unfold SigmaEquation H3 Hp3 Hpp3
-  field_simp [hz, hq] <;> ring
+  field_simp [hz, hq, hq2, hq6] <;> ring
 
 /-- All-index exact algebra converting tau logarithmic derivatives to
     Lanczos diagonal entries, given nonzero tau determinants.
