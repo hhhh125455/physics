@@ -50,7 +50,7 @@ theorem wdot_self_nonneg {M : ℕ} (w q : Fin M → ℝ)
   apply Finset.sum_nonneg
   intro i hi
   have h : 0 ≤ w i * (q i)^2 := mul_nonneg (hw i) (sq_nonneg _)
-  convert h using 1 <;> ring
+  simpa only [pow_two, mul_assoc] using h
 
 /-- The Lanczos residual identity against the current orthonormal vector. -/
 theorem resid_dot_current {M : ℕ} (w x p q : Fin M → ℝ) (a b : ℝ) :
@@ -130,7 +130,6 @@ theorem next_vector_normalized {M : ℕ} (w r : Fin M → ℝ)
           apply Finset.sum_congr rfl
           intro i hi
           field_simp [hb]
-          ring
     _ = 1 := by rw [hs]; exact div_self (ne_of_gt hnorm)
 
 /-- Positivity of the Hagedorn gap is a genuine domain requirement. -/
