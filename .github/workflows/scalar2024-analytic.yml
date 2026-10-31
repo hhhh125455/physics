@@ -23,6 +23,7 @@ jobs:
           lake env lean Scalar2024/03_MassCrossover.lean
           lake env lean Scalar2024/04_ComplexitySixthOrder.lean
           lake env lean Scalar2024/05_LogarithmTwoSite.lean
+          lake env lean Scalar2024/06_UvarovStaggering.lean
       - name: Reject placeholders and new axioms
         run: |
           if grep -RnE '(^|[[:space:]])(sorry|admit)([[:space:]]|$)' --include='*.lean' Scalar2024; then
