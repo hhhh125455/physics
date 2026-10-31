@@ -62,4 +62,64 @@ theorem variance_from_mean_slope
   nlinarith [hgap]
 
 
+
+/-! ## Differential verification of the actual saddle expressions
+
+Unlike the algebraic comparison lemmas above, these theorems use Lean's
+real differentiation rules, including the square-root chain rule.
+They only assume the *open physical branch* beta^2-4*mu*A > 0.
+-/
+
+theorem sqrt_gap_hasDerivAt (beta mu A : ℝ)
+    (hgap : 0 < beta^2 - 4*mu*A) :
+    HasDerivAt (fun x : ℝ => Real.sqrt (x^2 - 4*mu*A))
+      ((1 / (2*Real.sqrt (beta^2 - 4*mu*A))) * (2*beta)) beta := by
+  have hpoly : HasDerivAt (fun x : ℝ => x^2 - 4*mu*A) (2*beta) beta := by
+    simpa [id_eq] using (((hasDerivAt_id beta).pow 2).sub_const (4*mu*A))
+  exact (Real.hasDerivAt_sqrt (ne_of_gt hgap)).comp beta hpoly
+
+theorem logZ_hasDerivAt (beta mu A : ℝ)
+    (hgap : 0 < beta^2 - 4*mu*A) :
+    HasDerivAt
+      (fun x : ℝ => (x - Real.sqrt (x^2 - 4*mu*A))/(2*mu))
+      ((1 - ((1 / (2*Real.sqrt (beta^2 - 4*mu*A))) * (2*beta)))/(2*mu))
+      beta := by
+  exact ((hasDerivAt_id beta).sub (sqrt_gap_hasDerivAt beta mu A hgap)).div_const
+    (2*mu)
+
+theorem meanEnergy_hasDerivAt_raw (beta mu A : ℝ)
+    (hgap : 0 < beta^2 - 4*mu*A) :
+    HasDerivAt
+      (fun x : ℝ => (x / Real.sqrt (x^2 - 4*mu*A) - 1)/(2*mu))
+      (((Real.sqrt (beta^2 - 4*mu*A) -
+          beta * ((1 / (2*Real.sqrt (beta^2 - 4*mu*A))) * (2*beta))) /
+          (Real.sqrt (beta^2 - 4*mu*A))^2)/(2*mu)) beta := by
+  have hnonzero : Real.sqrt (beta^2 - 4*mu*A) ≠ 0 :=
+    ne_of_gt (Real.sqrt_pos.2 hgap)
+  have hquot := (hasDerivAt_id beta).div
+    (sqrt_gap_hasDerivAt beta mu A hgap) hnonzero
+  simpa [id_eq] using (hquot.sub_const 1).div_const (2*mu)
+
+/-- The negative derivative of the saddle mean energy is exactly
+the same 2*A/d^3 that appears in the TFD short-time curvature. -/
+theorem meanEnergy_hasDerivAt_variance (beta mu A : ℝ)
+    (hmu : mu ≠ 0) (hgap : 0 < beta^2 - 4*mu*A) :
+    HasDerivAt
+      (fun x : ℝ => (x / Real.sqrt (x^2 - 4*mu*A) - 1)/(2*mu))
+      (-(2*A/(Real.sqrt (beta^2 - 4*mu*A))^3)) beta := by
+  let d : ℝ := Real.sqrt (beta^2 - 4*mu*A)
+  have hd : d ≠ 0 := ne_of_gt (Real.sqrt_pos.2 hgap)
+  have hsq : d^2 = beta^2 - 4*mu*A := Real.sq_sqrt (le_of_lt hgap)
+  have hraw := meanEnergy_hasDerivAt_raw beta mu A hgap
+  have halg :
+      ((d - beta * ((1 / (2*d)) * (2*beta))) / d^2)/(2*mu)
+        = -(2*A/d^3) := by
+    field_simp
+    nlinarith [hsq]
+  change HasDerivAt
+      (fun x : ℝ => (x / Real.sqrt (x^2 - 4*mu*A) - 1)/(2*mu))
+      (-(2*A/d^3)) beta
+  rw [← halg]
+  exact hraw
+
 end TTbarCriticalSpread
