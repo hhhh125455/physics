@@ -39,10 +39,10 @@ sector norm ratio, with the physical polynomial x^2 rescaling. -/
 theorem even_sector_mass_cancel
     (M hEven hOdd hReference : ℝ)
     (hM : M ≠ 0) (hRef : hReference ≠ 0)
-    (hOdd : hOdd = M ^ 2 * hReference) :
+    (hOddEq : hOdd = M ^ 2 * hReference) :
     (2 * M) ^ 2 * hEven / hOdd =
       4 * hEven / hReference := by
-  rw [hOdd]
+  rw [hOddEq]
   field_simp [hM, hRef]
   <;> ring
 
@@ -53,7 +53,7 @@ theorem odd_sector_exact_remainder
     (M a b r : ℝ) (hden : b + M + a ≠ 0)
     (hb : b ^ 2 = M ^ 2 + 2 * M * a + r) :
     b - (M + a) = (r - a ^ 2) / (b + M + a) := by
-  apply (div_eq_iff hden).mpr
+  field_simp [hden]
   nlinarith [hb]
 
 /-- Arbitrary-degree real Jacobi recurrence has exact beta scaling;
