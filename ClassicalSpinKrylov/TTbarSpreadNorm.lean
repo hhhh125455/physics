@@ -74,7 +74,7 @@ theorem finite_quadratic_ratio_bound (N : ℕ) (p : Fin N → ℝ) (t : ℝ)
   constructor
   · exact div_nonneg (nonnegative_complexity N p hp) (sq_nonneg t)
   · exact (div_le_div_of_nonneg_right (finite_spread_bound N p hp hnorm)
-      (sq_pos_of_pos ht))
+      (le_of_lt (sq_pos_of_pos ht)))
 
 
 /-- An explicit large-time epsilon bound for finite normalized spread.
