@@ -44,10 +44,10 @@ theorem original_xweight_hasDerivAt (c q x : ℝ) (hq : 0 ≤ q) :
       (q * (Real.exp (-2 * c * x) * (-2 * c))) x :=
 by
       simpa only [Pi.add_apply, zero_add] using
-        (hasDerivAt_const x (1 : ℝ)).add (hE2.const_mul q)
+        (hasDerivAt_const x (1 : ℝ)).fun_add (hE2.const_mul q)
   have hU : HasDerivAt (fun y : ℝ => y ^ 2 * Real.exp (-c * y))
       (2 * x * Real.exp (-c * x) + x ^ 2 * (Real.exp (-c * x) * (-c))) x := by
-    have hh := ((hasDerivAt_id x).pow 2).mul hE1
+    have hh := ((hasDerivAt_id x).pow 2).fun_mul hE1
     simpa [pow_succ, pow_zero, mul_comm, mul_left_comm, mul_assoc] using hh
   have hmain := hU.div hD hd
   have hfun :
@@ -82,8 +82,8 @@ theorem original_xwP2_hasDerivAt
        + (x * originalWeight c q x) * (2 * P x * P' x)) x := by
   have hP2 : HasDerivAt (fun y : ℝ => (P y) ^ 2)
       (2 * P x * P' x) x := by
-    simpa [pow_two, two_mul, mul_comm, mul_left_comm, mul_assoc] using hP.mul hP
-  exact (original_xweight_hasDerivAt c q x hq).mul hP2
+    simpa [pow_two, two_mul, mul_comm, mul_left_comm, mul_assoc] using hP.fun_mul hP
+  exact (original_xweight_hasDerivAt c q x hq).fun_mul hP2
 
 /-- A genuine finite-interval integration-by-parts formula, with
 its derivative/integrability hypotheses exposed rather than hidden. -/
