@@ -22,9 +22,9 @@ Consequently a nonzero M² log M term cannot be absorbed into O(M²). -/
 theorem small_mass_log_is_not_quadratic :
     Filter.Tendsto
       (fun M : ℝ => M ^ 2 * Real.log M / M ^ 2)
-      (𝓝[>] (0 : ℝ)) atBot := by
+      (nhdsWithin (0 : ℝ) (Set.Ioi 0)) atBot := by
   have h_eq :
-      (fun M : ℝ => M ^ 2 * Real.log M / M ^ 2) =ᶠ[𝓝[>] (0 : ℝ)]
+      (fun M : ℝ => M ^ 2 * Real.log M / M ^ 2) =ᶠ[nhdsWithin (0 : ℝ) (Set.Ioi 0)]
         (fun M : ℝ => Real.log M) := by
     filter_upwards [self_mem_nhdsWithin] with M hM
     have hzero : M ^ 2 ≠ 0 := pow_ne_zero _ (ne_of_gt hM)
@@ -40,7 +40,10 @@ theorem two_site_tail_vanishes
     (h0 : Filter.Tendsto p0 atTop (nhds ((Real.cos tau) ^ 2)))
     (h1 : Filter.Tendsto p1 atTop (nhds ((Real.sin tau) ^ 2))) :
     Filter.Tendsto tail atTop (nhds 0) := by
-  have hh := (tendsto_const_nhds.sub h0).sub h1
+  have hconst :
+      Filter.Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (nhds 1) :=
+    tendsto_const_nhds
+  have hh := (hconst.sub h0).sub h1
   have hfun : tail = (fun M : ℕ => 1 - p0 M - p1 M) := by
     funext M
     linarith [hnorm M]
