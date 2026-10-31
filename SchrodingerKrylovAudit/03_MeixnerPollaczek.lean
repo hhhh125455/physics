@@ -29,7 +29,7 @@ theorem mp_recurrence_rescaled
       (n : ℝ) * pprev = 0) :
     (2 * Real.pi * x / s) * pcur =
       mpOffDiagonal s sn n * pprev +
-      mpDiagonal s sn n * pcur +
+      mpDiagonal s sn cs n * pcur +
       mpOffDiagonal s sn (n + 1) * pnext := by
   unfold mpDiagonal mpOffDiagonal
   push_cast
@@ -58,7 +58,6 @@ theorem mp_SL2_gap (s sn cs : ℝ) (hs : s ≠ 0) (hsn : sn ≠ 0)
     _ = 4 * (Real.pi / s) ^ 2 := by
         unfold mpAlpha
         field_simp [hs, hsn]
-        ring
 
 /-- The SL2 complexity formula reduces to a single hyperbolic sine. -/
 theorem mp_complexity_factor (s sn cs t : ℝ) (hs : s ≠ 0)
@@ -71,7 +70,6 @@ theorem mp_complexity_factor (s sn cs t : ℝ) (hs : s ≠ 0)
   have harg : mpAlpha s sn * t * sn = Real.pi * t / s := by
     unfold mpAlpha
     field_simp [hs, hsn]
-    ring
   rw [harg]
 
 theorem mp_off_exact_line (s sn : ℝ) (n : ℕ) :
