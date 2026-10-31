@@ -12,7 +12,7 @@ spectrum. It does NOT assume the field theory or the Lanczos asymptotics.
 namespace SchrodingerKrylovAudit
 
 /-- The real geometric ratio associated with the one-sided spectrum (4.1). -/
-def oneSidedRatio (k t : ℝ) : ℝ := t ^ 2 / (k ^ 2 + t ^ 2)
+noncomputable def oneSidedRatio (k t : ℝ) : ℝ := t ^ 2 / (k ^ 2 + t ^ 2)
 
 theorem oneSidedRatio_nonneg (k t : ℝ) (hk : 0 < k) :
     0 ≤ oneSidedRatio k t := by
@@ -43,8 +43,30 @@ theorem geometric_first_moment (q : ℝ)
   have hn : ‖q‖ < 1 := by
     rw [Real.norm_eq_abs, abs_of_nonneg hq0]
     exact hq1
-  have h := tsum_descFactorial_mul_geometric_of_norm_lt_one (𝕜 := ℝ) 1 hn
-  simpa [Nat.descFactorial_eq_factorial_mul_choose, Nat.choose_one_right] using h
+  let f : ℕ → ℝ := fun n => (↑((n + 1).choose 1) : ℝ) * q ^ n
+  have hf : Summable f := by
+    dsimp [f]
+    exact summable_choose_mul_geometric_of_norm_lt_one 1 hn
+  have hg : Summable (fun n : ℕ => q ^ n) :=
+    summable_geometric_of_lt_one hq0 hq1
+  have hsum : (∑' n : ℕ, f n) = 1 / (1 - q) ^ 2 := by
+    dsimp [f]
+    exact tsum_choose_mul_geometric_of_norm_lt_one 1 hn
+  have hden : 1 - q ≠ 0 := ne_of_gt (sub_pos.mpr hq1)
+  calc
+    (∑' n : ℕ, (n : ℝ) * q ^ n) =
+        (∑' n : ℕ, f n - q ^ n) := by
+          apply tsum_congr
+          intro n
+          dsimp [f]
+          simp only [Nat.choose_one_right, Nat.cast_add, Nat.cast_one]
+          ring
+    _ = (∑' n : ℕ, f n) - (∑' n : ℕ, q ^ n) := hf.tsum_sub hg
+    _ = 1 / (1 - q) ^ 2 - 1 / (1 - q) := by
+          rw [hsum, tsum_geometric_of_lt_one hq0 hq1]
+          ring
+    _ = q / (1 - q) ^ 2 := by field_simp [hden]; ring
+
 
 /-- Exact expected Krylov site, rather than a finite-n numerical spot check. -/
 theorem geometric_probability_mean (q : ℝ)
@@ -60,7 +82,7 @@ theorem geometric_probability_mean (q : ℝ)
           rw [hterm, tsum_mul_left]
     _ = (1 - q) * (q / (1 - q) ^ 2) := by
           rw [geometric_first_moment q hq0 hq1]
-    _ = q / (1 - q) := by field_simp; ring
+    _ = q / (1 - q) := by field_simp
 
 /-- One-sided exact complexity (4.8), modulo its spectral-amplitude identity. -/
 theorem oneSidedQuadraticComplexity (k t : ℝ) (hk : 0 < k) :
@@ -109,7 +131,7 @@ theorem eq_4_7_n0_numerator (k t : ℂ) :
   simp [Complex.I_sq]
 
 /-- The factorial moments of (4.2) obey this exact recurrence. -/
-def expMoment (k : ℝ) (n : ℕ) : ℝ := (-1) ^ n * (n.factorial : ℝ) / k ^ n
+noncomputable def expMoment (k : ℝ) (n : ℕ) : ℝ := (-1) ^ n * (n.factorial : ℝ) / k ^ n
 
 theorem eq_4_2_initial_moment (k : ℝ) : expMoment k 0 = 1 := by
   simp [expMoment]
@@ -119,6 +141,5 @@ theorem eq_4_2_moment_recurrence (k : ℝ) (hk : k ≠ 0) (n : ℕ) :
   unfold expMoment
   rw [pow_succ, Nat.factorial_succ, Nat.cast_mul, Nat.cast_succ, pow_succ]
   field_simp
-  ring
 
 end SchrodingerKrylovAudit
