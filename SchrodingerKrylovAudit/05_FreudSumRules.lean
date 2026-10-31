@@ -31,10 +31,14 @@ theorem jacobi_offdiag_uniform_bound
   have hlower : B ^ 2 - b ^ 2 ≤ 2 * M * (b + B) := by
     nlinarith [mul_nonneg hM hB.le]
   have h1 : b - B ≤ 2 * M := by
-    apply (mul_le_mul_right hpos).mp
+    by_contra hh
+    have hh' : 0 < b - B - 2 * M := by linarith
+    have hp := mul_pos hh' hpos
     nlinarith [hupper]
   have h2 : B - b ≤ 2 * M := by
-    apply (mul_le_mul_right hpos).mp
+    by_contra hh
+    have hh' : 0 < B - b - 2 * M := by linarith
+    have hp := mul_pos hh' hpos
     nlinarith [hlower]
   exact abs_le.mpr ⟨by linarith, h1⟩
 
