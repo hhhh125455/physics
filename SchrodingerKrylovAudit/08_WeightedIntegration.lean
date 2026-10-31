@@ -82,7 +82,15 @@ theorem original_xwP2_hasDerivAt
        + (x * originalWeight c q x) * (2 * P x * P' x)) x := by
   have hP2 : HasDerivAt (fun y : ℝ => (P y) ^ 2)
       (2 * P x * P' x) x := by
-    simpa [pow_succ, pow_zero, mul_comm, mul_left_comm, mul_assoc] using hP.pow 2
+    have hraw := hP.fun_mul hP
+    have hfun : (fun y : ℝ => (P y) ^ 2) =
+        (fun y : ℝ => P y * P y) := by
+      funext y
+      ring
+    have hder : 2 * P x * P' x =
+        P' x * P x + P x * P' x := by ring
+    rw [hfun, hder]
+    exact hraw
   exact (original_xweight_hasDerivAt c q x hq).fun_mul hP2
 
 /-- A genuine finite-interval integration-by-parts formula, with
