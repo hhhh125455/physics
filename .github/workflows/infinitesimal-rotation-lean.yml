@@ -1,0 +1,28 @@
+name: Infinitesimal Rotation — Lean verification
+
+on:
+  pull_request:
+    paths:
+      - 'InfinitesimalRotation_Verified.lean'
+      - '.github/workflows/infinitesimal-rotation-lean.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve pinned Mathlib and obtain cache
+        run: |
+          lake update
+          lake exe cache get
+      - name: Compile rotation proof
+        run: lake env lean InfinitesimalRotation_Verified.lean
+      - name: Disallow unfinished proofs and custom axioms
+        run: |
+          if grep -En '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' InfinitesimalRotation_Verified.lean; then exit 1; fi
+          if grep -En '^[[:space:]]*(axiom|constant)[[:space:]]' InfinitesimalRotation_Verified.lean; then exit 1; fi
