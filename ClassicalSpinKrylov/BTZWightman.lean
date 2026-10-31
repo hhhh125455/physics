@@ -23,10 +23,10 @@ def mu2 (h x y : ℝ) : ℝ :=
 def mu4 (h x y : ℝ) : ℝ :=
   4 * h * (x ^ 2 + y ^ 2) + 12 * h ^ 2 * (x + y) ^ 2
 
-def b2Sq (h x y : ℝ) : ℝ :=
+noncomputable def b2Sq (h x y : ℝ) : ℝ :=
   4 * h * (x + y) + 2 * (x ^ 2 + y ^ 2) / (x + y)
 
-def fingerprint (x y : ℝ) : ℝ :=
+noncomputable def fingerprint (x y : ℝ) : ℝ :=
   (x ^ 2 + y ^ 2) / (x + y) ^ 2
 
 /-- The first two spectral moments of a symmetric Jacobi chain determine b1,b2. -/
@@ -74,7 +74,7 @@ theorem nonrotating_fingerprint (r : ℝ) (hr : r ≠ 0) :
     simp [pow_ne_zero _ hr]
   simpa using horizon_fingerprint r 0 h0
 
-def ratioFingerprint (q : ℝ) : ℝ :=
+noncomputable def ratioFingerprint (q : ℝ) : ℝ :=
   (1 : ℝ) / 2 + 2 * q ^ 2 / (1 + q ^ 2) ^ 2
 
 /-- An algebraic inversion invariant for q = rMinus/rPlus. -/
