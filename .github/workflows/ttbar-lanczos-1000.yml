@@ -1,0 +1,35 @@
+name: TTbar Lanczos n=1..1000 numeric cross-check with Lean
+on:
+  push:
+    paths:
+      - 'TTbar-TFD-Spread/scripts/certify_lanczos_1000.py'
+      - '.github/workflows/ttbar-lanczos-1000.yml'
+  workflow_dispatch:
+jobs:
+  certify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install numerical dependencies
+        run: python -m pip install numpy scipy
+      - name: Recalculate 1000 Lanczos pairs using two quadrature sizes
+        run: python TTbar-TFD-Spread/scripts/certify_lanczos_1000.py
+      - name: Install Lean
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Prepare Mathlib
+        run: |
+          lake update
+          lake exe cache get
+      - name: Lean proof of finite discrete weighted Lanczos algebra
+        run: lake env lean TTbar-TFD-Spread/17_LanczosWeightedMeasure.lean
+      - name: Lean check ALL 1000 pairs and their 2000/4500-node agreement
+        run: lake env lean TTbar-TFD-Spread/generated/18_N1000LeanCertificate.lean
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ttbar-lean-lanczos-1000-certificate
+          path: TTbar-TFD-Spread/generated/18_N1000LeanCertificate.lean
