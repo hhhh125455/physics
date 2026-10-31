@@ -25,7 +25,6 @@ theorem variance_ratio (A beta d : ℝ)
     (hA : A ≠ 0) (hbeta : beta ≠ 0) (hd : d ≠ 0) :
     (2*A/d^3) / (2*A/beta^3) = (beta/d)^3 := by
   field_simp
-  ring
 
 /-- The undeformed saddle is recovered by setting the square-root gap d=beta. -/
 theorem undeformed_variance (A beta : ℝ) :
