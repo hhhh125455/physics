@@ -34,6 +34,7 @@ theorem original_double_commutator_diag
       -4 * (Rnext - Rn) := by
   unfold doubleCommutatorDiag
   apply (mul_left_cancel₀ hc)
+  field_simp [hc]
   linear_combination (-2) * hFreud
 
 /-- Corrected adjacent commutator entry given the exact diagonal sum rule. -/
@@ -62,7 +63,6 @@ theorem original_freud_succ_difference
     c * (bnext ^ 2 - bn ^ 2) = dn + beta * (Rnext - Rn) := h
     _ = c * (dn / c + (beta / c) * (Rnext - Rn)) := by
       field_simp
-      ring
 
 /-- If the two concrete original-spectrum Freud residual sequences vanish,
 then the diagonal entries of the double-commutator defect vanish. -/
@@ -84,6 +84,6 @@ theorem original_double_commutator_off_tendsto
     Filter.Tendsto
       (fun n : ℕ => -2 * b (n + 1) * (e (n + 1) - e n))
       Filter.atTop (nhds 0) := by
-  simpa only [mul_assoc] using he.const_mul (-2)
+  simpa only [mul_assoc, mul_zero] using he.const_mul (-2)
 
 end SchrodingerKrylovAudit
