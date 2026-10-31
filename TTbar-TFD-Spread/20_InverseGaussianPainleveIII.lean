@@ -154,8 +154,12 @@ theorem offdiag_n3_from_sigma (z : ℚ) (hz : z ≠ 0)
     (hq : 2*z+3 ≠ 0) :
     z^2*Hp3 z-H3 z+3*(3-3/2:ℚ) =
       3*(2*z^3+12*z^2+24*z+15)/(2*z+3)^2 := by
+  have hq2 : 9+z*12+z^2*4 ≠ 0 := by
+    have h : 9+z*12+z^2*4 = (2*z+3)^2 := by ring
+    rw [h]
+    exact pow_ne_zero 2 hq
   unfold H3 Hp3
-  field_simp [hz, hq] <;> ring
+  field_simp [hz, hq, hq2] <;> ring
 
 /-- a_n=2n-1/2+H_n-H_(n+1), checked at n=0,1,2. -/
 theorem diag_n0_from_sigma (z : ℚ) :
