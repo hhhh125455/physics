@@ -118,9 +118,6 @@ theorem sigma_n3_polynomial (z : ℚ) :
   dsimp
   ring
 
-/-- The n=3 rational sigma equation is certified by the preceding
-    denominator-cleared polynomial identity together with stage 21. -/
-
 /-- All-index exact algebra converting tau logarithmic derivatives to
     Lanczos diagonal entries, given nonzero tau determinants.
     Here p=τ_n, dp=∂_zτ_n, q=τ_(n+1), dq=∂_zτ_(n+1). -/
