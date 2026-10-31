@@ -55,7 +55,7 @@ theorem geometric_first_moment (q : ℝ)
   have hden : 1 - q ≠ 0 := ne_of_gt (sub_pos.mpr hq1)
   calc
     (∑' n : ℕ, (n : ℝ) * q ^ n) =
-        (∑' n : ℕ, f n - q ^ n) := by
+        (∑' n : ℕ, (f n - q ^ n)) := by
           apply tsum_congr
           intro n
           dsimp [f]
