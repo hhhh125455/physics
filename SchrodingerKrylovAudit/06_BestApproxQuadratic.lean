@@ -115,4 +115,62 @@ theorem logistic_weight_uniform_ratio (q x beta : ℝ)
   · apply (div_le_iff₀ hb).mpr
     linarith
 
+
+/-- An infinite version of the positive-series comparison. Unlike
+a finite truncation, this also proves summability of the perturbed
+complexity when the reference complexity is finite. -/
+theorem bounded_infinite_series_comparison
+    (u v : ℕ → ℝ) (m : ℝ) (hm : 0 < m)
+    (hu0 : ∀ n : ℕ, 0 ≤ u n)
+    (hlo : ∀ n : ℕ, m * u n ≤ v n)
+    (hhi : ∀ n : ℕ, v n ≤ (1 / m) * u n)
+    (hsum0 : Summable u) :
+    Summable v ∧
+    m * (∑' n : ℕ, u n) ≤ (∑' n : ℕ, v n) ∧
+    (∑' n : ℕ, v n) ≤ (1 / m) * (∑' n : ℕ, u n) := by
+  have hv0 (n : ℕ) : 0 ≤ v n :=
+    (mul_nonneg hm.le (hu0 n)).trans (hlo n)
+  have hsup : Summable (fun n : ℕ => (1 / m) * u n) :=
+    hsum0.mul_left (1 / m)
+  have hsum1 : Summable v :=
+    summable_of_nonneg_of_le hv0 hhi hsup
+  have hsub : Summable (fun n : ℕ => m * u n) :=
+    hsum0.mul_left m
+  have hleft : (∑' n : ℕ, m * u n) ≤ (∑' n : ℕ, v n) :=
+    tsum_le_tsum hlo hsub hsum1
+  have hright : (∑' n : ℕ, v n) ≤
+      (∑' n : ℕ, (1 / m) * u n) :=
+    tsum_le_tsum hhi hsum1 hsup
+  refine ⟨hsum1, ?_, ?_⟩
+  · simpa only [tsum_mul_left] using hleft
+  · simpa only [tsum_mul_left] using hright
+
+/-- All-time comparison of normalized infinite approximation-error sums:
+the reference sum is finite, so the deformed one is finite and bounded
+between m and 1/m times the reference. -/
+theorem normalized_errors_infinite_sum
+    (m Z0 Z1 : ℝ) (E0 E1 : ℕ → ℝ)
+    (hm : 0 < m) (hZ0 : 0 < Z0)
+    (hZlo : m * Z0 ≤ Z1) (hZhi : Z1 ≤ Z0)
+    (hE0 : ∀ n : ℕ, 0 ≤ E0 n)
+    (hElo : ∀ n : ℕ, m * E0 n ≤ E1 n)
+    (hEhi : ∀ n : ℕ, E1 n ≤ E0 n)
+    (hsum0 : Summable (fun n : ℕ => E0 (n + 1) / Z0)) :
+    Summable (fun n : ℕ => E1 (n + 1) / Z1) ∧
+    m * (∑' n : ℕ, E0 (n + 1) / Z0) ≤
+      (∑' n : ℕ, E1 (n + 1) / Z1) ∧
+    (∑' n : ℕ, E1 (n + 1) / Z1) ≤
+      (1 / m) * (∑' n : ℕ, E0 (n + 1) / Z0) := by
+  have hpair (n : ℕ) :=
+    normalized_error_comparison
+      m Z0 Z1 (E0 (n + 1)) (E1 (n + 1))
+      hm hZ0 hZlo hZhi (hE0 _) (hElo _) (hEhi _)
+  exact bounded_infinite_series_comparison
+    (fun n : ℕ => E0 (n + 1) / Z0)
+    (fun n : ℕ => E1 (n + 1) / Z1) m hm
+    (fun n => div_nonneg (hE0 _) hZ0.le)
+    (fun n => (hpair n).1)
+    (fun n => (hpair n).2)
+    hsum0
+
 end SchrodingerKrylovAudit
