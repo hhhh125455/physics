@@ -63,7 +63,10 @@ theorem exact_scaled_generator (μ β k d z : ℝ)
       Real.sqrt ((β-energyScale β d*z)^2-k^2))/(2*μ) =
       scaledLog (xi μ d) (eta β d) z := by
   rw [radicand_sqrt β k d z hβ hd hdisk]
-  unfold scaledLog xi eta energyScale Q
+  change (-energyScale β d*z+d-d*Real.sqrt (Q β d z))/(2*μ) =
+    2*(d/(4*μ))*(1-Real.sqrt (Q β d z))-
+      (d/(4*μ))*(d/β)*z
+  unfold energyScale
   field_simp [hμ, hβ] <;> ring
 
 /-- All-z real-variable continuity at the double scaling eta=0.
