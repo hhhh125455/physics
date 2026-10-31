@@ -19,6 +19,7 @@ jobs:
       - name: Compile exact scalar spectrum proofs
         run: |
           lake env lean Scalar2024/01_ExactMoments.lean
+          lake env lean Scalar2024/02_HankelKrylov.lean
       - name: Reject placeholders and new axioms
         run: |
           if grep -RnE '(^|[[:space:]])(sorry|admit)([[:space:]]|$)' --include='*.lean' Scalar2024; then
