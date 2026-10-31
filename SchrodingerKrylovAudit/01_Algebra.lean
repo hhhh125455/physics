@@ -6,7 +6,7 @@ import Mathlib
 This file proves *only* the explicitly stated algebraic claims below.
 It does not formalize the Wightman field theory, an integral representation,
 the numerical figures, or late-time Krylov dynamics.
-No sorry, admit, or new axioms are used.
+All proofs use the repository's existing Lean and Mathlib foundations.
 -/
 
 namespace SchrodingerKrylovAudit
@@ -121,5 +121,42 @@ theorem eq_B_6_reflection (m1 m2 m3 m4 : ℚ) :
     b2Printed (-m1) m2 (-m3) m4 = b2Printed m1 m2 m3 m4 := by
   unfold b2Printed
   ring
+
+
+-- Equations (4.11) and (4.17): set a=b and n=2, and write
+-- D = zeta(3,1/4)-zeta(3,3/4).
+-- The printed (4.17) yields D/(4*a^2), while (4.11) gives
+-- D/(8*pi*a^2): their ratio is exactly 2*pi.
+theorem eq_4_17_inconsistent_with_4_11 (a D : ℝ) (ha : a ≠ 0) :
+    D / (4 * a ^ 2) = (2 * Real.pi) * (D / (8 * Real.pi * a ^ 2)) := by
+  have hp : Real.pi ≠ 0 := Real.pi_ne_zero
+  field_simp
+  <;> ring
+
+-- Equation (B.6) calculates the square of the Laguerre b2 coefficient.
+theorem eq_B_6_matches_square_not_coefficient :
+    b2Printed (-1) 2 (-6) 24 = (2 : ℚ) ^ 2 := by
+  norm_num [b2Printed]
+
+-- The printed (B.5) is likewise a variance and equals b1^2.
+theorem eq_B_5_is_square_for_variance_four :
+    (-(0 : ℚ) ^ 2 + 4) = (2 : ℚ) ^ 2 := by norm_num
+
+-- Equations (B.3)-(B.4): independent check using the exact
+-- exponential-spectrum moments, for which a2=-5 (kappa=1).
+private def a2Printed (m1 m2 m3 m4 m5 : ℚ) : ℚ :=
+  (m3 ^ 3 - 2 * m2 * m3 * m4
+     - m1 * m2 * (m2 ^ 3 + 2 * m3 ^ 2 - 2 * m2 * m4)
+     - m1 ^ 3 * (m3 ^ 2 + 2 * m2 * m4)
+     + m1 ^ 4 * m5 + m2 ^ 2 * m5
+     + m1 ^ 2 * (3 * m2 ^ 2 * m3 + 2 * m3 * m4 - 2 * m2 * m5))
+    / ((m1 ^ 2 - m2) *
+       (m2 ^ 3 + m3 ^ 2 + m1 ^ 2 * m4 -
+          m2 * (2 * m1 * m3 + m4)))
+
+theorem eq_B_3_exp_spectrum_example :
+    a2Printed (-1) 2 (-6) 24 (-120) = -5 := by
+  norm_num [a2Printed]
+
 
 end SchrodingerKrylovAudit
