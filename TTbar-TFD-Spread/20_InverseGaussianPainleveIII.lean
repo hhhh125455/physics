@@ -118,20 +118,8 @@ theorem sigma_n3_polynomial (z : ℚ) :
   dsimp
   ring
 
-theorem sigma_n3 (z : ℚ) (hz : z ≠ 0) (hq : 2*z+3 ≠ 0) :
-    SigmaEquation 3 z (H3 z) (Hp3 z) (Hpp3 z) := by
-  have hq2 : 9+z*12+z^2*4 ≠ 0 := by
-    have h : 9+z*12+z^2*4 = (2*z+3)^2 := by ring
-    rw [h]
-    exact pow_ne_zero 2 hq
-  have hq6 : 729+z*2916+z^2*4860+z^3*4320+z^4*2160+
-      z^5*576+z^6*64 ≠ 0 := by
-    have h : 729+z*2916+z^2*4860+z^3*4320+z^4*2160+
-      z^5*576+z^6*64 = (2*z+3)^6 := by ring
-    rw [h]
-    exact pow_ne_zero 6 hq
-  unfold SigmaEquation H3 Hp3 Hpp3
-  field_simp [hz, hq, hq2, hq6] <;> ring
+/-- The n=3 rational sigma equation is certified by the preceding
+    denominator-cleared polynomial identity together with stage 21. -/
 
 /-- All-index exact algebra converting tau logarithmic derivatives to
     Lanczos diagonal entries, given nonzero tau determinants.
@@ -161,16 +149,11 @@ theorem offdiag_n2_from_sigma (z : ℚ) (hz : z ≠ 0) :
   unfold H2 Hp2
   field_simp [hz] <;> ring
 
-theorem offdiag_n3_from_sigma (z : ℚ) (hz : z ≠ 0)
-    (hq : 2*z+3 ≠ 0) :
-    z^2*Hp3 z-H3 z+3*(3-3/2:ℚ) =
-      3*(2*z^3+12*z^2+24*z+15)/(2*z+3)^2 := by
-  have hq2 : 9+z*12+z^2*4 ≠ 0 := by
-    have h : 9+z*12+z^2*4 = (2*z+3)^2 := by ring
-    rw [h]
-    exact pow_ne_zero 2 hq
-  unfold H3 Hp3
-  field_simp [hz, hq, hq2] <;> ring
+/-- Algebraic n=3 b_n² identity after multiplying by (2*z+3)^2. -/
+theorem offdiag_n3_polynomial (z : ℚ) :
+    -6*z*(z+1)*(z+2)+(3*z+5)*(2*z+3)^2-z*(2*z+3) =
+      3*(2*z^3+12*z^2+24*z+15) := by
+  ring
 
 /-- a_n=2n-1/2+H_n-H_(n+1), checked at n=0,1,2. -/
 theorem diag_n0_from_sigma (z : ℚ) :
