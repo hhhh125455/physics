@@ -44,6 +44,19 @@ theorem exact_b2_cumulant_identity (A β d : ℝ) (hd : d ≠ 0) :
   unfold k2 k3 k4 B2
   field_simp [hd] <;> ring
 
+/-- Denominator-cleared polynomial identity for a_2. This is a
+    nontrivial exact cumulant identity, requiring only d ≠ 0. -/
+theorem exact_a2_cumulant_poly (A β d : ℝ) (hd : d ≠ 0) :
+    (k2 A d)^3 * B2 A β d *
+      (3*β*(8*A*d+14*β^2-9*d^2)) =
+    ((k2 A d)^2*k5 A β d +
+      4*(k2 A d)^3*k3 A β d -
+      2*k2 A d*k3 A β d*k4 A β d +
+      (k3 A β d)^3) *
+       (d^2*(4*A*d+6*β^2-3*d^2)) := by
+  unfold k2 k3 k4 k5 B2
+  field_simp [hd] <;> ring
+
 /-- The centered fifth moment gives the exact a_2 correction
     after combining the second and fourth moment equations. -/
 theorem exact_a2_cumulant_identity (A β d : ℝ)
@@ -54,14 +67,28 @@ theorem exact_a2_cumulant_identity (A β d : ℝ)
       4*(k2 A d)^3 * k3 A β d -
       2*k2 A d*k3 A β d*k4 A β d +
       (k3 A β d)^3 := by
-  have hH' : A*d*4+β^2*6-d^2*3 ≠ 0 := by
-    intro hz
-    apply hH
-    calc
-      4*A*d+6*β^2-3*d^2 = A*d*4+β^2*6-d^2*3 := by ring
-      _ = 0 := hz
-  unfold k2 k3 k4 k5 B2 A2offset
-  field_simp [hd, hH, hH'] <;> ring
+  have hden : d^2*(4*A*d+6*β^2-3*d^2) ≠ 0 :=
+    mul_ne_zero (pow_ne_zero 2 hd) hH
+  have hp := exact_a2_cumulant_poly A β d hd
+  unfold A2offset
+  calc
+    (k2 A d)^3 * B2 A β d *
+        (3*β*(8*A*d+14*β^2-9*d^2)/
+          (d^2*(4*A*d+6*β^2-3*d^2))) =
+      ((k2 A d)^3 * B2 A β d *
+        (3*β*(8*A*d+14*β^2-9*d^2))) /
+          (d^2*(4*A*d+6*β^2-3*d^2)) := by ring
+    _ = (((k2 A d)^2*k5 A β d +
+      4*(k2 A d)^3*k3 A β d -
+      2*k2 A d*k3 A β d*k4 A β d +
+      (k3 A β d)^3) *
+      (d^2*(4*A*d+6*β^2-3*d^2))) /
+        (d^2*(4*A*d+6*β^2-3*d^2)) := by rw [hp]
+    _ = (k2 A d)^2*k5 A β d +
+      4*(k2 A d)^3*k3 A β d -
+      2*k2 A d*k3 A β d*k4 A β d +
+      (k3 A β d)^3 := by
+      field_simp [hden]
 
 /-- First shifted Jacobi diagonal in the centered variable. -/
 theorem exact_a1_from_variance (A β d : ℝ)
