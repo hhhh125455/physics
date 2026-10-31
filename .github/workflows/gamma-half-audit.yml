@@ -24,6 +24,10 @@ jobs:
           lake exe cache get
       - name: Compile positive Green-Wronskian comparison theorem
         run: lake env lean GammaHalf/InitialGreenWronskian.lean
+      - name: Compile cubic-root initial constraint
+        run: lake env lean GammaHalf/CubicRootInitialConstraint.lean
+      - name: Compile third Volterra comparison certificate
+        run: lake env lean GammaHalf/VolterraThirdIteration.lean
       - name: Compile black-hole inner-family audit
         run: lake env lean GammaHalf/InnerFamily.lean
       - name: Compile characteristic-corner calculus theorems
