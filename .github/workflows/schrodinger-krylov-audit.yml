@@ -1,0 +1,34 @@
+name: Audit Schrodinger Krylov paper with Lean
+
+on:
+  push:
+    branches:
+      - audit-schrodinger-krylov-2026
+    paths:
+      - 'SchrodingerKrylovAudit/**'
+      - '.github/workflows/schrodinger-krylov-audit.yml'
+  workflow_dispatch:
+
+jobs:
+  lean-equation-audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve Mathlib
+        run: lake update
+      - name: Download Mathlib cache
+        run: lake exe cache get
+      - name: Check equation-level Lean proofs
+        run: lake env lean SchrodingerKrylovAudit/01_Algebra.lean
+      - name: Reject proof holes
+        run: |
+          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' SchrodingerKrylovAudit; then
+            echo "Unfinished proof found"; exit 1
+          fi
+          if grep -RnE '^[[:space:]]*(axiom|constant)[[:space:]]' --include='*.lean' SchrodingerKrylovAudit; then
+            echo "Unverified axiom/constant found"; exit 1
+          fi
