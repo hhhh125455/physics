@@ -23,7 +23,8 @@ jobs:
       - name: Download Mathlib cache
         run: lake exe cache get
       - name: Check equation-level Lean proofs
-        run: lake env lean SchrodingerKrylovAudit/01_Algebra.lean
+        run: |
+          lake env lean SchrodingerKrylovAudit/01_Algebra.lean
           lake env lean SchrodingerKrylovAudit/02_ExactDynamics.lean
       - name: Reject proof holes
         run: |
