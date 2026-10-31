@@ -46,3 +46,4 @@ jobs:
           lake env lean TTbar-TFD-Spread/16_GegenbauerAllOrders.lean
           lake env lean TTbar-TFD-Spread/17_LanczosWeightedMeasure.lean
           lake env lean TTbar-TFD-Spread/18_AnalyticCriticalLanczos.lean
+          lake env lean TTbar-TFD-Spread/19_CriticalScaledMGF.lean
