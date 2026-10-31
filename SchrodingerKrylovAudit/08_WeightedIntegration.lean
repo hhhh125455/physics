@@ -31,9 +31,9 @@ theorem original_xweight_hasDerivAt (c q x : ℝ) (hq : 0 ≤ q) :
   have hd : 1 + q * Real.exp (-2 * c * x) ≠ 0 :=
     ne_of_gt (originalWeight_den_pos c q x hq)
   have hlin1 : HasDerivAt (fun y : ℝ => -c * y) (-c) x := by
-    convert (hasDerivAt_id x).const_mul (-c) using 1 <;> ring
+    simpa using (hasDerivAt_id x).const_mul (-c)
   have hlin2 : HasDerivAt (fun y : ℝ => -2 * c * y) (-2 * c) x := by
-    convert (hasDerivAt_id x).const_mul (-2 * c) using 1 <;> ring
+    simpa using (hasDerivAt_id x).const_mul (-2 * c)
   have hE1 : HasDerivAt (fun y : ℝ => Real.exp (-c * y))
       (Real.exp (-c * x) * (-c)) x :=
     (Real.hasDerivAt_exp (-c * x)).comp x hlin1
@@ -42,18 +42,33 @@ theorem original_xweight_hasDerivAt (c q x : ℝ) (hq : 0 ≤ q) :
     (Real.hasDerivAt_exp (-2 * c * x)).comp x hlin2
   have hD : HasDerivAt (fun y : ℝ => 1 + q * Real.exp (-2 * c * y))
       (q * (Real.exp (-2 * c * x) * (-2 * c))) x :=
-    (hasDerivAt_const x (1 : ℝ)).add (hE2.const_mul q)
+by
+      simpa only [Pi.add_apply, zero_add] using
+        (hasDerivAt_const x (1 : ℝ)).add (hE2.const_mul q)
   have hU : HasDerivAt (fun y : ℝ => y ^ 2 * Real.exp (-c * y))
       (2 * x * Real.exp (-c * x) + x ^ 2 * (Real.exp (-c * x) * (-c))) x := by
-    convert ((hasDerivAt_id x).pow 2).mul hE1 using 1 <;> ring
+    have hh := ((hasDerivAt_id x).pow 2).mul hE1
+    simpa [pow_succ, pow_zero, mul_comm, mul_left_comm, mul_assoc] using hh
   have hmain := hU.div hD hd
-  convert hmain using 1
-  · funext y
-    simp only [originalWeight]
+  have hfun :
+      (fun y : ℝ => y * originalWeight c q y) =
+      (fun y : ℝ => (y ^ 2 * Real.exp (-c * y)) /
+        (1 + q * Real.exp (-2 * c * y))) := by
+    funext y
+    unfold originalWeight
     ring
-  · unfold originalWeight originalRho
-    field_simp
-    <;> ring
+  rw [hfun]
+  have hder :
+    (2 - c * x + 2 * c * x * originalRho c q x) * originalWeight c q x =
+    ((2 * x * Real.exp (-c * x) + x ^ 2 * (Real.exp (-c * x) * (-c))) *
+       (1 + q * Real.exp (-2 * c * x)) -
+      x ^ 2 * Real.exp (-c * x) * (q * (Real.exp (-2 * c * x) * (-2 * c)))) /
+      (1 + q * Real.exp (-2 * c * x)) ^ 2 := by
+    unfold originalWeight originalRho
+    field_simp [hd]
+    ring
+  rw [hder]
+  exact hmain
 
 /-- The product rule needed for the diagonal Freud sum rule, including
 the nonpolynomial logistic weight exactly. -/
@@ -65,7 +80,10 @@ theorem original_xwP2_hasDerivAt
       (((2 - c * x + 2 * c * x * originalRho c q x) *
           originalWeight c q x) * (P x) ^ 2
        + (x * originalWeight c q x) * (2 * P x * P' x)) x := by
-  convert ((original_xweight_hasDerivAt c q x hq).mul (hP.pow 2)) using 1 <;> ring
+  have hP2 : HasDerivAt (fun y : ℝ => (P y) ^ 2)
+      (2 * P x * P' x) x := by
+    simpa [pow_two, two_mul, mul_comm, mul_left_comm, mul_assoc] using hP.mul hP
+  exact (original_xweight_hasDerivAt c q x hq).mul hP2
 
 /-- A genuine finite-interval integration-by-parts formula, with
 its derivative/integrability hypotheses exposed rather than hidden. -/
