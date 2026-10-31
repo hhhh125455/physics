@@ -57,13 +57,11 @@ theorem tau_one (z : ℚ) : tau 1 z = 1 := by
   simp [tau, Matrix.det_fin_one, mom]
 
 theorem tau_two (z : ℚ) : tau 2 z = z/2 := by
-  simp [tau, Matrix.det_fin_two, mom]
-  ring
+  simp [tau, Matrix.det_fin_two, mom] <;> ring
 
 theorem tau_three (z : ℚ) :
     tau 3 z = z^2*(2*z+3)/8 := by
-  simp [tau, Matrix.det_fin_three, mom]
-  ring
+  simp [tau, Matrix.det_fin_three, mom] <;> ring
 
 /-- Exact low-order Jacobi/Lanczos expressions (x is scaled energy). -/
 theorem b1sq (z : ℚ) :
@@ -127,10 +125,8 @@ theorem all_index_jacobi_from_tau
   ring
 
 /-- At n=1 the inverse-Gaussian a_1 is exactly z+3/2. -/
-theorem a1_exact (z : ℚ) :
+theorem a1_exact (z : ℚ) (hz : z ≠ 0) :
     (z+2) - (z/2)*((1:ℚ)/z) = z+3/2 := by
-  -- This quotient is only defined as expected away from z=0;
-  -- hence the physically relevant version includes z ≠ 0 below.
-  sorry
+  field_simp [hz] <;> ring
 
 end IG_PIII
