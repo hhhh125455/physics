@@ -1,0 +1,26 @@
+name: BTZ Wightman Krylov Lean verification
+on:
+  push:
+    paths:
+      - 'ClassicalSpinKrylov/BTZWightman.lean'
+      - '.github/workflows/black-hole-wightman.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve pinned Mathlib and cache
+        run: |
+          lake update
+          lake exe cache get
+      - name: Compile frozen BTZ statements
+        run: lake env lean ClassicalSpinKrylov/BTZWightman.lean
+      - name: Reject sorry, admit and extra axioms
+        run: |
+          if grep -nE '\b(sorry|admit)\b|^[[:space:]]*(axiom|constant)[[:space:]]' ClassicalSpinKrylov/BTZWightman.lean | grep -v '^'; then exit 1; fi
+          if grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)[[:space:]]' ClassicalSpinKrylov/BTZWightman.lean; then exit 1; fi
