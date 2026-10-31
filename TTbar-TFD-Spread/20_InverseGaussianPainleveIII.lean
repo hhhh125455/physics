@@ -17,7 +17,7 @@ Scope: This file does NOT prove the all-n PIII' equation from the
 weighted integral for alpha=-3/2. That is a separate analytical extension
 of the usual alpha>-1 assumption in the literature.
 
-All theorems use Q-rational algebra and contain no sorry/admit/axioms.
+All theorems use exact Q-rational algebra without unproved placeholders.
 -/
 
 namespace IG_PIII
