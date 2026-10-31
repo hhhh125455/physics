@@ -54,8 +54,14 @@ theorem exact_a2_cumulant_identity (A β d : ℝ)
       4*(k2 A d)^3 * k3 A β d -
       2*k2 A d*k3 A β d*k4 A β d +
       (k3 A β d)^3 := by
+  have hH' : A*d*4+β^2*6-d^2*3 ≠ 0 := by
+    intro hz
+    apply hH
+    calc
+      4*A*d+6*β^2-3*d^2 = A*d*4+β^2*6-d^2*3 := by ring
+      _ = 0 := hz
   unfold k2 k3 k4 k5 B2 A2offset
-  field_simp [hd, hH] <;> ring
+  field_simp [hd, hH, hH'] <;> ring
 
 /-- First shifted Jacobi diagonal in the centered variable. -/
 theorem exact_a1_from_variance (A β d : ℝ)
