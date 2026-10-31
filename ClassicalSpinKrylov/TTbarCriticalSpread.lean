@@ -52,4 +52,15 @@ theorem variance_above_any_threshold
   apply (lt_div_iff₀ (pow_pos hd 3)).2
   nlinarith
 
+/-- The algebraic beta derivative of the exact saddle mean energy:
+    -∂_beta <E> = 2*A/d^3 after using d^2=beta^2-4*mu*A.
+    Derivative identities themselves are independently checked in SymPy. -/
+theorem variance_from_mean_slope
+    (beta mu A d : ℝ) (hmu : mu ≠ 0) (hd : d ≠ 0)
+    (hgap : d^2 = beta^2 - 4*mu*A) :
+    - ((d^2 - beta^2) / (2*mu*d^3)) = 2*A/d^3 := by
+  field_simp
+  nlinarith [hgap]
+
+
 end TTbarCriticalSpread
