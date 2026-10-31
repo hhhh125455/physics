@@ -1,0 +1,29 @@
+name: Audit scalar field JHEP11(2024)014 exact moments
+on:
+  push:
+    branches: [audit-scalar-general-temp-2024]
+  workflow_dispatch:
+jobs:
+  scalar-analytic:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve Mathlib
+        run: lake update
+      - name: Cache Mathlib
+        run: lake exe cache get
+      - name: Compile exact scalar spectrum proofs
+        run: |
+          lake env lean Scalar2024/01_ExactMoments.lean
+      - name: Reject placeholders and new axioms
+        run: |
+          if grep -RnE '(^|[[:space:]])(sorry|admit)([[:space:]]|$)' --include='*.lean' Scalar2024; then
+            echo "Proof hole detected"; exit 1
+          fi
+          if grep -RnE '^[[:space:]]*(axiom|constant)[[:space:]]' --include='*.lean' Scalar2024; then
+            echo "New axiom detected"; exit 1
+          fi
