@@ -27,6 +27,7 @@ jobs:
           lake env lean SchrodingerKrylovAudit/01_Algebra.lean
           lake env lean SchrodingerKrylovAudit/02_ExactDynamics.lean
           lake env lean SchrodingerKrylovAudit/03_MeixnerPollaczek.lean
+          lake env lean SchrodingerKrylovAudit/04_OriginalSpectrum.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' SchrodingerKrylovAudit; then
