@@ -1,0 +1,75 @@
+name: Gamma-half inner-family Lean audit
+
+on:
+  push:
+    branches:
+      - research/gamma-half-lean-audit-20261031
+
+concurrency:
+  group: gamma-half-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  formal-check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Download Mathlib
+        run: |
+          lake update
+          lake exe cache get
+      - name: Compile positive Green-Wronskian comparison theorem
+        run: lake env lean GammaHalf/InitialGreenWronskian.lean
+      - name: Compile cubic-root initial constraint
+        run: lake env lean GammaHalf/CubicRootInitialConstraint.lean
+      - name: Compile third Volterra comparison certificate
+        run: lake env lean GammaHalf/VolterraThirdIteration.lean
+      - name: Compile black-hole inner-family audit
+        run: lake env lean GammaHalf/InnerFamily.lean
+      - name: Compile characteristic-corner calculus theorems
+        run: lake env lean GammaHalf/CharacteristicCorner.lean
+      - name: Compile local singular-corner rectangle theorem
+        run: lake env lean GammaHalf/LocalRectangle.lean
+      - name: Compile linear-area and coupled-leading balances
+        run: lake env lean GammaHalf/LinearAreaBranch.lean
+      - name: Compile exact finite-amplitude comparison identity
+        run: lake env lean GammaHalf/AmplitudeDifference.lean
+      - name: Compile homogeneous blowup rigidity theorem
+        run: lake env lean GammaHalf/BlowupRigidity.lean
+      - name: Compile exact charged-area counterfamilies
+        run: lake env lean GammaHalf/AreaCounterfamilies.lean
+      - name: Compile odd angular scalar boundary no-go
+        run: lake env lean GammaHalf/OddAngularBoundary.lean
+      - name: Compile full Einstein constraint obstruction
+        run: lake env lean GammaHalf/FullConstraintObstruction.lean
+      - name: Compile full coupled Einstein-scalar first variations
+        run: lake env lean GammaHalf/CoupledFirstJets.lean
+      - name: Compile initial constraint amplitude response
+        run: lake env lean GammaHalf/InitialConstraintResponse.lean
+      - name: Compile renormalized flux and constraint obstruction
+        run: lake env lean GammaHalf/RenormalizedFlux.lean
+      - name: Compile charged flux near-tip scaling
+        run: lake env lean GammaHalf/FluxScaling.lean
+      - name: Compile explicit fractional charged area correction
+        run: lake env lean GammaHalf/FractionalChargeCorrection.lean
+      - name: Compile null charge-flux transport equation
+        run: lake env lean GammaHalf/NullFluxTransport.lean
+      - name: Compile invariant charged curvature and critical scaling bounds
+        run: lake env lean GammaHalf/CurvatureLowerBound.lean
+      - name: Compile one-sided response barrier and square-root theorem
+        run: lake env lean GammaHalf/TransversalityBarrier.lean
+      - name: Compile second amplitude variation and initial concavity
+        run: lake env lean GammaHalf/SecondVariation.lean
+      - name: Compile full initial constraint response ODE
+        run: lake env lean GammaHalf/InitialResponseODE.lean
+      - name: Compile concavity bounds and counterexample
+        run: lake env lean GammaHalf/ConcavityDoesNotFixGamma.lean
+      - name: Reject proof holes
+        run: |
+          if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' GammaHalf; then
+            echo 'Unfinished proof placeholder detected'; exit 1
+          fi
