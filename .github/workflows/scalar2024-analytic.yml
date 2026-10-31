@@ -20,6 +20,8 @@ jobs:
         run: |
           lake env lean Scalar2024/01_ExactMoments.lean
           lake env lean Scalar2024/02_HankelKrylov.lean
+          lake env lean Scalar2024/03_MassCrossover.lean
+          lake env lean Scalar2024/04_ComplexitySixthOrder.lean
       - name: Reject placeholders and new axioms
         run: |
           if grep -RnE '(^|[[:space:]])(sorry|admit)([[:space:]]|$)' --include='*.lean' Scalar2024; then
