@@ -28,7 +28,10 @@ theorem small_mass_log_is_not_quadratic :
         (fun M : ℝ => Real.log M) := by
     filter_upwards [self_mem_nhdsWithin] with M hM
     have hzero : M ^ 2 ≠ 0 := pow_ne_zero _ (ne_of_gt hM)
-    field_simp [hzero]
+    calc
+      M ^ 2 * Real.log M / M ^ 2 =
+        (M ^ 2 / M ^ 2) * Real.log M := by ring
+      _ = Real.log M := by simp [hzero]
   exact Real.tendsto_log_nhdsGT_zero.congr' h_eq.symm
 
 /-- An abstract two-site normalization identity. Applying it to the
