@@ -86,4 +86,41 @@ theorem ratio_inversion_identity (q : ℝ) :
   field_simp [hp]
   ring
 
+
+/-!
+The following formalizes the algebraic K(t) jet:
+  K''(0) = 2*b1^2,  K''''(0) = 4*b1^2*(b2^2 - 2*b1^2).
+These two derivative identities are derived separately from the Krylov-chain
+short-time expansion, not proved as derivatives of an infinite-dimensional
+evolution in this file.
+-/
+
+/-- Reconstruction of the Lanczos ratio from the fourth and second K jets. -/
+theorem kjet_reconstruction (h b1Sq b2Sq : ℝ) (hb : b1Sq ≠ 0) :
+    h * (4 * b1Sq * (b2Sq - 2 * b1Sq)) / (2 * b1Sq) ^ 2 =
+      h * (b2Sq / b1Sq - 2) := by
+  field_simp [hb]
+  ring
+
+/-- The dimensionless black-hole fingerprint written directly with K jets. -/
+theorem horizon_from_kjet (h x y : ℝ)
+    (hh : h ≠ 0) (hs : x + y ≠ 0) :
+    h * (4 * mu2 h x y * (b2Sq h x y - 2 * mu2 h x y)) /
+        (2 * mu2 h x y) ^ 2 = fingerprint x y := by
+  have hb : mu2 h x y ≠ 0 := by
+    unfold mu2
+    exact mul_ne_zero (mul_ne_zero (by norm_num) hh) hs
+  calc
+    h * (4 * mu2 h x y * (b2Sq h x y - 2 * mu2 h x y)) /
+        (2 * mu2 h x y) ^ 2 =
+      h * (b2Sq h x y / mu2 h x y - 2) :=
+        kjet_reconstruction h (mu2 h x y) (b2Sq h x y) hb
+    _ = fingerprint x y := fingerprint_from_lanczos h x y hh hs
+
+/-- Short-time Krylov chain probability expansion, as a polynomial identity. -/
+theorem kjet_from_first_two_amplitudes (u v : ℝ) :
+    -(u ^ 4 + u ^ 2 * v ^ 2) / 3 + u ^ 2 * v ^ 2 / 2 =
+      u ^ 2 * (v ^ 2 - 2 * u ^ 2) / 6 := by
+  ring
+
 end BTZWightman
