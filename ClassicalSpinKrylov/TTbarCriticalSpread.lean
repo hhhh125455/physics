@@ -75,7 +75,7 @@ theorem sqrt_gap_hasDerivAt (beta mu A : ℝ)
     HasDerivAt (fun x : ℝ => Real.sqrt (x^2 - 4*mu*A))
       ((1 / (2*Real.sqrt (beta^2 - 4*mu*A))) * (2*beta)) beta := by
   have hpoly : HasDerivAt (fun x : ℝ => x^2 - 4*mu*A) (2*beta) beta := by
-    convert (((hasDerivAt_id beta).pow 2).sub_const (4*mu*A)) using 1 <;> (try { funext x }) <;> ring
+    simpa [id_eq] using (((hasDerivAt_id beta).pow 2).sub_const (4*mu*A))
   exact (Real.hasDerivAt_sqrt (ne_of_gt hgap)).comp beta hpoly
 
 theorem logZ_hasDerivAt (beta mu A : ℝ)
@@ -98,7 +98,7 @@ theorem meanEnergy_hasDerivAt_raw (beta mu A : ℝ)
     ne_of_gt (Real.sqrt_pos.2 hgap)
   have hquot := (hasDerivAt_id beta).div
     (sqrt_gap_hasDerivAt beta mu A hgap) hnonzero
-  simpa only [id_eq, one_mul] using (hquot.sub_const 1).div_const (2*mu)
+  simpa [id_eq] using (hquot.sub_const 1).div_const (2*mu)
 
 /-- The negative derivative of the saddle mean energy is exactly
 the same 2*A/d^3 that appears in the TFD short-time curvature. -/
