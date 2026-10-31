@@ -25,9 +25,12 @@ theorem laplace_monomial (k : ℕ) (a : ℝ) (ha : 0 < a) :
           simp [Real.rpow_natCast]
     _ = (1 / a) ^ ((k : ℝ) + 1) * Gamma ((k : ℝ) + 1) := h
     _ = (k.factorial : ℝ) / a ^ (k + 1) := by
-          simp [← Nat.cast_add_one, Gamma_nat_eq_factorial,
-            Real.rpow_natCast, one_div, inv_pow, div_eq_mul_inv]
-          ring
+          have hG : Gamma ((k : ℝ) + 1) = (k.factorial : ℝ) :=
+            Gamma_nat_eq_factorial k
+          have hpow : (1 / a) ^ ((k : ℝ) + 1) = (1 / a) ^ (k + 1) := by
+            norm_cast
+          rw [hG, hpow]
+          simp [one_div, inv_pow, div_eq_mul_inv, mul_comm]
 
 theorem massive_gap_shift (m x : ℝ) :
     (m + x) ^ 2 - m ^ 2 = x ^ 2 + 2 * m * x := by ring
@@ -69,6 +72,6 @@ theorem massless_lanczos_first_two
   apply (mul_left_cancel₀ h2)
   calc
     mu2 * b2sq = mu4 - mu2 ^ 2 := hnorm
-    _ = mu2 * (mu4 / mu2 - mu2) := by field_simp; ring
+    _ = mu2 * (mu4 / mu2 - mu2) := by field_simp
 
 end Scalar2024
