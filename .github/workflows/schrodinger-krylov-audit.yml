@@ -32,6 +32,7 @@ jobs:
           lake env lean SchrodingerKrylovAudit/06_BestApproxQuadratic.lean
           lake env lean SchrodingerKrylovAudit/07_SpectrumSignCheck.lean
           lake env lean SchrodingerKrylovAudit/08_WeightedIntegration.lean
+          lake env lean SchrodingerKrylovAudit/09_DoubleCommutator.lean
       - name: Reject proof holes
         run: |
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' SchrodingerKrylovAudit; then
