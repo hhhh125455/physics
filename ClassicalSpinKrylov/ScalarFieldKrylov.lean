@@ -26,10 +26,10 @@ open scoped Topology
 namespace ScalarFieldKrylov
 
 /-- Fourier-mode Lagrangian from the spatially integrated scalar action. -/
-def modeLag (k q v : ℝ) : ℝ := (v^2 - k^2*q^2)/2
+noncomputable def modeLag (k q v : ℝ) : ℝ := (v^2 - k^2*q^2)/2
 
 /-- Fourier-mode canonical Hamiltonian. -/
-def modeHam (k q p : ℝ) : ℝ := (p^2 + k^2*q^2)/2
+noncomputable def modeHam (k q p : ℝ) : ℝ := (p^2 + k^2*q^2)/2
 
 theorem legendre_recovery (k q p : ℝ) :
     p*p - modeLag k q p = modeHam k q p := by
@@ -49,16 +49,13 @@ theorem complex_mode_drift (k q p : ℂ) :
   calc
     k*p - Complex.I*(k^2*q) =
         k*p - Complex.I*k^2*q := by ring
-    _ = -(Complex.I*k)*(k*q + Complex.I*p) := by
-      calc
-        k*p - Complex.I*k^2*q =
-            k*p - Complex.I*k^2*q := rfl
-        _ = -(Complex.I*k)*(k*q + Complex.I*p) := by
-          simp only [Complex.I_mul_I]
-          ring
+    _ = -Complex.I*k^2*q - Complex.I^2*k*p := by
+      rw [Complex.I_sq]
+      ring
+    _ = -(Complex.I*k)*(k*q + Complex.I*p) := by ring
 
 /-- k starts at one: w_k=2^{-k} is the positive-frequency weight. -/
-def spectralWeight (j : ℕ) : ℝ := (1/2 : ℝ)^(j+1)
+noncomputable def spectralWeight (j : ℕ) : ℝ := (1/2 : ℝ)^(j+1)
 
 theorem spectral_weight_finite (N : ℕ) :
     (∑ j ∈ Finset.range N, spectralWeight j) =
@@ -135,9 +132,16 @@ theorem partial_complexity_closed (r : ℝ) (N : ℕ) :
         unfold partialComplexity
         rw [Finset.sum_range_succ]
       rw [hs]
-      simp only [krylovProb, pow_succ]
-      push_cast
-      nlinarith [ih]
+      simp only [krylovProb]
+      calc
+        (1-r) * (partialComplexity r N + (N : ℝ)*((1-r)*r^N)) =
+          (1-r)*partialComplexity r N + (N : ℝ)*(1-r)^2*r^N := by ring
+        _ = r - ((N+1 : ℕ) : ℝ)*r^(N+1) +
+              (((N+1 : ℕ) : ℝ)-1)*r^((N+1)+1) := by
+            rw [ih]
+            push_cast
+            simp only [pow_succ]
+            ring
 
 /-- Direct closed form for the untruncated geometric Krylov mean. -/
 noncomputable def geometricMean (r : ℝ) : ℝ := r / (1-r)
@@ -153,7 +157,6 @@ theorem mean_substitution (s : ℝ) (hs : 0 ≤ s) :
   rw [hOne]
   unfold spreadRatio
   field_simp
-  ring
 
 /-- First two Lanczos coefficients for the infinite geometric spectrum. -/
 def diagonalCoeff (n : ℕ) : ℝ := 3*n+2
@@ -167,7 +170,13 @@ theorem first_offdiag_square : offDiagonalCoeff 1 ^ 2 = 2 := by
   simp [offDiagonalCoeff, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
 theorem second_offdiag_square : offDiagonalCoeff 2 ^ 2 = 8 := by
-  simp [offDiagonalCoeff, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
-  <;> ring
+  have h : Real.sqrt 2 ^ 2 = (2 : ℝ) :=
+    Real.sq_sqrt (by norm_num)
+  unfold offDiagonalCoeff
+  norm_num
+  calc
+    (Real.sqrt 2 * (2 : ℝ))^2 =
+      (Real.sqrt 2)^2 * 4 := by ring
+    _ = 8 := by rw [h]; norm_num
 
 end ScalarFieldKrylov
