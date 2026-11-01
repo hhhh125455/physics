@@ -46,11 +46,16 @@ theorem completedPair_skew
     (hskew : ∀ v u, omega v u = -omega u v)
     (p t : V × (Fin r → ℝ)) :
     completedPair omega q p t = - completedPair omega q t p := by
-  simp only [completedPair]
+  unfold completedPair
   rw [hskew p.1 t.1]
-  congr 1
-  apply Finset.sum_congr rfl
-  intro a ha
+  have hs :
+      (∑ a : Fin r, (q a p.1 * t.2 a - q a t.1 * p.2 a)) =
+        -(∑ a : Fin r, (q a t.1 * p.2 a - q a p.1 * t.2 a)) := by
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro a ha
+    ring
+  rw [hs]
   ring
 
 /-- A nondegeneracy lemma formulated directly as a kernel criterion.
