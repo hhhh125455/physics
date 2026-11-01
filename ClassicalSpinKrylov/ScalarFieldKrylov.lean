@@ -172,8 +172,7 @@ theorem first_offdiag_square : offDiagonalCoeff 1 ^ 2 = 2 := by
 theorem second_offdiag_square : offDiagonalCoeff 2 ^ 2 = 8 := by
   have h : Real.sqrt 2 ^ 2 = (2 : ℝ) :=
     Real.sq_sqrt (by norm_num)
-  unfold offDiagonalCoeff
-  norm_num
+  change (Real.sqrt 2 * (2 : ℝ))^2 = 8
   calc
     (Real.sqrt 2 * (2 : ℝ))^2 =
       (Real.sqrt 2)^2 * 4 := by ring
