@@ -239,7 +239,7 @@ theorem finiteMoment_tendsto (n : ℕ) :
     funext N
     rfl
   rw [heq] at h
-  simpa only [div_one] using h
+  simpa only [finiteMoment, div_one] using h
 
 
 end SpinSeries
