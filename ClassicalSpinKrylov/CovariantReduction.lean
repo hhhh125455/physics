@@ -234,9 +234,12 @@ theorem finiteMoment_tendsto (n : ℕ) :
     simpa [momentNumerator] using
       (geomSum_tendsto (ratio n) hb.1 hb.2).const_mul (spinMomentCoeff n)
   have h := hn.div normWeight_tendsto_one (by norm_num : (1 : ℝ) ≠ 0)
-  change Filter.Tendsto (fun N : ℕ => momentNumerator N n / normWeight N)
-    Filter.atTop (𝓝 (spinMomentCoeff n * (ratio n / (1 - ratio n))))
-  exact h
+  have heq : ((fun N : ℕ => momentNumerator N n) / normWeight) =
+      (fun N : ℕ => momentNumerator N n / normWeight N) := by
+    funext N
+    rfl
+  rw [heq] at h
+  simpa only [div_one] using h
 
 
 end SpinSeries
