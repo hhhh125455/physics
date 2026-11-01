@@ -33,6 +33,13 @@ namespace ClassicalGravityKrylov
 section TT
 noncomputable def gravMass (G : ℝ) : ℝ := Real.pi / (8*G)
 
+/-- Exact TT quadratic action factor from the transverse area (2π)². -/
+theorem gravMass_from_EinsteinHilbert (G : ℝ) (hG : G ≠ 0) :
+    (2*Real.pi)^2/(32*Real.pi*G) = gravMass G := by
+  unfold gravMass
+  field_simp
+  <;> ring
+
 noncomputable def gravModeLag (M k a v : ℝ) : ℝ :=
   M/2 * (v^2 - k^2*a^2)
 
@@ -246,4 +253,75 @@ theorem second_lanczos_squared :
     ((150 : ℝ)-14*26+65*6-112*2+64)/2=8 := by norm_num
 
 end InfiniteModes
+/-!
+# Asymptotically flat gravitational curvature wavepacket
+Physical radial spectral density proportional to
+  ω² (three-dimensional density of states) × ω² (Weyl curvature variance)
+  × exp(-λ ω) (chosen smearing).
+Thus dν=(λ⁵/24) ω⁴ exp(-λ ω) dω.
+Laguerre α=4 gives a_n=(2n+5)/λ, b_n=√(n(n+4))/λ,
+and the negative-binomial Krylov probability yields K=5 t²/λ².
+The statements below verify algebraic identities only. Gamma integrations
+and full Laguerre spectral theorem are not formalized here.
+-/
+
+noncomputable def continuumRatio (lam t : ℝ) : ℝ :=
+  t^2/(lam^2+t^2)
+
+theorem continuumRatio_bounds (lam t : ℝ) (hlam : 0 < lam) :
+    0 ≤ continuumRatio lam t ∧ continuumRatio lam t < 1 := by
+  have hd : 0 < lam^2+t^2 := by positivity
+  constructor
+  · unfold continuumRatio
+    positivity
+  · unfold continuumRatio
+    apply (div_lt_one hd).2
+    have hl : 0 < lam^2 := by positivity
+    linarith
+
+/-- Exact mean of the negative-binomial (shape five) probability, conditional
+on its standard normalized generating function. -/
+noncomputable def continuumMean (r : ℝ) : ℝ := 5*r/(1-r)
+
+theorem continuum_complexity_formula (lam t : ℝ) (hlam : 0 < lam) :
+    continuumMean (continuumRatio lam t) = 5*t^2/lam^2 := by
+  have hd : lam^2+t^2 ≠ 0 := ne_of_gt (by positivity)
+  have hl : lam^2 ≠ 0 := ne_of_gt (by positivity)
+  have he : 1-continuumRatio lam t =
+      lam^2/(lam^2+t^2) := by
+    unfold continuumRatio
+    field_simp
+    ring
+  unfold continuumMean
+  rw [he]
+  unfold continuumRatio
+  field_simp
+  <;> ring
+
+/-- For normalized amplitudes c_n α^5 ρ^n, c_n=sqrt((n+4)!/(4!n!)),
+the weighted Jacobi recursion reduces at every n≥1 to this equality. -/
+theorem laguerre_recurrence_all (r : ℂ) (n : ℕ) :
+    5*(1+r)*r^(n+1)+(n+1)*(1+r)^2*r^n =
+    (n+6)*r^(n+2)+(2*(n+1)+5)*r^(n+1)+(n+1)*r^n := by
+  have h1 : r^(n+1) = r^n*r := by rw [pow_succ]
+  have h2 : r^(n+2) = r^n*r*r := by
+    rw [show n+2 = (n+1)+1 by omega, pow_succ, pow_succ]
+  rw [h1, h2]
+  push_cast
+  ring
+
+/-- n=0 member of the same infinite Jacobi recurrence. -/
+theorem laguerre_recurrence_zero (r : ℂ) :
+    5*(1+r) = 5+5*r := by ring
+
+/-- The spectral shape-five low moments are 5,30,210,1680 at λ=1.
+Here we check the Lanczos rational identities, not the Gamma integrations. -/
+theorem gamma5_first_b_sq : (30:ℝ)-5^2=5 := by norm_num
+
+theorem gamma5_next_a : ((210:ℝ)-2*5*30+5^2*5)/5 = 7 := by norm_num
+
+theorem gamma5_second_b_sq :
+    ((1680:ℝ)-24*210+204*30-720*5+900)/5 = 12 := by norm_num
+
+
 end ClassicalGravityKrylov
