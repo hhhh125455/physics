@@ -219,7 +219,8 @@ theorem normWeight_tendsto_one :
     Filter.Tendsto normWeight Filter.atTop (𝓝 (1 : ℝ)) := by
   have h := geomSum_tendsto (1 / 2 : ℝ) (by norm_num) (by norm_num)
   have he : (1 / 2 : ℝ) / (1 - 1 / 2) = 1 := by norm_num
-  simpa [normWeight, he] using h
+  rw [he] at h
+  exact h
 
 /-- The *normalized* finite-N moments converge for every n. -/
 theorem finiteMoment_tendsto (n : ℕ) :
@@ -233,7 +234,9 @@ theorem finiteMoment_tendsto (n : ℕ) :
     simpa [momentNumerator] using
       (geomSum_tendsto (ratio n) hb.1 hb.2).const_mul (spinMomentCoeff n)
   have h := hn.div normWeight_tendsto_one (by norm_num : (1 : ℝ) ≠ 0)
-  simpa [finiteMoment] using h
+  change Filter.Tendsto (fun N : ℕ => momentNumerator N n / normWeight N)
+    Filter.atTop (𝓝 (spinMomentCoeff n * (ratio n / (1 - ratio n))))
+  exact h
 
 
 end SpinSeries
