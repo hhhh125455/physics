@@ -116,12 +116,10 @@ theorem presymplectic_kernel_exact
     have h0 := hv (fun i => if i = 0 then (1 : ℝ) else 0)
     have h1' : (2*e/phi)*v 0 = 0 := by
       simpa [presymplectic] using h1
-    have h0' : (2*e/phi)*(v 1+v 2) = 0 := by
-      have hx : -(2*e/phi)*(v 1+v 2) = 0 := by
-        simpa [presymplectic] using h0
+    have h12 : v 1+v 2 = 0 := by
+      simp [presymplectic, he, hphi] at h0
       linarith
-    exact ⟨(mul_eq_zero.mp h1').resolve_left hc,
-      (mul_eq_zero.mp h0').resolve_left hc⟩
+    exact ⟨(mul_eq_zero.mp h1').resolve_left hc, h12⟩
   · rintro ⟨h0, h12⟩ w
     simp [presymplectic, h0, h12]
 
