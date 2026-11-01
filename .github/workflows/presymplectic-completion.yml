@@ -1,0 +1,26 @@
+name: Presymplectic completion Lean verification
+on:
+  push:
+    branches: [research/presymplectic-completion-20261101]
+    paths:
+      - 'ClassicalSpinKrylov/PresymplecticCompletion.lean'
+      - '.github/workflows/presymplectic-completion.yml'
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve Mathlib
+        run: lake update
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+      - name: Check frozen completion theorems
+        run: lake env lean ClassicalSpinKrylov/PresymplecticCompletion.lean
+      - name: Reject proof gaps and local new axioms
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)([[:space:]]|$)' ClassicalSpinKrylov/PresymplecticCompletion.lean; then exit 1; fi
