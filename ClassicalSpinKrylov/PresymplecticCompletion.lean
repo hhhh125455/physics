@@ -48,7 +48,6 @@ theorem completedPair_skew
     completedPair omega q p t = - completedPair omega q t p := by
   simp only [completedPair]
   rw [hskew p.1 t.1]
-  simp only [Finset.sum_neg_distrib]
   congr 1
   apply Finset.sum_congr rfl
   intro a ha
@@ -81,7 +80,6 @@ theorem completedPair_nondegenerate_of_kernel_test
     have hj := h (k j, 0)
     simp only [completedPair] at hj
     simp at hj
-    simp only [Finset.sum_neg_distrib] at hj
     rw [hωk j] at hj
     linarith
   have hw : p.2 = 0 := hB p.2 hwTest
