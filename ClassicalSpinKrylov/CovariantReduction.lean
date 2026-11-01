@@ -97,6 +97,29 @@ theorem residual_norm_recovery (r : S ≃ P)
       (residual L a b previous current) := by
   rw [residual_recovery, inner_recovery]
 
+/-- No arbitrary covariant inner product: compatibility on all observables forces uniqueness. -/
+theorem inner_unique (r : S ≃ P)
+    (inner : (P → ℝ) → (P → ℝ) → ℝ)
+    (innerCov : (S → ℝ) → (S → ℝ) → ℝ)
+    (compat : ∀ f g, innerCov (pull r f) (pull r g) = inner f g)
+    (F G : S → ℝ) :
+    innerCov F G = covInner r inner F G := by
+  calc
+    innerCov F G =
+      innerCov (pull r (push r F)) (pull r (push r G)) := by
+        simp only [pull_push]
+    _ = inner (push r F) (push r G) := compat _ _
+    _ = covInner r inner F G := rfl
+
+/-- The diagonal Lanczos expectation is transported without changing its value. -/
+theorem alpha_recovery (r : S ≃ P)
+    (inner : (P → ℝ) → (P → ℝ) → ℝ)
+    (L : (P → ℝ) → (P → ℝ)) (f : P → ℝ) :
+    covInner r inner (pull r f) (covL r L (pull r f)) =
+      inner f (L f) := by
+  rw [evolution_recovery, inner_recovery]
+
+
 end Transport
 
 section SpinSeries
@@ -162,6 +185,54 @@ theorem second_lanczos_square :
     limitMoment 2 / limitMoment 1 - limitMoment 1 = 74 / 1085 := by
   rw [limitMoment_two, limitMoment_four]
   norm_num
+
+/-- The finite geometric sum converges to its exact infinite value. -/
+theorem geomSum_tendsto (q : ℝ) (h0 : 0 ≤ q) (h1 : q < 1) :
+    Filter.Tendsto (geomSum q) Filter.atTop (𝓝 (q / (1 - q))) := by
+  have hq : q ≠ 1 := ne_of_lt h1
+  have hpow : Filter.Tendsto (fun N : ℕ => q ^ (N + 1))
+      Filter.atTop (𝓝 (0 : ℝ)) := by
+    have h := tendsto_pow_atTop_nhds_zero_of_lt_one h0 h1
+    simpa [pow_succ] using h.mul tendsto_const_nhds
+  have ht : Filter.Tendsto
+      (fun N : ℕ => (q - q ^ (N + 1)) * (1 - q)⁻¹)
+      Filter.atTop (𝓝 ((q - 0) * (1 - q)⁻¹)) := by
+    exact (tendsto_const_nhds.sub hpow).mul tendsto_const_nhds
+  have heq : geomSum q = (fun N : ℕ => (q - q ^ (N + 1)) * (1 - q)⁻¹) := by
+    funext N
+    rw [geomSum_closed q hq N, div_eq_mul_inv]
+  rw [heq]
+  simpa [div_eq_mul_inv] using ht
+
+theorem ratio_bounds (n : ℕ) : 0 ≤ ratio n ∧ ratio n < 1 := by
+  constructor
+  · unfold ratio
+    positivity
+  · unfold ratio
+    apply pow_lt_one₀ (by norm_num : (0 : ℝ) ≤ 1 / 2)
+      (by norm_num : (1 / 2 : ℝ) < 1)
+    omega
+
+theorem normWeight_tendsto_one :
+    Filter.Tendsto normWeight Filter.atTop (𝓝 (1 : ℝ)) := by
+  have h := geomSum_tendsto (1 / 2 : ℝ) (by norm_num) (by norm_num)
+  have he : (1 / 2 : ℝ) / (1 - 1 / 2) = 1 := by norm_num
+  simpa [normWeight, he] using h
+
+/-- The *normalized* finite-N moments converge for every n. -/
+theorem finiteMoment_tendsto (n : ℕ) :
+    Filter.Tendsto (fun N : ℕ => finiteMoment N n)
+      Filter.atTop
+      (𝓝 (spinMomentCoeff n * (ratio n / (1 - ratio n)))) := by
+  have hb := ratio_bounds n
+  have hn : Filter.Tendsto (fun N : ℕ => momentNumerator N n)
+      Filter.atTop
+      (𝓝 (spinMomentCoeff n * (ratio n / (1 - ratio n)))) := by
+    simpa [momentNumerator] using
+      (geomSum_tendsto (ratio n) hb.1 hb.2).const_mul (spinMomentCoeff n)
+  have h := hn.div normWeight_tendsto_one (by norm_num : (1 : ℝ) ≠ 0)
+  simpa [finiteMoment] using h
+
 
 end SpinSeries
 end CovariantKrylov
