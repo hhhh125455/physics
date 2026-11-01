@@ -1,0 +1,27 @@
+name: Covariant Krylov Lean proof check
+on:
+  push:
+    branches: [research/covariant-krylov-20261101]
+    paths:
+      - 'ClassicalSpinKrylov/CovariantReduction.lean'
+      - '.github/workflows/covariant-krylov.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve Mathlib dependencies
+        run: lake update
+      - name: Download Mathlib cache
+        run: lake exe cache get
+      - name: Typecheck all covariant Krylov theorems
+        run: lake env lean ClassicalSpinKrylov/CovariantReduction.lean
+      - name: Reject proof placeholders and custom axioms
+        run: |
+          if grep -nE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' ClassicalSpinKrylov/CovariantReduction.lean; then exit 1; fi
+          if grep -nE '^[[:space:]]*(axiom|constant)[[:space:]]' ClassicalSpinKrylov/CovariantReduction.lean; then exit 1; fi
