@@ -6,6 +6,8 @@ No new axioms. The Cauchy-data/solution bijection is an explicit input.
 This does not assert existence of a Liouville volume form in infinite dimension.
 -/
 
+open scoped Topology
+
 namespace CovariantKrylov
 
 universe u v
