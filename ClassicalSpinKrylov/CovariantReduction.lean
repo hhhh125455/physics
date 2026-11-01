@@ -84,7 +84,7 @@ theorem residual_recovery (r : S ≃ P)
     residual (covL r L) a b (pull r previous) (pull r current) =
       pull r (residual L a b previous current) := by
   funext s
-  simp [residual, covL, pull, push]
+  simp [residual, covL, pull, push_pull]
 
 theorem residual_norm_recovery (r : S ≃ P)
     (inner : (P → ℝ) → (P → ℝ) → ℝ)
@@ -128,21 +128,21 @@ theorem geomSum_tail (q : ℝ) (hq : q ≠ 1) (N : ℕ) :
   rw [geomSum_closed q hq N]
   ring
 
-def ratio (n : ℕ) : ℝ := (1 / 2 : ℝ) ^ (2 * n + 1)
+noncomputable def ratio (n : ℕ) : ℝ := (1 / 2 : ℝ) ^ (2 * n + 1)
 
 /-- This is the EXACT single-spin moment derived separately from sphere integrals. -/
-def spinMomentCoeff (n : ℕ) : ℝ :=
+noncomputable def spinMomentCoeff (n : ℕ) : ℝ :=
   3 / ((2 * (n : ℝ) + 1) * (2 * (n : ℝ) + 3))
 
-def momentNumerator (N n : ℕ) : ℝ :=
+noncomputable def momentNumerator (N n : ℕ) : ℝ :=
   spinMomentCoeff n * geomSum (ratio n) N
 
-def normWeight (N : ℕ) : ℝ := geomSum (1 / 2) N
+noncomputable def normWeight (N : ℕ) : ℝ := geomSum (1 / 2) N
 
-def finiteMoment (N n : ℕ) : ℝ := momentNumerator N n / normWeight N
+noncomputable def finiteMoment (N n : ℕ) : ℝ := momentNumerator N n / normWeight N
 
 /-- Analytic candidate from the product-Liouville model. -/
-def limitMoment (n : ℕ) : ℝ :=
+noncomputable def limitMoment (n : ℕ) : ℝ :=
   3 / ((2 * (n : ℝ) + 1) * (2 * (n : ℝ) + 3) *
     ((2 : ℝ) ^ (2 * n + 1) - 1))
 
