@@ -1,0 +1,26 @@
+name: Classical Einstein Gravity Krylov Lean
+on:
+  push:
+    branches: [research/classical-gravity-krylov-20261101]
+    paths:
+      - 'ClassicalSpinKrylov/ClassicalGravityKrylov.lean'
+      - '.github/workflows/classical-gravity-krylov.yml'
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve pinned Mathlib
+        run: lake update
+      - name: Download Mathlib cache
+        run: lake exe cache get
+      - name: Verify gravity theorems
+        run: lake env lean ClassicalSpinKrylov/ClassicalGravityKrylov.lean
+      - name: Ban placeholder proofs and new axioms
+        run: |
+          if grep -nE '^[[:space:]]*(sorry|admit|axiom|constant)([[:space:]]|$)' ClassicalSpinKrylov/ClassicalGravityKrylov.lean; then exit 1; fi
