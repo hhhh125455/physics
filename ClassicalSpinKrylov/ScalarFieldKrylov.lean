@@ -19,7 +19,7 @@ mode evolution, finite spectral normalization, its limit, geometric Krylov
 probability normalization, finite-depth weighted sums, and complexity algebra.
 Full infinite-dimensional Gibbs measure, functional variation, Gaussian
 integrals, Meixner orthogonality, and analytic functional calculus are NOT
-proved by this file. No new axioms, no sorry/admit.
+proved by this file. The verification uses existing Mathlib foundations.
 -/
 
 open scoped Topology
@@ -177,5 +177,48 @@ theorem second_offdiag_square : offDiagonalCoeff 2 ^ 2 = 8 := by
     (Real.sqrt 2 * (2 : ℝ))^2 =
       (Real.sqrt 2)^2 * 4 := by ring
     _ = 8 := by rw [h]; norm_num
+
+/-- The first nontrivial recurrence checks the Meixner identification. -/
+theorem meixner_recurrence_first (k : ℝ) :
+    k*(k-2) = (k^2-7*k+8) + 5*(k-2) + 2 := by ring
+
+/-- The next level checks the same fixed recurrence without changing the model. -/
+theorem meixner_recurrence_second (k : ℝ) :
+    k*(k^2-7*k+8) =
+      (k^3-15*k^2+56*k-48) + 8*(k^2-7*k+8) + 8*(k-2) := by ring
+
+/-- The rational part of the exact all-level amplitude ansatz. -/
+noncomputable def amplitudeAlpha (u : ℂ) : ℂ := u/(2-u)
+noncomputable def amplitudeRatio (u w : ℂ) : ℂ := -w*(1-u)/(2-u)
+
+/-- Algebra needed for i α̇ = (2 + √2 ρ) α, for u = exp(-it). -/
+theorem riccati_alpha_algebra (u w : ℂ)
+    (hu : (2 : ℂ)-u ≠ 0) (hw : w^2 = (2 : ℂ)) :
+    2*u/((2-u)^2) =
+      (2+w*amplitudeRatio u w)*amplitudeAlpha u := by
+  unfold amplitudeRatio amplitudeAlpha
+  calc
+    2*u/((2-u)^2) =
+        (2-2*(1-u)/(2-u))*(u/(2-u)) := by
+          field_simp [hu]
+          ring
+    _ = (2-w^2*(1-u)/(2-u))*(u/(2-u)) := by rw [hw]
+    _ = (2+w*(-w*(1-u)/(2-u)))*(u/(2-u)) := by ring
+
+/-- Algebra needed for i ρ̇ = √2 + 3ρ + √2ρ². -/
+theorem riccati_ratio_algebra (u w : ℂ)
+    (hu : (2 : ℂ)-u ≠ 0) (hw : w^2 = (2 : ℂ)) :
+    w*u/((2-u)^2) =
+      w + 3*amplitudeRatio u w + w*(amplitudeRatio u w)^2 := by
+  unfold amplitudeRatio
+  calc
+    w*u/((2-u)^2) =
+        w*(1-3*(1-u)/(2-u)+2*((1-u)/(2-u))^2) := by
+          field_simp [hu]
+          ring
+    _ = w*(1-3*(1-u)/(2-u)+w^2*((1-u)/(2-u))^2) := by
+          rw [hw]
+    _ = w+3*(-w*(1-u)/(2-u))+w*(-w*(1-u)/(2-u))^2 := by ring
+
 
 end ScalarFieldKrylov
