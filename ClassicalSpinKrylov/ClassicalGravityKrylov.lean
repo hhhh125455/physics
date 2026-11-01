@@ -52,7 +52,6 @@ theorem symplectic_normalization (s a₁ p₁ a₂ p₂ : ℝ) (hs : s ≠ 0) :
     (s*a₁)*(p₂/s) - (s*a₂)*(p₁/s) =
       a₁*p₂-a₂*p₁ := by
   field_simp
-  ring
 
 /-- Same gravitational Hamiltonian, in oscillator canonical variables, M=s². -/
 theorem oscillator_hamiltonian (s k a p : ℝ) (hs : s ≠ 0) :
@@ -60,7 +59,6 @@ theorem oscillator_hamiltonian (s k a p : ℝ) (hs : s ≠ 0) :
       ((p/s)^2 + k^2*(s*a)^2)/2 := by
   unfold gravModeHam
   field_simp
-  ring
 
 noncomputable def electric (k a : ℝ) : ℝ := k^2*a/2
 noncomputable def magnetic (M k p : ℝ) : ℝ := k*p/(2*M)
@@ -72,14 +70,12 @@ theorem electric_evolution (M k p : ℝ) (hM : M ≠ 0) :
     k^2/2*velocity M p = k*magnetic M k p := by
   unfold velocity magnetic
   field_simp
-  ring
 
 /-- d B/dt = -k E, the curvature rotation equation. -/
 theorem magnetic_evolution (M k a : ℝ) (hM : M ≠ 0) :
     k/(2*M)*force M k a = -k*electric k a := by
   unfold force electric
   field_simp
-  ring
 
 /-- Gaussian covariance identities, conditional on the original Gibbs
  measure: E[A²]=1/(β M k²), E[Π²]=M/β. -/
@@ -88,7 +84,6 @@ theorem curvature_variance (β M k : ℝ)
     (k^4/4)*(1/(β*M*k^2)) =
       (k^2/(4*M^2))*(M/β) := by
   field_simp
-  ring
 
 /-- A positive-frequency curvature combination is the same canonical complex
  oscillator observable, up to the explicitly tracked frequency/mass factors.
@@ -105,7 +100,6 @@ theorem curvature_to_canonical (s k a p : ℂ)
       canonicalComplex s k a p := by
   unfold curvatureComplex canonicalComplex
   field_simp
-  ring
 
 /-- One nonzero physical curvature mode gives a two-step Krylov chain. -/
 theorem one_mode_probability (k t : ℝ) :
