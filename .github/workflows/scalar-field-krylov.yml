@@ -1,0 +1,28 @@
+name: Scalar field classical Krylov Lean verification
+on:
+  push:
+    branches:
+      - research/scalar-field-krylov-20261101
+    paths:
+      - 'ClassicalSpinKrylov/ScalarFieldKrylov.lean'
+      - '.github/workflows/scalar-field-krylov.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve Mathlib
+        run: lake update
+      - name: Download Mathlib cache
+        run: lake exe cache get
+      - name: Check scalar field formulas
+        run: lake env lean ClassicalSpinKrylov/ScalarFieldKrylov.lean
+      - name: Ban proof gaps and extra axioms
+        run: |
+          if grep -nE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' ClassicalSpinKrylov/ScalarFieldKrylov.lean; then exit 1; fi
+          if grep -nE '^[[:space:]]*(axiom|constant)[[:space:]]' ClassicalSpinKrylov/ScalarFieldKrylov.lean; then exit 1; fi
