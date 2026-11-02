@@ -1,0 +1,30 @@
+name: TFD matrix-log proof check
+
+on:
+  push:
+    branches:
+      - verify/tfd-matrix-log-2026-11-02
+    paths:
+      - 'TFDMatrixLog.lean'
+      - '.github/workflows/tfd-matrix-log.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve Mathlib
+        run: lake update
+      - name: Get Mathlib cache
+        run: lake exe cache get
+      - name: Verify TFD matrix logarithm
+        run: lake env lean TFDMatrixLog.lean
+      - name: Reject unfinished or admitted proofs
+        run: |
+          if grep -nE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' TFDMatrixLog.lean; then exit 1; fi
+          if grep -nE '^[[:space:]]*(axiom|constant)[[:space:]]' TFDMatrixLog.lean; then exit 1; fi
