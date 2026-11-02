@@ -1,0 +1,30 @@
+name: Penrose dimension calculation Lean check
+
+on:
+  push:
+    branches:
+      - verify/penrose-dimension-2026-11-02
+    paths:
+      - 'PenroseDimension.lean'
+      - '.github/workflows/penrose-dimension.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve Mathlib
+        run: lake update
+      - name: Get Mathlib cache
+        run: lake exe cache get
+      - name: Check Penrose integral algebra
+        run: lake env lean PenroseDimension.lean
+      - name: Reject unfinished proofs and extra axioms
+        run: |
+          if grep -nE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' PenroseDimension.lean; then exit 1; fi
+          if grep -nE '^[[:space:]]*(axiom|constant)[[:space:]]' PenroseDimension.lean; then exit 1; fi
