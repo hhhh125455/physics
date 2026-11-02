@@ -34,7 +34,6 @@ theorem ads3_right_right_embedding
     u₁*u₂*Real.cosh (φ₁-φ₂) -
     a₁*a₂*Real.cosh (t₁-t₂) := by
   simp only [Real.cosh_sub]
-  ring
 
 theorem ads3_right_left_embedding
     (u₁ u₂ a₁ a₂ φ₁ φ₂ t₁ t₂ : ℝ) :
@@ -45,4 +44,3 @@ theorem ads3_right_left_embedding
     u₁*u₂*Real.cosh (φ₁-φ₂) +
     a₁*a₂*Real.cosh (t₁+t₂) := by
   simp only [Real.cosh_sub, Real.cosh_add]
-  ring
