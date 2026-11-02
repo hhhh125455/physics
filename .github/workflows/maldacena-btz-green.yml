@@ -1,0 +1,30 @@
+name: Maldacena BTZ Green function algebra Lean check
+
+on:
+  push:
+    branches:
+      - verify/maldacena-btz-green-2026-11-02
+    paths:
+      - 'MaldacenaBTZGreen.lean'
+      - '.github/workflows/maldacena-btz-green.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install Lean 4
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none --no-modify-path
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Resolve pinned Mathlib
+        run: lake update
+      - name: Download compiled Mathlib
+        run: lake exe cache get
+      - name: Compile algebraic checks
+        run: lake env lean MaldacenaBTZGreen.lean
+      - name: Reject unproved claims and extra axioms
+        run: |
+          if grep -nE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' MaldacenaBTZGreen.lean; then exit 1; fi
+          if grep -nE '^[[:space:]]*(axiom|constant)[[:space:]]' MaldacenaBTZGreen.lean; then exit 1; fi
