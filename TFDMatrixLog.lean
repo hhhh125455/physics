@@ -54,3 +54,18 @@ theorem tfd_log_normalized_exp
     _ = a - (algebraMap ℝ A) (Real.log Z) := by
           rw [map_neg]
           abel
+
+-- The original physical statement with a Hermitian Hamiltonian H and inverse temperature beta.
+-- Here scalar multiplication by (-beta) denotes -beta * H, and algebraMap r denotes r * I.
+theorem tfd_log_thermal_hamiltonian
+    {A : Type*}
+    [NormedRing A] [StarRing A]
+    [NormedAlgebra ℝ A] [NormedAlgebra ℚ A]
+    [ContinuousFunctionalCalculus ℝ A IsSelfAdjoint]
+    [CompleteSpace A] [ContinuousStar A]
+    (H : A) (beta Z : ℝ)
+    (hH : IsSelfAdjoint H) (hZ : 0 < Z) :
+    CFC.log (Z⁻¹ • NormedSpace.exp ((-beta) • H)) =
+      (-beta) • H - (algebraMap ℝ A) (Real.log Z) := by
+  exact tfd_log_normalized_exp ((-beta) • H) Z
+    ((IsSelfAdjoint.all (-beta)).smul hH) hZ
