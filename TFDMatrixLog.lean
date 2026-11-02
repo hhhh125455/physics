@@ -62,7 +62,7 @@ theorem tfd_log_thermal_hamiltonian
     [NormedRing A] [StarRing A]
     [NormedAlgebra ℝ A] [NormedAlgebra ℚ A]
     [ContinuousFunctionalCalculus ℝ A IsSelfAdjoint]
-    [CompleteSpace A] [ContinuousStar A]
+    [CompleteSpace A] [ContinuousStar A] [StarModule ℝ A]
     (H : A) (beta Z : ℝ)
     (hH : IsSelfAdjoint H) (hZ : 0 < Z) :
     CFC.log (Z⁻¹ • NormedSpace.exp ((-beta) • H)) =
