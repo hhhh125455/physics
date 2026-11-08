@@ -24,8 +24,8 @@ variable [AddCommGroup Λ] [Module K Λ]
 def conormal
     (dχ : V →ₗ[K] Module.Dual K Λ) :
     Λ →ₗ[K] Module.Dual K V where
-  toFun λ :=
-    { toFun := fun v => dχ v λ
+  toFun lam :=
+    { toFun := fun v => dχ v lam
       map_add' := by
         intro x y
         simp
@@ -33,11 +33,11 @@ def conormal
         intro c x
         simp }
   map_add' := by
-    intro λ μ
+    intro lam μ
     ext v
     simp
   map_smul' := by
-    intro c λ
+    intro c lam
     ext v
     simp
 
@@ -46,8 +46,8 @@ D2 (abstract constraint-kernel theorem).
 
 Assumptions:
 * `ω` is injective as the flat map;
-* `X λ` is tangent to the constraint surface (first-class condition);
-* `ω(X λ) = -dχ_λ` (Hamiltonian sign convention);
+* `X lam` is tangent to the constraint surface (first-class condition);
+* `ω(X lam) = -dχ_lam` (Hamiltonian sign convention);
 * every admissible covector annihilating the constraint tangent space is a
   conormal covector (the annihilator-completeness hypothesis).
 
@@ -61,38 +61,38 @@ theorem constraint_kernel_eq_generator_range
     (dχ : V →ₗ[K] Module.Dual K Λ)
     (X : Λ →ₗ[K] V)
     (hω_injective : Function.Injective ω)
-    (h_first_class : ∀ λ : Λ, dχ (X λ) = 0)
-    (h_hamiltonian : ∀ λ : Λ, ω (X λ) = - conormal dχ λ)
+    (h_first_class : ∀ lam : Λ, dχ (X lam) = 0)
+    (h_hamiltonian : ∀ lam : Λ, ω (X lam) = - conormal dχ lam)
     (h_annihilator_complete :
       ∀ v : V,
         (∀ w : V, dχ w = 0 → ω v w = 0) →
-          ∃ λ : Λ, ω v = conormal dχ λ) :
+          ∃ lam : Λ, ω v = conormal dχ lam) :
     ∀ v : V,
       (dχ v = 0 ∧ ∀ w : V, dχ w = 0 → ω v w = 0) ↔
-        ∃ λ : Λ, X λ = v := by
+        ∃ lam : Λ, X lam = v := by
   intro v
   constructor
   · rintro ⟨hv_tangent, hv_annihilates⟩
-    obtain ⟨λ, hλ⟩ := h_annihilator_complete v hv_annihilates
-    have hsum : ω (v + X λ) = 0 := by
+    obtain ⟨lam, hlam⟩ := h_annihilator_complete v hv_annihilates
+    have hsum : ω (v + X lam) = 0 := by
       ext w
-      change ω v w + ω (X λ) w = 0
-      rw [hλ, h_hamiltonian λ]
+      change ω v w + ω (X lam) w = 0
+      rw [hlam, h_hamiltonian lam]
       simp
-    have hzero : v + X λ = 0 :=
-      hω_injective (v + X λ) 0 (by simpa using hsum)
-    have hvneg : v = - X λ := by
-      simpa using congrArg (fun z : V => z - X λ) hzero
-    refine ⟨-λ, ?_⟩
-    change X (-λ) = v
+    have hzero : v + X lam = 0 :=
+      hω_injective (v + X lam) 0 (by simpa using hsum)
+    have hvneg : v = - X lam := by
+      simpa using congrArg (fun z : V => z - X lam) hzero
+    refine ⟨-lam, ?_⟩
+    change X (-lam) = v
     rw [map_neg]
     exact hvneg.symm
-  · rintro ⟨λ, rfl⟩
+  · rintro ⟨lam, rfl⟩
     constructor
-    · exact h_first_class λ
+    · exact h_first_class lam
     · intro w hw_tangent
       have h := congrArg (fun f : Module.Dual K V => f w)
-        (h_hamiltonian λ)
+        (h_hamiltonian lam)
       simpa [conormal, hw_tangent] using h
 
 end ConstraintKernel
