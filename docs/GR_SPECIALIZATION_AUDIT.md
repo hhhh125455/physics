@@ -208,6 +208,22 @@ hyperbolic vacuum GR (spacetime dimension at least three).
    spatially compact support places no restriction in time, and an arbitrary
    smooth vector field need not be complete.
 
+   This is a genuine function-space issue, not just a technicality. In the
+   standard convenient-manifold model of diffeomorphisms of a noncompact
+   manifold, the Lie algebra is the space of compactly supported vector
+   fields (Michor, 1980); Petersen's \(V\) is only spatially compact and need
+   not be compactly supported in spacetime. If instead one equips the full
+   noncompact diffeomorphism group with the compact-open \(C^\infty\)
+   functional diffeology, Magnot (2018) proves nonregularity: not every
+   smooth path in the Lie algebra integrates to a group path. Thus the
+   topology and smooth structure on \(\mathcal G_0\) must be specified, and
+   Petersen's \(V\) must be shown to belong to its actual infinitesimal
+   orbit image. Isenberg--Marsden's slice theorem supplies a candidate
+   spacetime-diffeomorphism group action on spatially compact globally
+   hyperbolic Einstein solutions in the CMC setting, but its group model and
+   Lie algebra must still be matched explicitly to the function spaces used
+   in Petersen's theorem.
+
 2. **Lemma 4.13 and Eqs. (23)--(24): gauge-producing initial data.**
    Petersen decomposes \(V|_\Sigma=N\nu+\beta\) and computes the induced
    first and second fundamental-form variations. This identifies the
@@ -295,6 +311,8 @@ rephrasing of the formal reduction.
 - T. J. R. Hughes, T. Kato and J. E. Marsden, “Well-posed quasi-linear second-order hyperbolic systems with applications to nonlinear elastodynamics and general relativity,” *Arch. Rational Mech. Anal.* **63** (1977), 273--294, DOI: 10.1007/BF00251584.
 - A. Carlotto, “The general relativistic constraint equations,” *Living Reviews in Relativity* **24** (2021), article 2, DOI: 10.1007/s41114-020-00030-z; see the discussion of KIDs and Theorem 4.6.
 - O. L. Petersen, “On the Cauchy problem for the linearised Einstein equation,” arXiv:1802.06028 (2018), especially Theorems 4.7 and 4.18, Lemma 4.13, and Corollary 4.22.
+- P. W. Michor, “Manifolds of smooth maps, II: The Lie group of diffeomorphisms of a non-compact smooth manifold,” *Cahiers de topologie et géométrie différentielle catégoriques* **21** (1980), 63--86.
+- J.-P. Magnot, “The group of diffeomorphisms of a non-compact manifold is not regular,” *Demonstratio Mathematica* **51** (2018), 8--16, DOI: 10.1515/dema-2018-0001; arXiv:1101.2370.
 - J. Isenberg and J. E. Marsden, “A Slice Theorem for the Space of Solutions of Einstein's Equations,” *Physics Reports* **89** (1982), 179--222, DOI: 10.1016/0370-1573(82)90066-7.
 - J. Margalef-Bentabol and E. J. S. Villaseñor, “Proof of the equivalence of the symplectic forms derived from the canonical and the covariant phase space formalisms,” arXiv:2204.06383 (2022).
 - J. Isenberg and J. E. Marsden, “A Slice Theorem for the Space of Solutions
