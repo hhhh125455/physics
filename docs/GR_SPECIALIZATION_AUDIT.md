@@ -99,10 +99,10 @@ invented Ostrogradsky convention.
 | Abstract condition | GR realization | Status and limitation |
 |---|---|---|
 | H0: diffeomorphism-covariant local action, no fixed background | Einstein--Hilbert action, with boundary terms treated consistently; compact \(\Sigma\) has no spatial boundary | Standard. Boundary conventions must be fixed before comparing symplectic potentials. |
-| H1: canonical flat map injective; constraint annihilator is conormal image | ADM phase space \(T^*\mathrm{Riem}(\Sigma)\) with canonical symplectic form; \(\Phi\) is the ADM constraint map | The canonical pairing is weakly nondegenerate. At a compact-Cauchy vacuum background, \(\ker D\Phi^*\) corresponds to spacetime Killing fields. With no Killing fields, the constraint map is a submersion in the standard split Sobolev setting; the elliptic/splitting result supplies the relevant annihilator factorization. To identify the multiplier space with the dual of the constraint-value space in the work-note notation, choose compatible Hilbert Sobolev spaces and use the Riesz/reflexivity identification. This is not a theorem about arbitrary Fréchet spaces without specifying function spaces. |
-| H2: solution-to-initial-data map is a local submersion/product | Cauchy data satisfying \(\Phi=0\) determine a maximal globally hyperbolic development up to isometry; the regular solution space is smooth near a no-Killing background | The equivalence of covariant and canonical symplectic forms is established in general by Margalef-Bentabol--Villaseñor (2022), including higher-order theories and boundaries, subject to a good variational principle. For Einstein--Hilbert gravity on a closed Cauchy surface, this supports the pullback compatibility Ω_CPS = r_Σ^* Ω_ADM once the boundary potential and normalization are matched. Hughes--Kato--Marsden (1977) establish local well-posedness, uniqueness, and continuous dependence for the GR Cauchy problem in Sobolev spaces. The separate map-level part of H2 still requires a differentiable/smooth gauge-fixed development section and a local product proof using Cauchy uniqueness and the slice theorem; continuous dependence alone is not sufficient for a submersion theorem. |
+| H1: canonical flat map injective; constraint annihilator is conormal image | ADM phase space \(T^*\mathrm{Riem}(\Sigma)\) with canonical symplectic form; \(\Phi\) is the ADM constraint map | The canonical pairing is weakly nondegenerate. For compact-Cauchy vacuum data, Moncrief identifies \(\ker D\Phi^*\) with the space of Killing initial data (KIDs), which correspond to spacetime Killing fields in the maximal development. Thus no KIDs imply injectivity of the formal adjoint. To infer surjectivity of \(D\Phi\), one must also work in specified Sobolev spaces where the underdetermined-elliptic operator has closed range/split image; this is the analytic step behind the regular constraint-manifold statement. Once \(D\Phi\) is a bounded surjection between Banach spaces, the open mapping theorem shows that every continuous functional annihilating \(\ker D\Phi\) factors continuously through \(D\Phi\). In the work-note notation \(D\chi:V\to\Lambda^*\), the resulting multiplier lies in \(\Lambda^{**}\), which is identified with \(\Lambda\) for a reflexive Hilbert choice by Riesz. Lean currently proves only the algebraic-dual factorization; it does not formalize the Sobolev closed-range estimate or open mapping theorem. |
+| H2: solution-to-initial-data map is a local submersion/product | Cauchy data satisfying \(\Phi=0\) determine a maximal globally hyperbolic development up to isometry; the regular solution space is smooth near a no-Killing background | Margalef-Bentabol--Villaseñor (2022) prove equivalence of the covariant and canonical symplectic forms, with a separate higher-order discussion in Sec. VI. For Einstein--Hilbert gravity on a closed Cauchy surface, this supports the pullback compatibility \(\Omega_{\rm CPS}=r_\Sigma^*\Omega_{\rm ADM}\) once the boundary potential, orientation, and normalization are matched. Hughes--Kato--Marsden (1977), Theorem V, establish local existence, uniqueness, and continuous dependence for the gauge-reduced GR Cauchy problem in Sobolev spaces. Their theorem does not establish the smooth dependence needed for a Banach-manifold submersion: the paper explicitly warns that quasilinear evolution maps may be only continuous in the solution topology and differentiable only into a weaker topology. Thus the map-level part of H2 remains open until a smooth/tame development map or an appropriate split-submersion theorem is proved in the chosen function spaces. |
 | H3 / CP: each constraint-generated initial-data direction is induced by a spacetime diffeomorphism | A lapse-shift \((N,X)\) is the normal/tangential deformation of the Cauchy embedding, \(\xi=Nn+X\) | Supported by the ADM/embedding formulation. The Hamiltonian flow of the smeared constraints is the induced deformation of \((h,\pi)\); see the formula below. Sign conventions must match the chosen \(\iota_{X_H}\Omega=-\delta H\). |
-| H4 / PU: a smooth family of solutions with identical initial data is a smooth diffeomorphism family | Uniqueness of maximal globally hyperbolic developments up to a data-fixing isometry | Choquet-Bruhat--Geroch gives an isometry for each member of a same-data family. On the no-Killing regular stratum, the Isenberg--Marsden slice theorem supplies local smooth orbit coordinates; together these should yield a smoothly parameterized family of diffeomorphisms. The proof must explicitly identify the data-fixing isometries with the local identity-component action and use the slice coordinate to establish smooth dependence. Pointwise uniqueness alone does not prove parameterized PU. |
+| H4 / PU: a smooth family of solutions with identical initial data is a smooth diffeomorphism family | Uniqueness of maximal globally hyperbolic developments up to a data-fixing isometry | Choquet-Bruhat--Geroch gives uniqueness of the maximal globally hyperbolic development up to isometry for each fixed data set. This is a pointwise/set-level statement, not a theorem that the isometries depend smoothly on an external parameter. A local slice may provide the needed orbit coordinates, but the parameterized identification still has to be constructed in the same Sobolev topology and shown to lie in the identity component. Pointwise uniqueness alone does not prove H4. |
 | H5: regular quotient by spacetime diffeomorphisms has local slices | Isenberg--Marsden spacetime-diffeomorphism slice theorem for spatially compact globally hyperbolic Einstein solutions, using CMC foliations | The quotient is stratified symplectic. The ordinary smooth quotient applies on a stratum with trivial stabilizer. Killing fields give continuous isotropy and conical singularities; residual discrete isotropy can instead give orbifold/stratified points and must not be silently treated as a free quotient. |
 
 ## The ADM check for CP
@@ -174,29 +174,41 @@ D3B assumes CP abstractly.
 
 ## How Cauchy uniqueness and the slice theorem can supply H2/PU
 
-There is a concrete route to the two remaining map-level conditions:
+There is a plausible route to the two remaining map-level conditions, but it contains an analytic gap:
 
 1. In a fixed hyperbolic gauge, the local Einstein Cauchy problem assigns to
    each regular constrained initial datum \(c\in\mathcal C\) a development
-   \(\operatorname{Dev}(c)\). Smooth dependence on \(c\) gives a candidate
-   smooth local section of \(r_\Sigma\).
+   \(\operatorname{Dev}(c)\). To obtain a smooth local section of
+   \(r_\Sigma\), one needs smooth (or an appropriate tame) dependence on
+   \(c\) in the chosen topology. Hughes--Kato--Marsden establish continuous
+   dependence for the GR application, not this stronger conclusion.
 2. Choquet-Bruhat--Geroch uniqueness says that any other maximal globally
    hyperbolic development with the same initial data is isometric to
    \(\operatorname{Dev}(c)\), with the isometry identifying the initial
    hypersurface and its data.
 3. On a no-Killing regular stratum, the Isenberg--Marsden slice theorem gives
-   local smooth orbit coordinates with trivial isotropy. Therefore, for a
-   smooth curve of solutions in one \(r_\Sigma\)-fiber, the diffeomorphism
-   coordinate relating it to \(\operatorname{Dev}(c)\) is smooth in the
-   curve parameter.
+   local orbit slices for the spacetime-diffeomorphism action. To turn this
+   into a smooth parameterized family of diffeomorphisms, one must prove that
+   the family lies in a single local slice chart and that its group coordinate
+   varies smoothly; this does not follow from pointwise Cauchy uniqueness.
 
-If the gauge-fixed development section and the slice coordinates are
-constructed in the same Sobolev topology, this yields the local product
-structure in H2 and the parameterized PU condition in H4. This is the
-intended GR proof route, not yet a completed proof in the work note. The
-remaining technical work is to specify the function spaces, the
-identity-component diffeomorphism subgroup, the data-fixing isometries, and
-the smoothness of the development/slice maps.
+If H4 is established, its tangent consequence is immediate: for a smooth
+curve \(\psi_s=f_s^*\phi\) with \(f_0=\mathrm{id}\), differentiability of the
+pullback action gives
+\[
+\dot\psi_0=\mathcal L_\xi\phi,\qquad
+\xi=\left.\frac{d f_s}{ds}\right|_{s=0}.
+\]
+Hence \(\ker D r_\Sigma\subseteq\operatorname{im}R_\phi\), which is exactly the
+tangent-level hypothesis called \`hPU\` in the Lean D3B bridge. The Lean proof
+assumes this tangent inclusion directly; it does not formalize the derivation
+from nonlinear H4.
+
+The remaining technical work is to specify the function spaces, prove the
+smooth/tame dependence of the gauge-fixed development map, identify the
+data-fixing isometries with the identity-component diffeomorphism action, and
+prove smooth dependence of the slice/group coordinates. H2 and H4 are
+therefore not yet verified for GR.
 
 ## Killing fields and the regular stratum
 
@@ -246,6 +258,7 @@ GR or higher-derivative application follows.
 
 - I. Khavkine, “Covariant phase space, constraints, gauge and the Peierls formula,” *Int. J. Mod. Phys. A* **29** (2014), 1430009, DOI: 10.1142/S0217751X14300099, arXiv:1402.1282.
 - T. J. R. Hughes, T. Kato and J. E. Marsden, “Well-posed quasi-linear second-order hyperbolic systems with applications to nonlinear elastodynamics and general relativity,” *Arch. Rational Mech. Anal.* **63** (1977), 273--294, DOI: 10.1007/BF00251584.
+- A. Carlotto, “The general relativistic constraint equations,” *Living Reviews in Relativity* **24** (2021), article 2, DOI: 10.1007/s41114-020-00030-z; see the discussion of KIDs and Theorem 4.6.
 - J. Margalef-Bentabol and E. J. S. Villaseñor, “Proof of the equivalence of the symplectic forms derived from the canonical and the covariant phase space formalisms,” arXiv:2204.06383 (2022).
 - J. Isenberg and J. E. Marsden, “A Slice Theorem for the Space of Solutions
   of Einstein's Equations,” *Physics Reports* **89** (1982), 179--222,
