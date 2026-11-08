@@ -252,6 +252,11 @@ theorem higherOrderMomentum_eq_forward
           rw [harg r (Finset.mem_range.mp hr)]
     _ = ∑ r ∈ Finset.range n, ((-D) ^ r) (F (j + 1 + r)) := by
           rw [← Finset.sum_range_reflect]
+          apply Finset.sum_congr rfl
+          intro r hr
+          have hrlt : r < n := Finset.mem_range.mp hr
+          have hreflect : n - 1 - (n - 1 - r) = r := by omega
+          rw [hreflect]
 
 end HigherDerivativeMomentum
 
