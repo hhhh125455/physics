@@ -384,10 +384,13 @@ zero centre. Therefore \(a=B=0\). Moncrief's KID theorem then gives
 
 The stabilizer in the identity component of the spacetime diffeomorphism
 group is also trivial. A time-orientation-preserving spacetime isometry
-preserves the CMC value \(\pm3/t\), hence preserves each \(t\)-slice. Its
-restriction is an isometry of \((\Sigma,h_{-1})\). If the spacetime
-isometry is isotopic to the identity, that restriction is homotopic to the
-identity; Mostow rigidity forces it to be the identity. Thus there is no
+preserves the CMC value \(\pm3/t\), hence preserves each \(t\)-slice.
+Write it as \(F(t,x)=(t,\varphi_t(x))\). The vanishing of the pulled-back
+\(dt\,dx\) term forces \(\partial_t\varphi_t=0\), so the same spatial
+isometry \(\varphi\in\operatorname{Isom}(\Sigma,h_{-1})\) acts on every
+slice. If the spacetime isometry is isotopic to the identity, projection
+of that isotopy to \(\Sigma\) shows that \(\varphi\) is homotopic to the
+identity; Mostow rigidity forces \(\varphi=\mathrm{id}\). Thus there is no
 residual discrete stabilizer inside \(\mathcal G_0\), even though the full
 isometry group of \(\Sigma\) need not be trivial.
 
