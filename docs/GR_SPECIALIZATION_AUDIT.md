@@ -25,6 +25,39 @@ momentum constraints
 \]
 The multipliers are a lapse-shift pair \((N,X^i)\).
 
+## D1: why spacetime diffeomorphisms are null on a closed Cauchy slice
+
+For a diffeomorphism-covariant Lagrangian, the on-shell covariant
+presymplectic current satisfies \(d\omega=0\) when both variations solve the
+linearized equations. This is the Lee--Wald/Iyer--Wald identity; Harlow--Wu
+give a boundary-aware derivation.
+
+Fix a Cauchy surface \(\Sigma_0\) and a spacetime vector field \(\xi\). Choose
+a smooth time cutoff \(\chi\) such that \(\chi=1\) in a neighborhood of
+\(\Sigma_0\) and \(\chi=0\) near an earlier Cauchy surface \(\Sigma_-\).
+Set \(\widehat\xi=\chi\xi\). Diffeomorphism covariance implies
+\(\mathcal L_{\widehat\xi}g\) is a linearized solution. Conservation of
+\(\omega\) gives
+\[
+\int_{\Sigma_0}\omega(\delta g,\mathcal L_{\widehat\xi}g)
+=
+\int_{\Sigma_-}\omega(\delta g,\mathcal L_{\widehat\xi}g)=0,
+\]
+because \(\mathcal L_{\widehat\xi}g\) vanishes near \(\Sigma_-\).
+Since \(\widehat\xi=\xi\) near \(\Sigma_0\), locality of the symplectic
+current gives
+\[
+\Omega_{\Sigma_0}(\delta g,\mathcal L_\xi g)=0.
+\]
+Compactness and absence of a spatial boundary remove side-boundary terms.
+This proves the inclusion of diffeomorphism directions in the presymplectic
+kernel without introducing a Noether charge.
+
+The proof requires the allowed diffeomorphism flows to preserve the solution
+space and boundary conditions. If the Cauchy surface has a boundary or
+asymptotic boundary conditions are imposed, boundary charges can make these
+transformations non-null.
+
 ## Hypothesis-by-hypothesis status
 
 | Abstract condition | GR realization | Status and limitation |
