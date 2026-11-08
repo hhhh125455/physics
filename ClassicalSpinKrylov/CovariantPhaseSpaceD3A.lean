@@ -38,7 +38,9 @@ lemma iterD_succ_right (D : R →+ R) (n : ℕ) (x : R) :
     iterD D (n + 1) x = iterD D n (D x) := by
   induction n with
   | zero => rfl
-  | succ n ih => simp [iterD, ih]
+  | succ n ih =>
+      change D (iterD D (n + 1) x) = D (iterD D n (D x))
+      rw [ih]
 
 /-- Shifting the boundary sum by one derivative on q. -/
 lemma ibpBoundary_succ (D : R →+ R) (F q : R) (n : ℕ) :
@@ -46,13 +48,28 @@ lemma ibpBoundary_succ (D : R →+ R) (F q : R) (n : ℕ) :
       negIterD D n F * q + ibpBoundary D F (D q) n := by
   unfold ibpBoundary
   rw [Finset.sum_range_succ']
-  congr 1
-  · simp [iterD]
-  · apply Finset.sum_congr rfl
-    intro j hj
-    have hjlt : j < n := Finset.mem_range.mp hj
-    have hidx : n + 1 - 1 - (j + 1) = n - 1 - j := by omega
-    rw [hidx, iterD_succ_right]
+  have hhead :
+      negIterD D (n + 1 - 1 - 0) F * iterD D 0 q =
+        negIterD D n F * q := by
+    simp [iterD]
+  rw [hhead]
+  calc
+    (∑ j ∈ Finset.range n,
+      negIterD D (n + 1 - 1 - (j + 1)) F * iterD D (j + 1) q) +
+        negIterD D n F * q =
+      negIterD D n F * q +
+        (∑ j ∈ Finset.range n,
+          negIterD D (n + 1 - 1 - (j + 1)) F * iterD D (j + 1) q) := by
+            ac_rfl
+    _ = negIterD D n F * q +
+        (∑ j ∈ Finset.range n,
+          negIterD D (n - 1 - j) F * iterD D j (D q)) := by
+            congr 1
+            apply Finset.sum_congr rfl
+            intro j hj
+            have hjlt : j < n := Finset.mem_range.mp hj
+            have hidx : n + 1 - 1 - (j + 1) = n - 1 - j := by omega
+            rw [hidx, iterD_succ_right]
 
 /-- The m-th repeated integration-by-parts identity:
 F D^m(q) = (-D)^m(F) q + D(B_m(F,q)). -/
@@ -64,7 +81,7 @@ theorem iterated_integration_by_parts
       F * iterD D m q =
         negIterD D m F * q + D (ibpBoundary D F q m) := by
   intro m
-  induction m with
+  induction m generalizing q with
   | zero =>
       simp [iterD, negIterD, ibpBoundary]
   | succ m ih =>
@@ -77,8 +94,7 @@ theorem iterated_integration_by_parts
         _ = negIterD D (m + 1) F * q +
             D (ibpBoundary D F (D q) m +
               negIterD D m F * q) := by
-          rw [map_add, hLeibniz]
-          simp only [negIterD]
+          simp only [map_add, hLeibniz, negIterD]
           ring
 
 /-- The Euler-Lagrange expression obtained by summing the signed
