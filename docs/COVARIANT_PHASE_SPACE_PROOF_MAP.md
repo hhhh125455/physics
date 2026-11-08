@@ -102,24 +102,34 @@ Fréchet-manifold/PDE hypotheses, the ADM tensor-calculus identities, Stokes'
 theorem on the spacetime field bundle, or the existence and regularity of the
 quotient by spacetime diffeomorphisms. In D3B, the Lean hypothesis `hPU` is
 the infinitesimal inclusion `ker Dr ⊆ im R`. Petersen's Theorem 4.7 proves
-this for the linearized vacuum Einstein equation when `R` is the full smooth
-infinitesimal gauge operator. However, the Lean development does not prove
-that the tangent space of the actual nonlinear solution space equals the
-full linearized solution space (linearization stability), nor that every
-vector field produced by Petersen lies in the Lie algebra of the selected
-identity-component diffeomorphism group and integrates to a smooth path in
-that group. Thus it does not identify `im R` with `T(G_0·φ)` without those
-additional hypotheses. The nonlinear H4 statement is not formalized.
+this for the linearized vacuum Einstein equation. The remaining passage to
+the actual nonlinear tangent spaces has two independent inputs:
 
-The group-topology issue is substantive. In the standard convenient
+1. **Linearization stability.** In suitable tame Banach/Sobolev spaces, no
+   KIDs imply split-surjectivity of the linearized vacuum constraint map.
+   Carlotto (2021), §4.1 and Theorem 4.6, together with the Fischer--Marsden
+   linearization-stability theorem, then identifies the relevant constraint
+   tangent directions with integrable curves of exact data. The Lorentzian
+   Einstein-map version is equivalent for consistent function spaces,
+   locally near a Cauchy surface.
+2. **Orbit tangency.** On (M=\mathbb R\times\Sigma) with compact
+   (Sigma), the GR audit proves a cutoff-flow lemma: for any smooth vector
+   field (V), the family (V_s=\chi(st)V) has compact spacetime support
+   for (s\ne0), and (f_s=\operatorname{Fl}^{V_s}_s), (f_0=\mathrm{id}),
+   is jointly smooth in ((s,x)) with (dot f_0=V). Thus, if (G_0)
+   contains the allowed compactly supported isotopies, (\mathcal L_V\phi)
+   is tangent to an actual (G_0)-orbit. The construction is not formalized
+   in Lean.
+
+The group topology still matters for H5. In the standard convenient
 manifold model for diffeomorphisms of a noncompact manifold, the Lie algebra
-is the compactly supported vector fields (Michor, 1980), whereas Petersen's
-gauge vector field is only spatially compact. With the compact-open
-\(C^\infty\) functional diffeology, the full diffeomorphism group is
-nonregular (Magnot, 2018), so arbitrary Lie-algebra paths need not integrate.
-The exact topology/group model used by the Isenberg--Marsden spacetime slice
-theorem must therefore be matched to Petersen's function spaces before
-identifying \(\operatorname{im}R\) with a nonlinear orbit tangent.
+is the compactly supported vector fields (Michor, 1980), while the cutoff
+path above is smooth in the compact-open (C^\infty) sense but its supports
+expand as (s\to0). With the compact-open functional diffeology, the full
+diffeomorphism group is nonregular (Magnot, 2018), so one cannot assume that
+arbitrary Lie-algebra paths integrate. This does not obstruct the specific
+cutoff-flow construction; it means that the group model used for H5 must be
+matched to the jointly smooth isotopies used here.
 
 For spatially compact, globally hyperbolic vacuum GR, the classical
 Isenberg--Marsden slice theorem uses a constant-mean-curvature (CMC) foliation
@@ -145,6 +155,7 @@ by Isenberg--Marsden, not a generic theorem on all Lorentzian metrics.
 - Michor, *Manifolds of smooth maps, II* (1980): the standard convenient Lie-group model for diffeomorphisms of a noncompact manifold and its compactly supported Lie algebra.
 - Magnot, *Demonstratio Mathematica* **51** (2018), 8--16, arXiv:1101.2370: nonregularity of the full noncompact diffeomorphism group with compact-open functional diffeology.
 - Carlotto (Living Rev. Relativ. 24 (2021) 2): KIDs, surjectivity of the linearized constraint map, and linearization stability.
+- A. E. Fischer and J. E. Marsden, “Linearization stability of nonlinear partial differential equations,” *Proc. Sympos. Pure Math.* **27** (1975), 219--263.
 - Arms--Marsden--Moncrief: linearization stability and conical singularities at
   symmetric compact-Cauchy vacuum solutions.
 - Isenberg--Marsden: spacetime-diffeomorphism slice theorem for spatially
