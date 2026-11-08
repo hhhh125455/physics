@@ -43,10 +43,11 @@ where \(n\) is the future unit normal, \(N\) is the lapse, and \(X\) is tangent
 to \(\Sigma\) (the shift). The induced data are \(h=i^*g\) and the second
 fundamental form \(K\), with \(\pi\) its ADM momentum density.
 
-With the convention \(K_{ij}=\frac12\mathcal L_n h_{ij}\) and in vacuum
-(\(\Lambda=0\)), the induced hypersurface-deformation formulas are
+With the standard ADM convention \(K_{ij}=-\frac12\mathcal L_n h_{ij}\)
+and in vacuum (\(\Lambda=0\)), the induced hypersurface-deformation formulas
+are
 \[
-\delta_{(N,X)}h_{ij}=2N K_{ij}+\mathcal L_X h_{ij},
+\delta_{(N,X)}h_{ij}=-2N K_{ij}+\mathcal L_X h_{ij},
 \]
 \[
 \delta_{(N,X)}K_{ij}
