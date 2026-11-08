@@ -43,6 +43,21 @@ where \(n\) is the future unit normal, \(N\) is the lapse, and \(X\) is tangent
 to \(\Sigma\) (the shift). The induced data are \(h=i^*g\) and the second
 fundamental form \(K\), with \(\pi\) its ADM momentum density.
 
+With the convention \(K_{ij}=\frac12\mathcal L_n h_{ij}\) and in vacuum
+(\(\Lambda=0\)), the induced hypersurface-deformation formulas are
+\[
+\delta_{(N,X)}h_{ij}=2N K_{ij}+\mathcal L_X h_{ij},
+\]
+\[
+\delta_{(N,X)}K_{ij}
+=-D_iD_jN
++N\bigl(R_{ij}+K K_{ij}-2K_{ik}K^k{}_j\bigr)
++\mathcal L_XK_{ij}.
+\]
+These are the ADM evolution equations read as deformations of the Cauchy
+embedding. Other sign conventions for \(K_{ij}\) change the corresponding
+signs and must be translated consistently.
+
 The smeared constraint functional is
 \[
 H[N,X]=\int_\Sigma (N\mathcal H+X^i\mathcal H_i).
