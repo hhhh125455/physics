@@ -24,6 +24,7 @@ modules = {
     "ClassicalSpinKrylov/CovariantPhaseSpaceD3A.lean": [
         "iterated_integration_by_parts",
         "finite_order_variation_identity",
+        "totalBoundary_eq_endpointMomentum_pairing",
     ],
     "ClassicalSpinKrylov/CovariantPhaseSpaceMomentum.lean": [
         "higherOrderEuler_eq_F0_sub_D_momentum",
