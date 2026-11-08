@@ -28,6 +28,10 @@ modules = {
     "ClassicalSpinKrylov/CovariantPhaseSpaceMomentum.lean": [
         "higherOrderEuler_eq_F0_sub_D_momentum",
     ],
+    "ClassicalSpinKrylov/CovariantPhaseSpaceFactorization.lean": [
+        "linearFunctional_factors_through_surjective",
+        "constraint_kernel_eq_of_surjective",
+    ],
 }
 
 for relative_path, symbols in modules.items():
