@@ -98,7 +98,14 @@ The assumptions encode:
 * surjectivity of the initial-data map;
 * the already-established constraint-kernel characterization on C;
 * CP: each constraint direction is realized by a spacetime gauge direction;
-* PU: every vertical initial-data variation is a spacetime gauge direction.
+* PU_tan: every vertical tangent vector of the initial-data map is a
+  spacetime gauge tangent vector.
+
+The work note's H4 is stronger: it is a nonlinear, parameterized statement
+that every smooth same-initial-data solution curve is related by a smooth
+family of diffeomorphisms. Differentiating H4 should imply PU_tan, but this
+Lean theorem assumes PU_tan directly; it does not formalize that
+infinite-dimensional differentiation step.
 
 This proves the reverse inclusion without assuming the target kernel equality. -/
 theorem reverse_kernel_inclusion
