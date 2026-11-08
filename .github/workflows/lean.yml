@@ -16,6 +16,8 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Check theorem-to-document mapping
         run: python3 scripts/check_traceability.py
+      - name: Check covariant phase-space theorem map
+        run: python3 scripts/check_covariant_phase_space_traceability.py
       - name: Resolve pinned Mathlib dependency
         run: lake update
       - name: Download Mathlib cache
@@ -33,6 +35,6 @@ jobs:
           if grep -RnE '(^|[^[:alnum:]_])(sorry|admit)([^[:alnum:]_]|$)' --include='*.lean' ClassicalSpinKrylov.lean ClassicalSpinKrylov; then
             echo 'Unfinished proof placeholder detected'; exit 1
           fi
-          if grep -RnE '^[[:space:]]*(axiom|constant)[[:space:]]' --include='*.lean' ClassicalSpinKrylov.lean; then
+          if grep -RnE '^[[:space:]]*(axiom|constant)[[:space:]]' --include='*.lean' ClassicalSpinKrylov.lean ClassicalSpinKrylov; then
             echo 'Unexpected new axiom or constant detected'; exit 1
           fi
