@@ -10,7 +10,7 @@ specific field theory.
 | D1 | Not formalized | Conservation of the covariant symplectic current and the time-cutoff argument are geometric/analytic inputs. |
 | D2 | `constraint_kernel_eq`, `linearFunctional_factors_through_surjective`, `constraint_kernel_eq_of_surjective` | `constraint_kernel_eq` assumes annihilator factorization; `linearFunctional_factors_through_surjective` and `constraint_kernel_eq_of_surjective` derive it algebraically from a surjective constraint map, with multipliers in the dual of the constraint-value space. To match the work-note notation \(D\chi:V\to\Lambda^*\) and multipliers \(\lambda\in\Lambda\), one still needs the reflexive/Riesz identification \(\Lambda\simeq\Lambda^{**}\). The original constraint_kernel_eq hypothesis is stated over the algebraic dual. For a bounded surjective map between Banach spaces, the open mapping theorem supplies the corresponding continuous-dual factorization; the required Sobolev closed-range/surjectivity analysis and open mapping step are not formalized in Lean. The algebraic-dual theorem and the continuous dual theorem therefore remain distinct verification layers. |
 | D3A | `higherOrderMomentum_recursion`, `higherOrderMomentum_eq_forward`, `iterated_integration_by_parts`, `finite_order_variation_identity`, `higherOrderEuler_eq_F0_sub_D_momentum`, `totalBoundary_eq_endpointMomentum_pairing` | Finite-order momentum recursion, repeated integration by parts, summed first-variation identity, and E = F_0 - D p_0. The direct m-indexed endpointMomentum coefficient is proved to satisfy totalBoundary = sum_j p_j D^j(q). The forward derivative-order and reverse-indexed vector momentum formulas are now explicitly proved equivalent by finite-sum reflection. Spatial integration by parts and the realization of D as a spacetime differential operator remain outside Lean. Margalef-Bentabol--Villaseñor, arXiv:2204.06383, Sec. VI, independently discusses the higher-order canonical momenta and covariant/canonical symplectic equivalence; the detailed notation map remains to be written. |
-| D3B | `reverse_kernel_inclusion`, `full_kernel_eq_from_bridge` | Abstract bridge conditional on pullback compatibility, surjectivity, CP, and **tangent-level** PU: `ker Dr` is assumed to lie in `im R`. It does not derive this from the work note's nonlinear, parameterized H4. Differentiating H4 along a smooth same-data curve and a smooth diffeomorphism family should yield tangent-level PU, but that infinite-dimensional chain-rule step is not formalized. The covariant/canonical symplectic-form equivalence is established in Margalef-Bentabol--Villaseñor (arXiv:2204.06383), subject to their hypotheses; the exact GR normalization still needs specialization. |
+| D3B | `reverse_kernel_inclusion`, `full_kernel_eq_from_bridge` | Abstract bridge conditional on pullback compatibility, surjectivity, CP, and **tangent-level** PU: `ker Dr` is assumed to lie in `im R`. Lean assumes this tangent inclusion directly; it does not derive it from nonlinear H4. For vacuum GR, Petersen (arXiv:1802.06028), Theorem 4.7, proves exactly this tangent-level statement by linearized Cauchy uniqueness, so nonlinear H4 is stronger than needed for D3B. The covariant/canonical symplectic-form equivalence is established in Margalef-Bentabol--Villaseñor (arXiv:2204.06383), subject to their hypotheses; the exact GR normalization still needs specialization. |
 | D4 | `pairing_independent_of_lifts`, `quotient_pairing_nondegenerate`, `quotient_pairing_unique`, `cartan_invariance_of_horizontal_closed_form`, `closedness_descends` | Algebraic consequences for quotient pairings and descent. Smooth quotient existence and the geometric Cartan formula are assumptions, not Lean results. |
 | D5 | `sphere_scalar_curvature_injective`, `two_sphere_scalar_curvature_injective`, `invariant_observable_excludes_gauge` | Injectivity of the displayed scalar-curvature functions and the abstract invariant-observable separation argument. The metric-curvature calculation and naturality under diffeomorphisms are checked separately. |
 
@@ -38,6 +38,20 @@ to verify, and prove a genuinely new GR or higher-derivative application.
 The general covariant/canonical equivalence of symplectic forms is also already
 addressed by Margalef-Bentabol--Villaseñor (arXiv:2204.06383).
 
+Petersen, *On the Cauchy problem for the linearised Einstein equation*
+(arXiv:1802.06028, 2018), is another close prior result for the GR
+specialization. Theorem 4.7 proves that a linearized vacuum Einstein solution
+with zero induced first and second fundamental-form variations is pure gauge;
+Lemma 4.13 identifies gauge-producing initial-data variations with induced
+spacetime gauge variations; Theorem 4.18 proves the quotient-level linearized
+Cauchy map is an isomorphism of locally convex topological vector spaces.
+Thus tangent-level PU and CP are already established in vacuum GR, and the
+linearized quotient Cauchy map is already well-posed. The remaining possible
+contribution is the nonlinear symplectic reduction/local-product theorem and
+its relation to Khavkine's cohomological criterion, not the linearized Cauchy
+uniqueness statement itself.
+
+
 A useful first-pass correspondence is:
 
 | This note | Khavkine 2014 | Difference that must be demonstrated |
@@ -52,11 +66,12 @@ Khavkine's Lemma 3.17 proves nondegeneracy of the pairing on gauge-invariant
 solution tangent/cotangent spaces under global parametrizability and
 recognizability; Corollary 3.39 then descends the presymplectic form. This is
 too close to ignore. The strongest defensible positioning for the present
-work would be: a Cauchy/ADM criterion that turns these abstract cohomological
-requirements into concrete regularity, constraint, and uniqueness conditions,
-and that additionally addresses the smooth solution-space quotient. That
-claim is not established until the H1--H5 comparison and a nontrivial GR
-application are completed.
+work would be: a nonlinear Cauchy/ADM symplectic-reduction theorem that
+combines the known linearized Cauchy result of Petersen with a precise
+constraint-annihilator criterion and a smooth quotient/slice construction,
+and that proves a concrete result not already covered by Khavkine or
+Isenberg--Marsden. That claim is not established until the H1--H5 comparison
+and a nontrivial GR application are completed.
 
 
 ## Global proof boundary
