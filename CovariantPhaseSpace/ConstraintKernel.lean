@@ -77,8 +77,9 @@ theorem constraint_kernel_eq_generator_range
     have hsum : ω (v + X lam) = 0 := by
       rw [map_add, hlam, h_hamiltonian lam]
       simp
-    have hzero : v + X lam = 0 :=
-      hω_injective (by simpa using hsum)
+    have hzero : v + X lam = 0 := by
+      apply hω_injective
+      simpa using hsum
     have hvneg : v = - X lam := by
       calc
         v = (v + X lam) - X lam := by simp
