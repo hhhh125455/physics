@@ -112,6 +112,18 @@ These are the ADM evolution equations read as deformations of the Cauchy
 embedding. Other sign conventions for \(K_{ij}\) change the corresponding
 signs and must be translated consistently.
 
+With \(\Omega_{\rm ADM}=\int_\Sigma\delta\pi^{ij}\wedge\delta h_{ij}\)
+and \(\iota_{X_H}\Omega_{\rm ADM}=-\delta H\), the Hamiltonian vector field
+of the smeared constraint satisfies
+\[
+X_{H[N,X]}h_{ij}
+=\frac{2N}{\sqrt h}\left(\pi_{ij}-\frac12\pi h_{ij}\right)
++\mathcal L_Xh_{ij}
+=-2NK_{ij}+\mathcal L_Xh_{ij}.
+\]
+This is exactly the first hypersurface-deformation formula above, with the
+declared sign convention for \(K_{ij}\).
+
 The smeared constraint functional is
 \[
 H[N,X]=\int_\Sigma (N\mathcal H+X^i\mathcal H_i).
