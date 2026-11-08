@@ -9,10 +9,12 @@ field theory.
 ## Reference setting
 
 Let \(V^4\) be globally hyperbolic with a compact spacelike Cauchy surface
-\(\Sigma^3\), and let \(g\) be a vacuum Einstein solution. Work on a regular
-background with no spacetime Killing fields. For the slice/quotient results,
-also assume the existence of a constant-mean-curvature (CMC) foliation, as in
-the Isenberg--Marsden construction.
+\(\Sigma^3\), and let \(g\) be a vacuum Einstein solution. Work on a background with no spacetime Killing fields and, for the ordinary
+smooth quotient in H5, trivial stabilizer under the chosen identity-component
+diffeomorphism group. No Killing fields remove continuous isotropy but do not
+by themselves exclude residual discrete stabilizers. For the slice/quotient
+results, also assume the existence of a constant-mean-curvature (CMC)
+foliation, as in the Isenberg--Marsden construction.
 
 Use \(K_{ij}=-\frac12\mathcal L_n h_{ij}\) and the momentum convention
 \[
@@ -101,7 +103,7 @@ invented Ostrogradsky convention.
 | H2: solution-to-initial-data map is a local submersion/product | Cauchy data satisfying \(\Phi=0\) determine a maximal globally hyperbolic development up to isometry; the regular solution space is smooth near a no-Killing background | The equivalence of covariant and canonical symplectic forms is established in general by Margalef-Bentabol--Villaseñor (2022), including higher-order theories and boundaries, subject to a good variational principle. For Einstein--Hilbert gravity on a closed Cauchy surface, this supports the pullback compatibility Ω_CPS = r_Σ^* Ω_ADM once the boundary potential and normalization are matched. The separate map-level part of H2 still requires a smooth gauge-fixed development section and a local product proof using Cauchy uniqueness and the slice theorem. |
 | H3 / CP: each constraint-generated initial-data direction is induced by a spacetime diffeomorphism | A lapse-shift \((N,X)\) is the normal/tangential deformation of the Cauchy embedding, \(\xi=Nn+X\) | Supported by the ADM/embedding formulation. The Hamiltonian flow of the smeared constraints is the induced deformation of \((h,\pi)\); see the formula below. Sign conventions must match the chosen \(\iota_{X_H}\Omega=-\delta H\). |
 | H4 / PU: a smooth family of solutions with identical initial data is a smooth diffeomorphism family | Uniqueness of maximal globally hyperbolic developments up to a data-fixing isometry | Choquet-Bruhat--Geroch gives an isometry for each member of a same-data family. On the no-Killing regular stratum, the Isenberg--Marsden slice theorem supplies local smooth orbit coordinates; together these should yield a smoothly parameterized family of diffeomorphisms. The proof must explicitly identify the data-fixing isometries with the local identity-component action and use the slice coordinate to establish smooth dependence. Pointwise uniqueness alone does not prove parameterized PU. |
-| H5: regular quotient by spacetime diffeomorphisms has local slices | Isenberg--Marsden spacetime-diffeomorphism slice theorem for spatially compact globally hyperbolic Einstein solutions, using CMC foliations | The quotient is stratified symplectic. The ordinary smooth quotient applies on a regular symmetry stratum; symmetric solutions have conical singularities and must be treated by singular/stratified reduction. |
+| H5: regular quotient by spacetime diffeomorphisms has local slices | Isenberg--Marsden spacetime-diffeomorphism slice theorem for spatially compact globally hyperbolic Einstein solutions, using CMC foliations | The quotient is stratified symplectic. The ordinary smooth quotient applies on a stratum with trivial stabilizer. Killing fields give continuous isotropy and conical singularities; residual discrete isotropy can instead give orbifold/stratified points and must not be silently treated as a free quotient. |
 
 ## The ADM check for CP
 
@@ -206,9 +208,13 @@ setting. If Killing fields are present, the linearized constraint equations
 admit spurious directions unless the Taub quadratic charges vanish. The
 solution space can have a conical singularity.
 
-Thus, in GR, the smooth-manifold theorem should be stated on the no-Killing
-regular stratum. At symmetric backgrounds, use the singular/stratified
-version instead.
+Thus, in GR, the regular solution-space theorem requires no Killing fields.
+For the stronger free-action hypothesis in H5, also check that the stabilizer
+inside the selected identity-component diffeomorphism group is actually
+trivial; no Killing fields only show that its Lie algebra vanishes. If a
+residual discrete stabilizer remains, use the orbifold/stratified quotient
+rather than an ordinary smooth manifold. At backgrounds with Killing fields,
+linearization stability itself also requires the Taub-charge conditions.
 
 ## What remains open in this specialization
 
