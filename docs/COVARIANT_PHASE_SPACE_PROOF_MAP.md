@@ -84,6 +84,33 @@ concrete result not already covered by Khavkine or Isenberg--Marsden. That
 claim is not established until the H1--H5 comparison and a nontrivial GR
 application are completed.
 
+## Reduced GR hypothesis set for D3B
+
+For compact-Cauchy vacuum GR, the full nonlinear H2 local-product condition
+and nonlinear H4 parameterized same-data uniqueness are stronger than the
+pointwise kernel proof requires. A reduced route is:
+
+1. No KIDs plus the injective-symbol/split-range result for the linearized
+   constraint map gives the regular constraint surface and linearization
+   stability (Carlotto 2021, §4.1, Theorem 4.6; Fischer--Marsden 1975).
+2. Petersen's Theorems 4.7 and 4.18, together with Lemma 4.13 and the ADM
+   lapse-shift/constraint-generator comparison, give infinitesimal PU and
+   surjectivity of the linearized Cauchy map.
+3. The cutoff-flow lemma in the GR audit upgrades each smooth infinitesimal
+   gauge generator to a jointly smooth path of compactly supported
+   diffeomorphisms, if H0's group contains these isotopies.
+4. Retain the covariant/canonical pullback identity and the H5 CMC slice
+   theorem with trivial full stabilizer.
+
+Thus H2 may be weakened to its pullback-compatibility part plus the
+pointwise surjectivity of the linearized Cauchy map; H4 may be replaced by
+linearization stability, infinitesimal PU, and cutoff-flow. This proves the
+kernel identity in the chosen local function-space model, but does not by
+itself establish novelty: Khavkine's formal reduction and
+Isenberg--Marsden's CMC stratified symplectic quotient are close prior work.
+The exact group topology for H5 and the chosen admissible dual for H1 remain
+to be fixed.
+
 ## Global proof boundary
 
 For a specifically four-dimensional GR presentation, use
