@@ -92,9 +92,11 @@ theorem iterated_integration_by_parts
             negIterD D m F * D q + D (ibpBoundary D F (D q) m) :=
           ih (D q)
         _ = negIterD D (m + 1) F * q +
-            D (ibpBoundary D F (D q) m +
-              negIterD D m F * q) := by
-          simp only [map_add, hLeibniz, negIterD]
+            D (negIterD D m F * q +
+              ibpBoundary D F (D q) m) := by
+          rw [negIterD]
+          rw [D.map_add]
+          rw [hLeibniz]
           ring
 
 /-- The Euler-Lagrange expression obtained by summing the signed
