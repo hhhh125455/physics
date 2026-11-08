@@ -106,10 +106,13 @@ structure LinearizedCauchyQuotientMapProperties
 
 /-- Abstract form of the reverse-inclusion argument D3B.
 
-Here S is the tangent space to the actual solution space, C is the tangent
-space to the initial-data constraint surface, r is the linearized initial-data
-map, R generates spacetime gauge directions, and X generates constraint
-directions on C.
+Here S is the candidate linearized solution space, C is the linearized
+initial-data constraint space, r is the linearized initial-data map, R is the
+infinitesimal spacetime-gauge generator, and X generates constraint
+directions on C. Identifying S with the tangent space to the actual nonlinear
+solution manifold requires a separate linearization-stability/regularity
+theorem. Identifying im R with the tangent to a chosen nonlinear
+diffeomorphism-group orbit requires a separate group-action theorem.
 
 The assumptions encode:
 * pullback compatibility of the two presymplectic forms;
@@ -125,7 +128,9 @@ family of diffeomorphisms. Differentiating H4 should imply PU_tan, but this
 Lean theorem assumes PU_tan directly; it does not formalize that
 infinite-dimensional differentiation step.
 
-This proves the reverse inclusion without assuming the target kernel equality. -/
+This proves the reverse inclusion in the linearized vector-space model.
+It does not by itself identify the right-hand side with the tangent to a
+nonlinear diffeomorphism-group orbit. -/
 theorem reverse_kernel_inclusion
     (ωS : S →ₗ[K] S →ₗ[K] K)
     (ωC : C →ₗ[K] C →ₗ[K] K)
@@ -159,7 +164,8 @@ theorem reverse_kernel_inclusion
     _ = R ξ + R η := by rw [hη]
     _ = R (ξ + η) := (map_add R ξ η).symm
 
-/-- Combining D1 with the bridge theorem gives the full kernel equality. -/
+/-- Combining D1 with the bridge theorem gives the full kernel equality
+in the stated linearized vector-space model. -/
 theorem full_kernel_eq_from_bridge
     (ωS : S →ₗ[K] S →ₗ[K] K)
     (ωC : C →ₗ[K] C →ₗ[K] K)
