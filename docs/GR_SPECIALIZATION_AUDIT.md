@@ -100,9 +100,9 @@ invented Ostrogradsky convention.
 |---|---|---|
 | H0: diffeomorphism-covariant local action, no fixed background | Einstein--Hilbert action, with boundary terms treated consistently; compact \(\Sigma\) has no spatial boundary | Standard. Boundary conventions must be fixed before comparing symplectic potentials. |
 | H1: canonical flat map injective; constraint annihilator is conormal image | ADM phase space \(T^*\mathrm{Riem}(\Sigma)\) with canonical symplectic form; \(\Phi\) is the ADM constraint map | The canonical pairing is weakly nondegenerate. For compact-Cauchy vacuum data, Moncrief identifies \(\ker D\Phi^*\) with the space of Killing initial data (KIDs), which correspond to spacetime Killing fields in the maximal development. Thus no KIDs imply injectivity of the formal adjoint. To infer surjectivity of \(D\Phi\), one must also work in specified Sobolev spaces where the underdetermined-elliptic operator has closed range/split image; this is the analytic step behind the regular constraint-manifold statement. Once \(D\Phi\) is a bounded surjection between Banach spaces, the open mapping theorem shows that every continuous functional annihilating \(\ker D\Phi\) factors continuously through \(D\Phi\). In the work-note notation \(D\chi:V\to\Lambda^*\), the resulting multiplier lies in \(\Lambda^{**}\), which is identified with \(\Lambda\) for a reflexive Hilbert choice by Riesz. However, this proves the exact work-note statement only if the selected admissible cotangent pairing \(\mathrm{Ann}_{\rm adm}\) is the continuous dual used in the Banach argument, or if one separately proves that the factorizing multiplier belongs to the allowed \(\Lambda\). Riesz identification alone does not identify an arbitrary restricted admissible dual with the full continuous dual. Lean currently proves only the algebraic-dual factorization; it does not formalize the Sobolev closed-range estimate or open mapping theorem. |
-| H2: solution-to-initial-data map is a local submersion/product | Cauchy data satisfying \(\Phi=0\) determine a maximal globally hyperbolic development up to isometry; the regular solution space is smooth near a no-Killing background | Margalef-Bentabol--Villaseñor (2022) prove equivalence of the covariant and canonical symplectic forms, with a separate higher-order discussion in Sec. VI. For Einstein--Hilbert gravity on a closed Cauchy surface, this supports the pullback compatibility \(\Omega_{\rm CPS}=r_\Sigma^*\Omega_{\rm ADM}\) once the boundary potential, orientation, and normalization are matched. Petersen (2018), Theorem 4.18, proves that the *linearized* Cauchy solution map from initial data modulo gauge-producing data to solutions modulo gauge solutions is an isomorphism of locally convex topological vector spaces; for compact \(\Sigma\), Corollary 4.22 gives the quotient a Hilbert structure at finite Sobolev order and a Fréchet structure in the smooth case. This verifies the linearized quotient-level Cauchy map. It does not prove that the nonlinear map \(r_\Sigma\) is a smooth submersion with a local product structure. That nonlinear map-level part of H2 remains open in the chosen function-space setting. |
-| H3 / CP: each constraint-generated initial-data direction is induced by a spacetime diffeomorphism | A lapse-shift \((N,X)\) is the normal/tangential deformation of the Cauchy embedding, \(\xi=Nn+X\) | Petersen (2018), Lemma 4.13 and Eqs. (23)--(24), identifies the gauge-producing initial-data directions with the induced data \(\pi_\Sigma(\mathcal L_V g)\) of spacetime gauge variations, explicitly in lapse-shift variables. This gives the CP identification in vacuum GR, after translating the sign convention for the second fundamental form. The ADM Hamiltonian calculation below independently checks the sign used in this note. |
-| H4 / PU: a smooth family of solutions with identical initial data is a smooth diffeomorphism family | Uniqueness of maximal globally hyperbolic developments up to a data-fixing isometry | The work note's H4 is a nonlinear, parameterized same-data uniqueness statement and is stronger than D3B needs. The exact tangent-level condition required by D3B is instead proved for vacuum GR by Petersen (2018), Theorem 4.7: a solution \(h\) of the linearized Einstein equation whose induced first and second fundamental-form variations vanish is a pure gauge perturbation \(h=\mathcal L_V g\). The theorem constructs \(V\) by solving a normally hyperbolic vector equation and uses Cauchy uniqueness. Thus the tangent-level PU hypothesis of the Lean bridge is literature-supported in the stated globally hyperbolic vacuum setting. The nonlinear H4 itself remains unproved and appears unnecessary for the kernel-equality theorem; a revised statement could replace H4 by this weaker linearized condition. |
+| H2: solution-to-initial-data map is a local submersion/product | Cauchy data satisfying \(\Phi=0\) determine a maximal globally hyperbolic development up to isometry; the regular solution space is smooth near a no-Killing background | Margalef-Bentabol--Villaseñor (2022) prove equivalence of the covariant and canonical symplectic forms, with a separate higher-order discussion in Sec. VI. For Einstein--Hilbert gravity on a closed Cauchy surface, this supports the pullback compatibility \(\Omega_{\rm CPS}=r_\Sigma^*\Omega_{\rm ADM}\) once the boundary potential, orientation, and normalization are matched. Petersen (2018), Theorem 4.18, proves that the *linearized* Cauchy solution map between initial data modulo gauge-producing data and solutions modulo infinitesimal gauge solutions is an isomorphism of locally convex topological vector spaces; for compact \(\Sigma\), Corollary 4.22 gives the quotient a Hilbert structure at finite Sobolev order and a Fréchet structure in the smooth case. The theorem therefore supplies the algebraic/topological quotient-level linearized Cauchy correspondence. Together with CP, its algebraic content is enough for the surjectivity of the unquotiented linearized initial-data map used in D3B. However, identifying the linearized solution space with the tangent space to the actual nonlinear solution manifold requires linearization stability/regularity (for compact vacuum data, the no-KID condition is the standard regular-stratum hypothesis). Petersen's theorem does not prove that the nonlinear map \(r_\Sigma\) is a smooth submersion with a local product structure. That stronger nonlinear part of H2 remains open in the chosen function-space setting, although it is stronger than what the pointwise D3B kernel argument itself uses. |
+| H3 / CP: each constraint-generated initial-data direction is induced by a spacetime diffeomorphism | A lapse-shift \((N,X)\) is the normal/tangential deformation of the Cauchy embedding, \(\xi=Nn+X\) | Petersen (2018), Lemma 4.13 and Eqs. (23)--(24), identifies the gauge-producing initial-data directions with the induced data \(\pi_\Sigma(\mathcal L_V g)\) of spacetime infinitesimal gauge variations, explicitly in lapse-shift variables. The separate ADM Hamiltonian calculation below matches the Hamiltonian vector fields of the smeared constraints to these lapse-shift deformations, after translating the sign convention for the second fundamental form. This combined comparison is the CP check; Lemma 4.13 alone does not identify an arbitrary constraint generator with a spacetime diffeomorphism. |
+| H4 / PU: a smooth family of solutions with identical initial data is a smooth diffeomorphism family | Uniqueness of maximal globally hyperbolic developments up to a data-fixing isometry | The work note's H4 is a nonlinear, parameterized same-data uniqueness statement and is stronger than the infinitesimal condition used by the algebraic D3B bridge. Petersen (2018), Theorem 4.7, proves that a linearized vacuum Einstein solution \(h\) whose induced first and second fundamental-form variations vanish has the form \(h=\mathcal L_V g\), with \(V\) constructed by solving a normally hyperbolic vector equation and using Cauchy uniqueness. This proves infinitesimal PU at the level of the linearized PDE solution space. Two identifications are still required before it becomes the exact geometric hypothesis \(\ker D r_\Sigma\subset T_\phi(\mathcal G_0\cdot\phi)\): (i) linearization stability must identify the tangent space of the actual nonlinear solution manifold with the relevant linearized solution space; (ii) the vector field \(V\) supplied by Petersen must belong to the Lie algebra of the chosen diffeomorphism group and integrate to a smooth curve in \(\mathcal G_0\). The second point is not automatic on \(M\simeq\mathbb R\times\Sigma\), which is noncompact in time: spatially compact support becomes no restriction when \(\Sigma\) is compact, and completeness of an arbitrary smooth \(V\) is not guaranteed. Thus Petersen establishes infinitesimal gauge exactness, not by itself tangent-to-the-global-orbit equality. The nonlinear H4 remains unproved; a weaker infinitesimal replacement is plausible only after these two identifications are supplied. |
 | H5: regular quotient by spacetime diffeomorphisms has local slices | Isenberg--Marsden spacetime-diffeomorphism slice theorem for spatially compact globally hyperbolic Einstein solutions, using CMC foliations | The quotient is stratified symplectic. The ordinary smooth quotient applies on a stratum with trivial stabilizer. Killing fields give continuous isotropy and conical singularities; residual discrete isotropy can instead give orbifold/stratified points and must not be silently treated as a free quotient. |
 
 ## The ADM check for CP
@@ -172,56 +172,70 @@ fixed Lie algebra of spacetime vector fields away from the constraint surface.
 This formula is not yet Lean-formalized in the repository; the Lean theorem
 D3B assumes CP abstractly.
 
-## Linearized Cauchy uniqueness: direct verification of tangent-level PU and CP
+## Linearized Cauchy uniqueness: what Petersen proves and what it does not
 
-A stronger and more direct reference than the nonlinear H4 route is Petersen,
-*On the Cauchy problem for the linearised Einstein equation* (2018).
+Petersen, *On the Cauchy problem for the linearised Einstein equation*
+(arXiv:1802.06028), supplies a strong linearized result in globally
+hyperbolic vacuum GR (spacetime dimension at least three).
 
-1. **Tangent-level PU is a theorem, not an extra conjecture in vacuum GR.**
-   Petersen's Theorem 4.7 states that if \(h_{\mu\nu}\) solves the linearized
-   vacuum Einstein equation and its induced first and second fundamental-form
-   variations on a Cauchy surface vanish, then there exists a vector field
-   \(V\) such that
+1. **Theorem 4.7: infinitesimal PU for the linearized PDE.**
+   If \(h_{\mu\nu}\) solves the linearized vacuum Einstein equation and its
+   induced first and second fundamental-form variations on a Cauchy surface
+   vanish, then there is a vector field \(V\) such that
    \[
-   h_{\mu\nu}=\mathcal L_V g_{\mu\nu}.
+   h_{\mu\nu}=\mathcal L_Vg_{\mu\nu}.
    \]
    The proof solves a normally hyperbolic vector equation for \(V\), then
    applies uniqueness for a linear wave equation to the gauge-adjusted
-   perturbation with zero Cauchy data. This is precisely
-   \(\ker D r_\Sigma\subseteq\operatorname{im}R_g\), the tangent-level PU
-   hypothesis used by Lean D3B. The theorem is stated for globally hyperbolic
-   vacuum spacetimes in finite-energy Sobolev regularity spaces, including
-   the smooth case.
-
-2. **CP is also explicit in the same paper.**
-   Petersen's Lemma 4.13 and Eqs. (23)--(24) identify the space of
-   gauge-producing initial-data variations with the image of the spacetime
-   gauge variations \(\mathcal L_Vg\) under the linearized initial-data map.
-   Decomposing \(V|_\Sigma=N\nu+\beta\) gives the lapse-shift formulas for
-   the induced variations of the first and second fundamental forms. This
-   matches the geometric content of CP, subject to translating the sign
-   convention for the second fundamental form.
-
-3. **The quotient-level linearized Cauchy map is an isomorphism.**
-   Petersen's Theorem 4.18 proves that the linear solution map
+   perturbation with zero Cauchy data. This proves
    \[
-   \frac{\{\text{linearized solutions}\}}{\{\text{spacetime gauge solutions}\}}
-   \longleftrightarrow
-   \frac{\{\text{linearized constraint data}\}}{\{\text{gauge-producing data}\}}
+   \ker(\pi_\Sigma|_{\mathrm{Sol}_{\rm lin}})
+   \subseteq \operatorname{im}(\mathcal L_g)
    \]
-   is an isomorphism of locally convex topological vector spaces. For compact
-   \(\Sigma\), Corollary 4.22 gives the quotient a Hilbert structure at finite
-   Sobolev order and a Fréchet structure in the smooth case. This is a
-   linearized quotient statement, not the nonlinear split-submersion claim
-   H2 in the work note.
+   for the linearized solution space and the paper's finite-energy
+   regularity classes.
 
-Consequently, the nonlinear H4 assumption is stronger than needed for D3B:
-the weaker tangent-level PU follows from Petersen's theorem in vacuum GR.
-The remaining nonlinear gap is H2, namely a smooth local product structure
-for the nonlinear solution-to-initial-data map. Isenberg--Marsden slices
-control the diffeomorphism quotient, but the construction must still show
-that the development and slice charts combine into the required local
-submersion in a common topology.
+   **Important distinction:** this is equality with the image of the
+   infinitesimal gauge operator. It is not, without further work, equality
+   with the tangent space to the orbit of the particular nonlinear group
+   \(\mathcal G_0\) used in the work note. To make that identification one
+   must (a) identify the tangent space of the actual nonlinear solution
+   manifold with the linearized solution space (linearization stability),
+   and (b) prove that every vector field \(V\) produced in the theorem is
+   an admissible Lie-algebra element of the chosen diffeomorphism group and
+   integrates to a smooth path in \(\mathcal G_0\). The latter is not
+   automatic on \(M\simeq\mathbb R\times\Sigma\): when \(\Sigma\) is compact,
+   spatially compact support places no restriction in time, and an arbitrary
+   smooth vector field need not be complete.
+
+2. **Lemma 4.13 and Eqs. (23)--(24): gauge-producing initial data.**
+   Petersen decomposes \(V|_\Sigma=N\nu+\beta\) and computes the induced
+   first and second fundamental-form variations. This identifies the
+   initial-data image of spacetime infinitesimal gauge transformations.
+   To obtain the work note's CP, one must additionally match these lapse-shift
+   formulas with the Hamiltonian vector fields of the ADM smeared
+   constraints. The ADM calculation below performs this comparison; the
+   second fundamental-form convention is translated by
+   \(K=-\tilde k\).
+
+3. **Theorem 4.18: quotient-level linearized Cauchy isomorphism.**
+   The linear solution map between solutions modulo infinitesimal gauge
+   solutions and linearized constraint data modulo gauge-producing data is
+   an isomorphism of locally convex topological vector spaces. For compact
+   \(\Sigma\), Corollary 4.22 gives the quotient a Hilbert structure at finite
+   Sobolev order and a Fréchet structure in the smooth case. Lean formalizes
+   only the underlying algebraic well-definedness and bijectivity needed to
+   derive surjectivity of the unquotiented linearized initial-data map and
+   the infinitesimal PU inclusion; it does not formalize the topology or
+   the theorem's continuity estimates.
+
+Consequently, the nonlinear local-product portion of H2 and the nonlinear
+parameterized H4 are stronger than the pointwise linearized D3B argument
+requires. For the actual nonlinear theorem, however, one still needs
+linearization stability and the group-integrability identification above.
+The remaining smooth nonlinear quotient/local-slice construction is a
+separate H5 issue; Isenberg--Marsden's slice theorem is relevant only in its
+stated CMC and stratified setting.
 
 ## Killing fields and the regular stratum
 
