@@ -14,6 +14,10 @@ background with no spacetime Killing fields. For the slice/quotient results,
 also assume the existence of a constant-mean-curvature (CMC) foliation, as in
 the Isenberg--Marsden construction.
 
+Use \(K_{ij}=-\frac12\mathcal L_n h_{ij}\) and the momentum convention
+\[
+\pi^{ij}=\sqrt h\,(K h^{ij}-K^{ij}).
+\]
 The ADM initial data are \((h_{ij},\pi^{ij})\), subject to the Hamiltonian and
 momentum constraints
 \[
