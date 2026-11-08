@@ -86,6 +86,53 @@ variable [AddCommGroup C] [Module K C]
 variable [AddCommGroup G] [Module K G]
 variable [AddCommGroup M] [Module K M]
 
+/-- Algebraic data for the induced linearized Cauchy map on gauge
+quotients to be well-defined and bijective.
+
+The first field says that spacetime gauge directions map to
+constraint-generated initial-data directions. The second and third fields
+are, respectively, surjectivity and injectivity of the induced map on
+quotients, written without constructing quotient types explicitly. -/
+structure LinearizedCauchyQuotientEquiv
+    (r : S →ₗ[K] C) (R : G →ₗ[K] S) (X : M →ₗ[K] C) : Prop where
+  map_gauge_to_gauge : ∀ ξ, ∃ μ, r (R ξ) = X μ
+  quotient_surjective : ∀ c, ∃ s μ, r s = c + X μ
+  quotient_injective : ∀ s, (∃ μ, r s = X μ) → ∃ ξ, s = R ξ
+
+/-- A quotient-level linearized Cauchy isomorphism, together with CP,
+implies the tangent-level surjectivity and PU hypotheses used in D3B.
+
+This is the algebraic passage from a theorem such as Petersen's
+Theorem 4.18 (solution space modulo gauge is isomorphic to initial data
+modulo gauge-producing data) to the concrete tangent-map hypotheses. -/
+theorem full_kernel_eq_from_quotient_cauchy_equiv
+    (ωS : S →ₗ[K] S →ₗ[K] K)
+    (ωC : C →ₗ[K] C →ₗ[K] K)
+    (r : S →ₗ[K] C)
+    (R : G →ₗ[K] S)
+    (X : M →ₗ[K] C)
+    (hD1 : ∀ ξ v, ωS (R ξ) v = 0)
+    (hPullback : ∀ u v, ωS u v = ωC (r u) (r v))
+    (hQuotient : LinearizedCauchyQuotientEquiv r R X)
+    (hCP : ∀ μ, ∃ ξ, r (R ξ) = X μ)
+    (hConstraintKernel :
+      ∀ c, (∀ d, ωC c d = 0) → ∃ μ, c = X μ) :
+    ∀ u, (∀ v, ωS u v = 0) ↔ ∃ ξ, u = R ξ := by
+  have hSurjective : Function.Surjective r := by
+    intro c
+    obtain ⟨s, μ, hsm⟩ := hQuotient.quotient_surjective c
+    obtain ⟨ξ, hξ⟩ := hCP μ
+    refine ⟨s - R ξ, ?_⟩
+    calc
+      r (s - R ξ) = r s - r (R ξ) := map_sub r s (R ξ)
+      _ = (c + X μ) - X μ := by rw [hsm, hξ]
+      _ = c := by abel
+  have hPU : ∀ u, r u = 0 → ∃ ξ, u = R ξ := by
+    intro u hu
+    exact hQuotient.quotient_injective u ⟨0, by simpa using hu⟩
+  exact full_kernel_eq_from_bridge ωS ωC r R X hD1 hPullback
+    hSurjective hConstraintKernel hCP hPU
+
 /-- Abstract form of the reverse-inclusion argument D3B.
 
 Here S is the tangent space to the actual solution space, C is the tangent
