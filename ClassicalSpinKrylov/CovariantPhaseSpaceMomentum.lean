@@ -41,14 +41,25 @@ theorem higherOrderEuler_eq_F0_sub_D_momentum
       F 0 - D (higherOrderMomentum D F k 0) := by
   unfold higherOrderEulerExpression higherOrderMomentum
   rw [map_sum]
-  congr 1
-  rw [← Finset.sum_neg_distrib]
-  apply Finset.sum_congr rfl
-  intro r hr
-  have hrlt : r < k := Finset.mem_range.mp hr
-  have hidx : k - r = (k - 1 - r) + 1 := by omega
-  rw [hidx]
-  exact D_apply_neg_pow D (k - 1 - r) (F (k - r))
+  simp only [Nat.sub_zero]
+  have hsum :
+      (∑ r ∈ Finset.range k, ((-D) ^ (k - r)) (F (k - r))) =
+        -(∑ r ∈ Finset.range k,
+          D (((-D) ^ (k - 1 - r)) (F (k - r))) ) := by
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro r hr
+    have hrlt : r < k := Finset.mem_range.mp hr
+    have hidx : k - r = (k - 1 - r) + 1 := by omega
+    rw [hidx]
+    exact D_apply_neg_pow D (k - 1 - r) (F (k - r))
+  calc
+    F 0 + (∑ r ∈ Finset.range k, ((-D) ^ (k - r)) (F (k - r))) =
+        F 0 + -(∑ r ∈ Finset.range k,
+          D (((-D) ^ (k - 1 - r)) (F (k - r))) ) :=
+      congrArg (fun x => F 0 + x) hsum
+    _ = F 0 - (∑ r ∈ Finset.range k,
+          D (((-D) ^ (k - 1 - r)) (F (k - r))) ) := by simp
 
 end HigherDerivativeEulerIdentity
 
