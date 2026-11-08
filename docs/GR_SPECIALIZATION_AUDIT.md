@@ -191,6 +191,38 @@ fixed Lie algebra of spacetime vector fields away from the constraint surface.
 This formula is not yet Lean-formalized in the repository; the Lean theorem
 D3B assumes CP abstractly.
 
+## Actual solution-space tangent: the no-Killing theorem
+
+There is a direct theorem for the actual spacetime solution space, not merely
+for the constraint map. Marsden, *Lectures on Geometric Methods in
+Mathematical Physics*, Lecture 9, Theorem 9.1, states for a globally
+hyperbolic vacuum spacetime with a compact spacelike Cauchy hypersurface that
+the space \(\mathcal E\) of globally hyperbolic vacuum solutions is a smooth
+manifold near \(g\), with tangent space equal to the solutions of the
+linearized Einstein equation, if and only if \(g\) has no Killing fields.
+The lecture specifies the topology as \(H^s\)-convergence on compact subsets
+of spacetime and explains that the compact-Cauchy initial-value formulation
+reduces the local analysis to a compact neighbourhood and Banach spaces.
+The proof lineage is Fischer--Marsden and Moncrief.
+
+This is exactly the linearization-stability input needed to interpret
+Petersen's linearized solution space as the tangent space of actual
+solutions on the no-Killing regular stratum. Carlotto's constraint-map
+criterion gives the initial-data mechanism: no KIDs, together with the
+injective-symbol/closed-range splitting condition, makes the constraint
+map a submersion. The two statements are compatible but should not be
+conflated: Marsden's Theorem 9.1 is the spacetime solution-manifold
+statement; Carlotto's Theorem 4.6 is the constraint-map linearization-
+stability statement.
+
+Marsden's Lecture 9, Theorem 9.3, also formulates the ADM evolution in terms
+of spacelike embeddings and the adjoint linearized constraint map. It
+explains why lapse and shift are the infinitesimal deformation data and why
+the embedding space acts analogously to a symmetry group, while explicitly
+warning that the embedding space is not itself a group. This is useful
+background for CP, but it is not a substitute for the separate
+lapse-shift/ADM-generator calculation in this audit.
+
 ## Linearized Cauchy uniqueness: what Petersen proves and what it does not
 
 Petersen, *On the Cauchy problem for the linearised Einstein equation*
@@ -463,6 +495,7 @@ rephrasing of the formal reduction.
 - A. E. Fischer and J. E. Marsden, “Linearization stability of nonlinear partial differential equations,” *Proc. Sympos. Pure Math.* **27** (1975), 219--263.
 - G. D. Mostow, *Strong Rigidity of Locally Symmetric Spaces*, Annals of Mathematics Studies **78**, Princeton University Press (1973).
 - A. Borel, “Density properties for certain subgroups of semisimple groups without compact components,” *Annals of Mathematics* **72** (1960), 179--188.
+- J. E. Marsden, *Lectures on Geometric Methods in Mathematical Physics*, Lecture 9, Theorems 9.1 and 9.3 (original lectures 1979; online version modified 22 July 2009), https://www.cds.caltech.edu/~marsden/volume/LGMMP/lgmmp.pdf.
 - O. L. Petersen, “On the Cauchy problem for the linearised Einstein equation,” arXiv:1802.06028 (2018), especially Theorems 4.7 and 4.18, Lemma 4.13, and Corollary 4.22.
 - P. W. Michor, “Manifolds of smooth maps, II: The Lie group of diffeomorphisms of a non-compact smooth manifold,” *Cahiers de topologie et géométrie différentielle catégoriques* **21** (1980), 63--86.
 - J.-P. Magnot, “The group of diffeomorphisms of a non-compact manifold is not regular,” *Demonstratio Mathematica* **51** (2018), 8--16, DOI: 10.1515/dema-2018-0001; arXiv:1101.2370.
