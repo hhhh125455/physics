@@ -230,8 +230,21 @@ linearization stability itself also requires the Taub-charge conditions.
 5. Restrict H5 to the CMC setting of the slice theorem, or separately justify
    a different regular quotient construction.
 
+## Prior covariant-phase-space criterion to compare against
+
+Khavkine (2014) is a close prior result, not an optional background citation.
+It formulates hyperbolizability together with global parametrizability of
+constraints and global recognizability of gauge transformations, and derives
+nondegeneracy of the reduced covariant symplectic structure under those
+conditions. Those hypotheses overlap substantially with the purpose of H1,
+H2, H4, and the D2--D4 conclusion here. The present Cauchy/ADM route may be
+complementary, but a novelty claim requires a theorem-by-theorem comparison:
+which of H1--H5 is weaker, stronger, or more readily verifiable, and what new
+GR or higher-derivative application follows.
+
 ## Primary references
 
+- I. Khavkine, “Covariant phase space, constraints, gauge and the Peierls formula,” *Int. J. Mod. Phys. A* **29** (2014), 1430009, DOI: 10.1142/S0217751X14300099, arXiv:1402.1282.
 - J. Margalef-Bentabol and E. J. S. Villaseñor, “Proof of the equivalence of the symplectic forms derived from the canonical and the covariant phase space formalisms,” arXiv:2204.06383 (2022).
 - J. Isenberg and J. E. Marsden, “A Slice Theorem for the Space of Solutions
   of Einstein's Equations,” *Physics Reports* **89** (1982), 179--222,
