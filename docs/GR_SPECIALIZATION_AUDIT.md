@@ -453,6 +453,46 @@ spacetime diffeomorphism group used by the CMC slice theorem must be checked
 against the compact-open jointly smooth cutoff isotopies used to represent
 arbitrary infinitesimal gauge fields.
 
+## Principal-symbol check for the vacuum constraint adjoint
+
+For the vacuum constraints on a compact \(n\)-dimensional Cauchy surface,
+\[
+\mathcal H(\gamma,K)=R[\gamma]+K^2-K_{ij}K^{ij},\qquad
+\mathcal M_i(\gamma,K)=\nabla^j(K_{ij}-K\gamma_{ij}),
+\]
+the highest-order terms in the formal adjoint \(D\Phi^*(N,X)\) are
+triangular in the lapse \(N\) and shift \(X\). Up to an overall sign and
+nonzero numerical factors, the lapse symbol in the metric component is
+\[
+\sigma_\zeta(D_\gamma\mathcal H)^*N
+=N(\zeta_i\zeta_j-|\zeta|_\gamma^2\gamma_{ij}),
+\]
+and the shift symbol in the \(K\)-component is
+\[
+\sigma_\zeta(D_K\mathcal M)^*X
+=\zeta_{(i}X_{j)}-\gamma_{ij}\zeta^kX_k .
+\]
+For \(\zeta\ne0\), if the latter vanishes, taking its trace gives
+\((1-n)\zeta\cdot X=0\). For \(n\ge2\), this implies
+\(\zeta\cdot X=0\); contracting the remaining equation with \(\zeta^i\)
+then gives \(|\zeta|^2X_j=0\), hence \(X=0\). With \(X=0\), vanishing of
+the lapse symbol forces \(N=0\), because
+\(\zeta_i\zeta_j-|\zeta|^2\gamma_{ij}\ne0\) for \(n\ge2\).
+Thus the principal symbol of the coupled overdetermined operator
+\(D\Phi^*\) is injective.
+
+On closed \(\Sigma\), this injective-symbol ellipticity gives the standard
+Sobolev elliptic estimate and closed range for \(D\Phi^*\) in compatible
+Sobolev scales. If there are no KIDs, then \(\ker D\Phi^*=0\). In a
+compatible Hilbert realization, the closed-range theorem gives
+\(\operatorname{ran}D\Phi\) closed, while
+\((\operatorname{ran}D\Phi)^\perp=\ker D\Phi^*=0\) makes it dense.
+Therefore \(D\Phi\) is surjective; the corresponding elliptic splitting
+gives a split kernel. This is the analytic mechanism behind H1 and the
+constraint-map linearization-stability criterion. The precise Sobolev
+indices and dual identifications are still to be fixed for the chosen
+canonical phase space; the symbol calculation alone does not choose them.
+
 ## Killing fields and the regular stratum
 
 For vacuum spacetimes with compact Cauchy surfaces, Moncrief identifies the
@@ -473,17 +513,24 @@ linearization stability itself also requires the Taub-charge conditions.
 
 ## What remains open in this specialization
 
-1. Write the precise Sobolev spaces and prove the split-surjectivity and
-   continuous-dual annihilator identity for \(D\Phi\) in those spaces.
-2. Give the explicit ADM sign/normalization conversion to the work-note
-   convention \(\iota_{X_H}\Omega=-\delta H\).
-3. Prove the parameterized smooth PU statement using a fixed hyperbolic gauge
-   and smooth dependence on the external parameter.
+1. Fix the precise Sobolev spaces for ((\gamma,K)), the constraint values,
+   and the admissible dual; complete the elliptic closed-range argument in
+   those spaces and prove the continuous-dual annihilator identity.
+2. Finish the ADM sign/normalization conversion to the work-note convention
+   \(\iota_{X_H}\Omega=-\delta H\), including the exact lapse-shift map.
+3. The full nonlinear H2 submersion/local-product statement and nonlinear
+   parameterized PU remain unproved. They are not needed for the
+   pointwise tangent-level D3B identity once Marsden's no-Killing theorem,
+   Petersen's quotient Cauchy theorem, CP, and the cutoff-flow lemma are
+   combined.
 4. Specialize the general covariant/canonical symplectic-equivalence theorem
-   to the chosen Einstein--Hilbert boundary potential and verify the exact
-   16πG normalization and sign convention used in the note.
-5. Restrict H5 to the CMC setting of the slice theorem, or separately justify
-   a different regular quotient construction.
+   to the chosen Einstein--Hilbert potential and verify the exact \(16\pi G\)
+   normalization and sign convention used in the note.
+5. For H5, identify the precise smooth structure on the spacetime
+   diffeomorphism group in Isenberg--Marsden with the compact-open
+   jointly-smooth cutoff isotopies. The CMC slice theorem is the right
+   solution-space result, but this group-topology match must be stated rather
+   than assumed.
 
 ## Prior covariant-phase-space criterion to compare against
 
