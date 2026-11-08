@@ -29,6 +29,14 @@ which matches the work-note convention \(\Omega=\int\delta p\wedge\delta q\).
 The ADM initial data are \((h_{ij},\pi^{ij})\), subject to the Hamiltonian and
 momentum constraints
 \[
+\mathcal H=
+\frac{1}{\sqrt h}\left(\pi_{ij}\pi^{ij}-\frac12\pi^2\right)
+-\sqrt h\,{}^{(3)}R,
+\qquad
+\mathcal H_i=-2h_{ij}D_k\pi^{jk}.
+\]
+The constraint map is
+\[
 \Phi(h,\pi)=(\mathcal H(h,\pi),\mathcal H_i(h,\pi))=0.
 \]
 The multipliers are a lapse-shift pair \((N,X^i)\).
