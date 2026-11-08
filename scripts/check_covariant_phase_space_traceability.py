@@ -33,7 +33,7 @@ modules = {
 for relative_path, symbols in modules.items():
     source = (root / relative_path).read_text(encoding="utf-8")
     for symbol in symbols:
-        if not re.search(rf"\\b(?:theorem|lemma)\\s+{re.escape(symbol)}\\b", source):
+        if not re.search(rf"\b(?:theorem|lemma)\s+{re.escape(symbol)}\b", source):
             raise SystemExit(f"Missing Lean declaration {symbol} in {relative_path}")
         if f"`{symbol}`" not in proof_map:
             raise SystemExit(f"Missing proof-map entry for {symbol}")
