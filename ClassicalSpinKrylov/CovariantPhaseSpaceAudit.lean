@@ -292,6 +292,57 @@ theorem quotient_pairing_unique
   exact hPullback u v
 end QuotientPairing
 
+section DifferentialFormConsequences
+
+variable {K A A1 B B1 C : Type*}
+variable [Field K]
+variable [AddCommGroup A] [Module K A]
+variable [AddCommGroup A1] [Module K A1]
+variable [AddCommGroup B] [Module K B]
+variable [AddCommGroup B1] [Module K B1]
+variable [AddCommGroup C] [Module K C]
+
+/-- Algebraic consequence of Cartan's formula: a closed horizontal form
+is invariant under the corresponding infinitesimal flow. The actual
+differential-geometric Cartan formula is a separate geometric input. -/
+theorem cartan_invariance_of_horizontal_closed_form
+    (d : A →ₗ[K] B)
+    (i : A →ₗ[K] C)
+    (dNext : C →ₗ[K] A)
+    (iNext : B →ₗ[K] A)
+    (lie : A →ₗ[K] A)
+    (hCartan : ∀ α, lie α = dNext (i α) + iNext (d α))
+    (α : A)
+    (hHorizontal : i α = 0)
+    (hClosed : d α = 0) :
+    lie α = 0 := by
+  rw [hCartan, hHorizontal, hClosed]
+  simp
+
+/-- Closedness descends through an injective pullback map when pullback
+commutes with the exterior differential. In geometric applications,
+injectivity is supplied by local sections of a surjective submersion. -/
+theorem closedness_descends
+    (pullback : A →ₗ[K] B)
+    (pullbackNext : A1 →ₗ[K] B1)
+    (dBase : A →ₗ[K] A1)
+    (dTotal : B →ₗ[K] B1)
+    (hCommute : ∀ α, pullbackNext (dBase α) = dTotal (pullback α))
+    (hPullbackInjective : Function.Injective pullbackNext)
+    (formBase : A)
+    (formTotal : B)
+    (hPullback : pullback formBase = formTotal)
+    (hClosed : dTotal formTotal = 0) :
+    dBase formBase = 0 := by
+  apply hPullbackInjective
+  calc
+    pullbackNext (dBase formBase) = dTotal (pullback formBase) :=
+      hCommute formBase
+    _ = dTotal formTotal := by rw [hPullback]
+    _ = 0 := hClosed
+
+end DifferentialFormConsequences
+
 section FourDimensionalSphereCounterexample
 
 /-- The scalar curvature 6/a² of the product metric
