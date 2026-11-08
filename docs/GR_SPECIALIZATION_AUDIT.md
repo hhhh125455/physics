@@ -404,6 +404,24 @@ Thus \(g\) is vacuum. Each \(t=\mathrm{const}\) slice is compact, has
 \(g=t^2(-d(\log t)^2+h_{-1})\) is conformal to the static product metric on
 \(\mathbb R\times\Sigma\).
 
+With the audit convention \(K_{ij}=-\frac12\mathcal L_n\tilde g_{ij}\) and
+\(n=\partial_t\), the initial data at \(t=t_0\) are
+\[
+\gamma_{ij}=t_0^2(h_{-1})_{ij},\qquad
+K_{ij}=-t_0(h_{-1})_{ij}=-t_0^{-1}\gamma_{ij}.
+\]
+Consequently
+\[
+R[\gamma]=-\frac6{t_0^2},\qquad
+K=-\frac3{t_0},\qquad
+K_{ij}K^{ij}=\frac3{t_0^2}.
+\]
+The vacuum Hamiltonian constraint is therefore
+\(R[\gamma]+K^2-K_{ij}K^{ij}=0\). The momentum constraint also vanishes:
+\(K_{ij}-K\gamma_{ij}=(2/t_0)\gamma_{ij}\), whose spatial divergence is zero.
+This checks directly that the example lies on the ADM constraint surface,
+rather than relying only on the spacetime Ricci calculation.
+
 There are no spacetime Killing fields. The universal cover is the future
 Minkowski cone, and its deck group is a torsion-free cocompact lattice
 \(\Gamma<SO^+(3,1)\). A Killing field on the cone is the restriction of a
