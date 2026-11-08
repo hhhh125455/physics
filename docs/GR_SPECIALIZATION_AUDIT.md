@@ -163,7 +163,7 @@ and \(\iota_{X_H}\Omega_{\rm ADM}=-\delta H\), the Hamiltonian vector field
 of the smeared constraint satisfies
 \[
 X_{H[N,X]}h_{ij}
-=\frac{2N}{\sqrt h}\left(\pi_{ij}-\frac12\pi h_{ij}\right)
+=\frac{2\kappa N}{\sqrt h}\left(\pi_{ij}-\frac12\pi h_{ij}\right)
 +\mathcal L_Xh_{ij}
 =-2NK_{ij}+\mathcal L_Xh_{ij}.
 \]
