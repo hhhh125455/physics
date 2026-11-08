@@ -16,6 +16,17 @@ specific field theory.
 
 ## Global proof boundary
 
+For a specifically four-dimensional GR presentation, use
+\(M=\mathbb R\times S^3\) and
+\(g_a=-dt^2+a^2h_{S^3}\). An independent exact symbolic curvature
+calculation gives \(R[g_a]=6/a^2\) and
+\(\partial_aR[g_a]=-12/a^3\). The Lean theorem checks injectivity of
+\(a\mapsto6/a^2\) for \(a>0\); it does not formalize the tensor-curvature
+calculation or the naturality identity
+\(\delta_\xi R=\mathcal L_\xi R\). The work note's original
+\(\mathbb R\times S^2\) example is a valid 2+1-dimensional counterexample,
+but the \(S^3\) version is preferable when explaining the point in 3+1 GR.
+
 The Lean development does **not** formalize the infinite-dimensional
 Fréchet-manifold/PDE hypotheses, the ADM tensor-calculus identities, Stokes'
 theorem on the spacetime field bundle, parameterized Cauchy uniqueness,
