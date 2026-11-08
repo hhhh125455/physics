@@ -13,6 +13,7 @@ modules = {
         "higherOrderMomentum_eq_forward",
         "reverse_kernel_inclusion",
         "full_kernel_eq_from_bridge",
+        "full_kernel_eq_from_quotient_cauchy_equiv",
         "pairing_independent_of_lifts",
         "quotient_pairing_nondegenerate",
         "quotient_pairing_unique",
