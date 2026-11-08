@@ -52,7 +52,7 @@ theorem constraint_kernel_eq
       ∀ α : V →ₗ[K] K,
         (∀ v, χ v = 0 → α v = 0) →
           ∃ μ : W →ₗ[K] K, α = μ.comp χ) :
-    ∀ u, IsConstraintKernel ω χ u ↔ ∃ μ, u = X λ := by
+    ∀ u, IsConstraintKernel ω χ u ↔ ∃ μ, u = X μ := by
   intro u
   constructor
   · rintro ⟨huConstraint, huRadical⟩
