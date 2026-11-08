@@ -132,6 +132,32 @@ fixed Lie algebra of spacetime vector fields away from the constraint surface.
 This formula is not yet Lean-formalized in the repository; the Lean theorem
 D3B assumes CP abstractly.
 
+## How Cauchy uniqueness and the slice theorem can supply H2/PU
+
+There is a concrete route to the two remaining map-level conditions:
+
+1. In a fixed hyperbolic gauge, the local Einstein Cauchy problem assigns to
+   each regular constrained initial datum \(c\in\mathcal C\) a development
+   \(\operatorname{Dev}(c)\). Smooth dependence on \(c\) gives a candidate
+   smooth local section of \(r_\Sigma\).
+2. Choquet-Bruhat--Geroch uniqueness says that any other maximal globally
+   hyperbolic development with the same initial data is isometric to
+   \(\operatorname{Dev}(c)\), with the isometry identifying the initial
+   hypersurface and its data.
+3. On a no-Killing regular stratum, the Isenberg--Marsden slice theorem gives
+   local smooth orbit coordinates with trivial isotropy. Therefore, for a
+   smooth curve of solutions in one \(r_\Sigma\)-fiber, the diffeomorphism
+   coordinate relating it to \(\operatorname{Dev}(c)\) is smooth in the
+   curve parameter.
+
+If the gauge-fixed development section and the slice coordinates are
+constructed in the same Sobolev topology, this yields the local product
+structure in H2 and the parameterized PU condition in H4. This is the
+intended GR proof route, not yet a completed proof in the work note. The
+remaining technical work is to specify the function spaces, the
+identity-component diffeomorphism subgroup, the data-fixing isometries, and
+the smoothness of the development/slice maps.
+
 ## Killing fields and the regular stratum
 
 For vacuum spacetimes with compact Cauchy surfaces, Moncrief identifies the
