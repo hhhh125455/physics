@@ -14,6 +14,24 @@ specific field theory.
 | D4 | `pairing_independent_of_lifts`, `quotient_pairing_nondegenerate`, `quotient_pairing_unique`, `cartan_invariance_of_horizontal_closed_form`, `closedness_descends` | Algebraic consequences for quotient pairings and descent. Smooth quotient existence and the geometric Cartan formula are assumptions, not Lean results. |
 | D5 | `sphere_scalar_curvature_injective`, `two_sphere_scalar_curvature_injective`, `invariant_observable_excludes_gauge` | Injectivity of the displayed scalar-curvature functions and the abstract invariant-observable separation argument. The metric-curvature calculation and naturality under diffeomorphisms are checked separately. |
 
+## Literature overlap and novelty risk
+
+Khavkine, *Covariant phase space, constraints, gauge and the Peierls formula*
+(arXiv:1402.1282, 2014), is a close prior result. Its conditions of global
+parametrizability of constraints and global recognizability of gauge
+transformations lead to nondegeneracy of the natural pairing on gauge-invariant
+solution tangent/cotangent spaces and to a nondegenerate reduced symplectic
+structure. This overlaps substantially with the purpose of D2--D4.
+
+The present route is organized differently: it uses the Cauchy-data map,
+canonical constraint surface, ADM constraint generators, and a smooth
+solution-space quotient. That difference is not by itself enough to establish
+novelty. A paper must compare the H1--H5 conditions explicitly with
+Khavkine's hypotheses, identify which condition is weaker/stronger or easier
+to verify, and prove a genuinely new GR or higher-derivative application.
+The general covariant/canonical equivalence of symplectic forms is also already
+addressed by Margalef-Bentabol--Villaseñor (arXiv:2204.06383).
+
 ## Global proof boundary
 
 For a specifically four-dimensional GR presentation, use
