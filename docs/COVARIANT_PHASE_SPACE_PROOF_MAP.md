@@ -10,7 +10,7 @@ specific field theory.
 | D1 | Not formalized | Conservation of the covariant symplectic current and the time-cutoff argument are geometric/analytic inputs. |
 | D2 | `constraint_kernel_eq`, `linearFunctional_factors_through_surjective`, `constraint_kernel_eq_of_surjective` | `constraint_kernel_eq` assumes annihilator factorization; `linearFunctional_factors_through_surjective` and `constraint_kernel_eq_of_surjective` derive it algebraically from a surjective constraint map, with multipliers in the dual of the constraint-value space. To match the work-note notation \(D\chi:V\to\Lambda^*\) and multipliers \(\lambda\in\Lambda\), one still needs the reflexive/Riesz identification \(\Lambda\simeq\Lambda^{**}\). The original constraint_kernel_eq hypothesis is stated over the algebraic dual. For a bounded surjective map between Banach spaces, the open mapping theorem supplies the corresponding continuous-dual factorization; the required Sobolev closed-range/surjectivity analysis and open mapping step are not formalized in Lean. The algebraic-dual theorem and the continuous dual theorem therefore remain distinct verification layers. |
 | D3A | `higherOrderMomentum_recursion`, `higherOrderMomentum_eq_forward`, `iterated_integration_by_parts`, `finite_order_variation_identity`, `higherOrderEuler_eq_F0_sub_D_momentum`, `totalBoundary_eq_endpointMomentum_pairing` | Finite-order momentum recursion, repeated integration by parts, summed first-variation identity, and E = F_0 - D p_0. The direct m-indexed endpointMomentum coefficient is proved to satisfy totalBoundary = sum_j p_j D^j(q). The forward derivative-order and reverse-indexed vector momentum formulas are now explicitly proved equivalent by finite-sum reflection. Spatial integration by parts and the realization of D as a spacetime differential operator remain outside Lean. Margalef-Bentabol--Villaseñor, arXiv:2204.06383, Sec. VI, independently discusses the higher-order canonical momenta and covariant/canonical symplectic equivalence; the detailed notation map remains to be written. |
-| D3B | `reverse_kernel_inclusion`, `full_kernel_eq_from_bridge`, `full_kernel_eq_from_quotient_cauchy_equiv` | The bridge is proved assuming tangent-level surjectivity of the linearized initial-data map and tangent-level PU. The new quotient-Cauchy theorem derives these from a bijective linearized Cauchy map on gauge quotients plus CP. Petersen (arXiv:1802.06028), Theorems 4.7 and 4.18 and Lemma 4.13, supplies these linearized vacuum-GR inputs. The nonlinear H4 and nonlinear H2 local-product claims are not formalized. |
+| D3B | `reverse_kernel_inclusion`, `full_kernel_eq_from_bridge`, `full_kernel_eq_from_quotient_cauchy_map_properties` | The bridge is conditional on pullback compatibility, surjectivity of the linearized initial-data map, CP, and infinitesimal PU. The new theorem derives the latter two tangent-map properties from algebraic well-definedness/bijectivity of the linearized quotient map plus CP. Petersen (arXiv:1802.06028), Theorems 4.7 and 4.18 and Lemma 4.13, supplies the corresponding vacuum-GR linearized results. Lean does not formalize the topological isomorphism, linearization stability, or the integration of every infinitesimal generator to a path in the chosen nonlinear diffeomorphism group. Therefore `im R` is an infinitesimal gauge subspace here, not automatically `T(G_0\cdot\phi)`. |
 | D4 | `pairing_independent_of_lifts`, `quotient_pairing_nondegenerate`, `quotient_pairing_unique`, `cartan_invariance_of_horizontal_closed_form`, `closedness_descends` | Algebraic consequences for quotient pairings and descent. Smooth quotient existence and the geometric Cartan formula are assumptions, not Lean results. |
 | D5 | `sphere_scalar_curvature_injective`, `two_sphere_scalar_curvature_injective`, `invariant_observable_excludes_gauge` | Injectivity of the displayed scalar-curvature functions and the abstract invariant-observable separation argument. The metric-curvature calculation and naturality under diffeomorphisms are checked separately. |
 
@@ -101,9 +101,15 @@ The Lean development does **not** formalize the infinite-dimensional
 Fréchet-manifold/PDE hypotheses, the ADM tensor-calculus identities, Stokes'
 theorem on the spacetime field bundle, or the existence and regularity of the
 quotient by spacetime diffeomorphisms. In D3B, the Lean hypothesis `hPU` is
-the tangent-level inclusion `ker Dr ⊆ im R`; the nonlinear H4 statement and
-the differentiation of a parameterized diffeomorphism family that would
-imply `hPU` remain outside Lean.
+the infinitesimal inclusion `ker Dr ⊆ im R`. Petersen's Theorem 4.7 proves
+this for the linearized vacuum Einstein equation when `R` is the full smooth
+infinitesimal gauge operator. However, the Lean development does not prove
+that the tangent space of the actual nonlinear solution space equals the
+full linearized solution space (linearization stability), nor that every
+vector field produced by Petersen lies in the Lie algebra of the selected
+identity-component diffeomorphism group and integrates to a smooth path in
+that group. Thus it does not identify `im R` with `T(G_0·φ)` without those
+additional hypotheses. The nonlinear H4 statement is not formalized.
 
 For spatially compact, globally hyperbolic vacuum GR, the classical
 Isenberg--Marsden slice theorem uses a constant-mean-curvature (CMC) foliation
