@@ -283,15 +283,13 @@ theorem quotient_pairing_unique
     (π : V →ₗ[K] Q)
     (hSurjective : Function.Surjective π)
     (ω₁ ω₂ : Q →ₗ[K] Q →ₗ[K] K)
-    (hPullback₁ : ∀ u v, ω₁ (π u) (π v) = 0)
-    (hPullback₂ : ∀ u v, ω₂ (π u) (π v) = 0) :
+    (hPullback : ∀ u v, ω₁ (π u) (π v) = ω₂ (π u) (π v)) :
     ω₁ = ω₂ := by
-  -- Both forms have zero pullback, so surjectivity forces both to vanish.
   ext q r
   obtain ⟨u, hu⟩ := hSurjective q
   obtain ⟨v, hv⟩ := hSurjective r
-  rw [← hu, ← hv, hPullback₁, hPullback₂]
-
+  rw [← hu, ← hv]
+  exact hPullback u v
 end QuotientPairing
 
 section FourDimensionalSphereCounterexample
