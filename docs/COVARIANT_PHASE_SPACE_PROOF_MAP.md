@@ -38,9 +38,11 @@ Isenberg--Marsden slice theorem uses a constant-mean-curvature (CMC) foliation
 and yields a stratified solution space whose regular strata are symplectic.
 Backgrounds with spacetime symmetries (Killing fields) can produce conical
 singularities; the ordinary smooth-manifold argument must not be applied
-there. The GR specialization should therefore either restrict to a suitable
-regular stratum (with no Killing initial data under the relevant compact-Cauchy
-regularity hypotheses) or use singular/stratified reduction.
+there. No Killing fields remove continuous isotropy but do not by themselves
+exclude residual discrete stabilizers in the identity-component diffeomorphism
+group. H5's free-action hypothesis therefore requires trivial full stabilizer;
+otherwise use orbifold/stratified reduction. The GR specialization should
+restrict to a suitable regular stratum or use singular/stratified reduction.
 
 Do not infer H5 from Ebin's Riemannian slice theorem: the diffeomorphism action
 on the full space of Lorentzian metrics need not be proper. The relevant
