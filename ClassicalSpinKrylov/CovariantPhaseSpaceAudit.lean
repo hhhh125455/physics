@@ -36,8 +36,10 @@ Assumptions:
 * hHamilton: the Hamiltonian-vector sign convention is
   Ω(X_λ, ·) = - λ ∘ χ;
 * hAnnihilatorComplete: every covector annihilating ker χ factors through χ.
-  In infinite dimensions this is an independent topological hypothesis,
-  not a consequence of first-classness alone.
+  This Lean file uses the algebraic dual only. It does not formalize the
+  continuous/admissible dual in H1; in that topological setting the exactness
+  condition is independent and requires separate closed-range/extension
+  analysis.
 
 Conclusion: the kernel of the restricted form is exactly the image of the
 constraint Hamiltonian generators. -/
