@@ -207,7 +207,7 @@ theorem higherOrderMomentum_recursion
   have hpow : n - 2 = n - 1 - 1 := by omega
   rw [hpow]
   rw [hlast]
-  simp [sub_eq_add_neg, add_comm, add_left_comm, add_assoc]
+  simp [sub_eq_add_neg, add_comm]
 
 end HigherDerivativeMomentum
 
@@ -249,7 +249,7 @@ theorem pairing_independent_of_lifts
       _ = 0 := by rw [hRadV u']; simp
   calc
     ω u v = ω (u' + (u - u')) (v' + (v - v')) := by
-      congr 1 <;> abel
+      abel_nf
     _ = (ω u' v' + ω u' (v - v')) +
         (ω (u - u') v' + ω (u - u') (v - v')) := by
       simp only [map_add, LinearMap.add_apply]
@@ -276,6 +276,21 @@ theorem quotient_pairing_nondegenerate
     exact pairing_independent_of_lifts ω π hSkew hRadical rfl hw.symm
   rw [hsame]
   exact hω
+
+/-- A descended bilinear form is unique when the quotient map is
+surjective: two forms with the same pullback along π must coincide. -/
+theorem quotient_pairing_unique
+    (π : V →ₗ[K] Q)
+    (hSurjective : Function.Surjective π)
+    (ω₁ ω₂ : Q →ₗ[K] Q →ₗ[K] K)
+    (hPullback₁ : ∀ u v, ω₁ (π u) (π v) = 0)
+    (hPullback₂ : ∀ u v, ω₂ (π u) (π v) = 0) :
+    ω₁ = ω₂ := by
+  -- Both forms have zero pullback, so surjectivity forces both to vanish.
+  ext q r
+  obtain ⟨u, hu⟩ := hSurjective q
+  obtain ⟨v, hv⟩ := hSurjective r
+  rw [← hu, ← hv, hPullback₁, hPullback₂]
 
 end QuotientPairing
 
