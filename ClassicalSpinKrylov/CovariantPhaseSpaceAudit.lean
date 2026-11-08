@@ -216,6 +216,43 @@ theorem higherOrderMomentum_recursion
   rw [hlast]
   simp [sub_eq_add_neg, add_comm]
 
+
+/-- Forward-indexed presentation of the same finite-order momentum:
+p_j = sum_{s=0}^{k-j-1} (-D)^s F_{j+1+s}. -/
+def higherOrderMomentumForward
+    (D : V →ₗ[K] V) (F : ℕ → V) (k j : ℕ) : V :=
+  ∑ s ∈ Finset.range (k - j),
+    ((-D) ^ s) (F (j + 1 + s))
+
+/-- The direct derivative-order sum and the reverse-indexed Ostrogradsky
+sum are identical; the proof is the finite-sum reflection r ↦ k-j-1-r. -/
+theorem higherOrderMomentum_eq_forward
+    (D : V →ₗ[K] V) (F : ℕ → V)
+    {k j : ℕ} (hjk : j < k) :
+    higherOrderMomentum D F k j =
+      higherOrderMomentumForward D F k j := by
+  let n := k - j
+  have harg : ∀ r, r < n → j + 1 + (n - 1 - r) = k - r := by
+    intro r hr
+    dsimp [n]
+    omega
+  unfold higherOrderMomentum higherOrderMomentumForward
+  change
+    (∑ r ∈ Finset.range n,
+      ((-D) ^ (n - 1 - r)) (F (k - r))) =
+    ∑ r ∈ Finset.range n, ((-D) ^ r) (F (j + 1 + r)
+    )
+  calc
+    (∑ r ∈ Finset.range n,
+      ((-D) ^ (n - 1 - r)) (F (k - r))) =
+      ∑ r ∈ Finset.range n,
+        ((-D) ^ (n - 1 - r)) (F (j + 1 + (n - 1 - r))) := by
+          apply Finset.sum_congr rfl
+          intro r hr
+          rw [harg r (Finset.mem_range.mp hr)]
+    _ = ∑ r ∈ Finset.range n, ((-D) ^ r) (F (j + 1 + r)) := by
+          rw [← Finset.sum_range_reflect]
+
 end HigherDerivativeMomentum
 
 section QuotientPairing
