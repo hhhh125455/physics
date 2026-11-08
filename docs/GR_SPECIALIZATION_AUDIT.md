@@ -270,6 +270,84 @@ The remaining smooth nonlinear quotient/local-slice construction is a
 separate H5 issue; Isenberg--Marsden's slice theorem is relevant only in its
 stated CMC and stratified setting.
 
+## Reduced GR criterion: the hypotheses actually needed for the kernel theorem
+
+The preceding results suggest replacing the original H2/H4 package by a
+smaller set of tangent-level inputs. This is a conditional synthesis of
+existing theorems, not yet a novelty claim.
+
+Let \(M=I\times\Sigma\), with \(\Sigma\) a compact Cauchy surface, and let
+\(\phi\) be a smooth vacuum Einstein solution in a CMC regular stratum. Fix
+compatible Sobolev spaces and a precise identity-component diffeomorphism
+group \(\mathcal G_0\). Suppose:
+
+1. **Regular constraint surface (H1).** The ADM constraint map
+   \(\Phi\) has surjective derivative with split kernel. In the tame
+   compact-Cauchy setting, no KIDs imply this submersion property because
+   \(D\Phi^*\) is injective and has injective symbol. Carlotto's Theorem 4.6
+   then gives linearisation stability. The continuous-dual annihilator
+   factorization follows from the Banach open mapping theorem, provided the
+   work note's admissible dual is chosen to be the corresponding continuous
+   dual (or the multiplier is proved to lie in the permitted space).
+2. **Covariant/canonical compatibility (the pullback part of H2).**
+   \[
+   \Omega_{\rm CPS}=r_\Sigma^*\Omega_{\rm ADM}
+   \]
+   with boundary potential, orientation, and normalization matched.
+   Margalef-Bentabol--Villaseñor supply the general equivalence theorem;
+   the Einstein--Hilbert specialization must still be written in the exact
+   conventions of the note.
+3. **ADM constraint generators (H3/CP).** The Hamiltonian vector fields of
+   the smeared Hamiltonian and momentum constraints agree with the
+   lapse-shift-induced data variations of spacetime infinitesimal gauge
+   transformations. Petersen's Lemma 4.13 gives the latter; the ADM
+   hypersurface-deformation calculation performs the comparison.
+4. **Linearized Cauchy quotient theorem (Petersen).** Theorem 4.18 gives
+   the quotient-level linearized Cauchy isomorphism; Theorem 4.7 gives
+   infinitesimal gauge exactness for zero linearized initial data. Combined
+   with CP, these imply the two pointwise properties needed by D3B:
+   surjectivity of \(D r_\Sigma\) and
+   \(\ker D r_\Sigma\subseteq\operatorname{im}\mathcal L_\phi\).
+5. **Actual solution tangent and orbit tangent.** No-KID linearisation
+   stability identifies the relevant local solution tangent with the
+   linearized solution space. The cutoff-flow lemma above identifies
+   \(\operatorname{im}\mathcal L_\phi\) with the tangent to the
+   \(\mathcal G_0\)-orbit, provided \(\mathcal G_0\) contains the compactly
+   supported isotopies constructed there.
+6. **Smooth quotient (H5).** A compatible CMC slice theorem and trivial
+   full stabilizer give a local smooth quotient. No Killing fields remove
+   continuous isotropy, but residual discrete stabilizers must also be
+   excluded if the quotient is to be an ordinary manifold rather than an
+   orbifold/stratified space.
+
+Under these assumptions, D1--D4 yield
+\[
+\ker\Omega_{\rm CPS,\phi}
+   =T_\phi(\mathcal G_0\cdot\phi),
+\]
+and the form descends to a unique nondegenerate two-form on the local
+quotient. The proof is the three-step D3B argument: use surjectivity of
+\(D r_\Sigma\) and pullback compatibility to show that a vector in
+\(\ker\Omega_{\rm CPS}\) maps into the ADM constraint radical; use H1/D2
+to identify that radical with the constraint-generator image; then use CP
+to subtract a spacetime gauge direction and the infinitesimal PU result
+to show the remainder is vertical gauge. D1 gives the reverse inclusion.
+
+**What has been removed:** the full nonlinear local-product assertion for
+\(r_\Sigma\) in H2 is not needed for this pointwise kernel identity, once
+the linearized Cauchy theorem supplies \(D r_\Sigma\)-surjectivity.
+The nonlinear, parameterized same-data uniqueness statement H4 is also
+not needed; it is replaced by linearization stability, Petersen's
+linearized theorem, and the cutoff-flow lemma. The pullback identity in H2
+and the smooth quotient/slice requirement H5 remain essential.
+
+This is a useful simplification of the work note, but it is not yet a new
+GR theorem: Khavkine's formal reduction and Isenberg--Marsden's CMC
+stratified symplectic quotient are close prior results. A publication-level
+contribution must show that the precise function-space formulation,
+admissible-dual criterion, or a new higher-derivative application goes
+beyond those results.
+
 ## Killing fields and the regular stratum
 
 For vacuum spacetimes with compact Cauchy surfaces, Moncrief identifies the
