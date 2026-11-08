@@ -258,14 +258,22 @@ linearization stability itself also requires the Taub-charge conditions.
 ## Prior covariant-phase-space criterion to compare against
 
 Khavkine (2014) is a close prior result, not an optional background citation.
-It formulates hyperbolizability together with global parametrizability of
-constraints and global recognizability of gauge transformations, and derives
-nondegeneracy of the reduced covariant symplectic structure under those
-conditions. Those hypotheses overlap substantially with the purpose of H1,
-H2, H4, and the D2--D4 conclusion here. The present Cauchy/ADM route may be
-complementary, but a novelty claim requires a theorem-by-theorem comparison:
-which of H1--H5 is weaker, stronger, or more readily verifiable, and what new
-GR or higher-derivative application follows.
+The exact statements are Definitions 3.2 (global parametrizability of
+constraints) and 3.3 (global recognizability of gauge transformations);
+Lemma 3.5 proves nondegeneracy of the formal gauge-invariant solution
+tangent/cotangent pairing under these hypotheses; Lemma 3.11 establishes
+Cauchy-surface independence and formal closedness; Corollary 3.1 descends
+the presymplectic form to the formal gauge quotient; and Theorem 3.2 proves
+that the Peierls formula is its two-sided inverse. These hypotheses overlap
+substantially with the purpose of H1 and the D2--D4 conclusion, but they are
+not literally H1's ADM annihilator factorization or H4's nonlinear
+parameterized same-data uniqueness. Khavkine works with formal tangent and
+cotangent quotients of the linearized constrained hyperbolic system; the
+present note additionally asks for a smooth geometric quotient with local
+sections and a local-product/submersion property. A novelty claim therefore
+requires a theorem-by-theorem comparison showing that the latter is a
+genuinely new result in a specified function-space category, not just an ADM
+rephrasing of the formal reduction.
 
 ## Primary references
 
