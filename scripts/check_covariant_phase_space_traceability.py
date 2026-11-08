@@ -10,6 +10,7 @@ modules = {
     "ClassicalSpinKrylov/CovariantPhaseSpaceAudit.lean": [
         "constraint_kernel_eq",
         "higherOrderMomentum_recursion",
+        "higherOrderMomentum_eq_forward",
         "reverse_kernel_inclusion",
         "full_kernel_eq_from_bridge",
         "pairing_independent_of_lifts",
