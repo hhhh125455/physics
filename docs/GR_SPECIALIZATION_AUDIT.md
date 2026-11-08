@@ -74,6 +74,24 @@ space and boundary conditions. If the Cauchy surface has a boundary or
 asymptotic boundary conditions are imposed, boundary charges can make these
 transformations non-null.
 
+## D3A: literature cross-check of higher-order momenta
+
+Margalef-Bentabol and Villaseñor, arXiv:2204.06383, Section VI,
+Eqs. (22)--(24), derive the higher-order canonical momenta by a backward
+recursion and prove equivalence of the canonical and covariant symplectic
+forms for higher-order theories, including boundary terms. Their momentum
+formula has the same finite alternating-derivative structure as
+\[
+p_j=\sum_{m=j+1}^{k}(-D)^{m-j-1}F_m,
+\qquad
+p_j=F_{j+1}-Dp_{j+1}.
+\]
+The exact index and boundary-density dictionary must be written when
+specializing their notation to the work note, but the recursion and the
+canonical/covariant symplectic equivalence are independently present in the
+literature. This is an important check that the D3A algebra is not an
+invented Ostrogradsky convention.
+
 ## Hypothesis-by-hypothesis status
 
 | Abstract condition | GR realization | Status and limitation |
