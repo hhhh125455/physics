@@ -348,6 +348,56 @@ contribution must show that the precise function-space formulation,
 admissible-dual criterion, or a new higher-derivative application goes
 beyond those results.
 
+## A concrete regular background: compact Milne quotient
+
+The no-KID regular stratum is nonempty. Let \((\Sigma,h_{-1})\) be a closed
+hyperbolic three-manifold, with sectional curvature \(-1\), and set
+\[
+M=(0,\infty)\times\Sigma,\qquad
+g=-dt^2+t^2h_{-1}.
+\]
+This is the compact-Cauchy Milne quotient. In the warped-product Ricci
+formulas, with scale factor \(a(t)=t\) and spatial curvature \(k=-1\),
+\[
+\operatorname{Ric}_{tt}=-3\frac{\ddot a}{a}=0,\qquad
+\operatorname{Ric}_{ij}
+=\big(a\ddot a+2\dot a^2+2k\big)(h_{-1})_{ij}=0.
+\]
+Thus \(g\) is vacuum. Each \(t=\mathrm{const}\) slice is compact, has
+\(\tilde g=t^2h_{-1}\), and has pure-trace second fundamental form
+\(\tilde k=\pm t h_{-1}=\pm t^{-1}\tilde g\), so its mean curvature is
+\(\pm3/t\): the foliation is CMC. The metric is globally hyperbolic because
+\(g=t^2(-d(\log t)^2+h_{-1})\) is conformal to the static product metric on
+\(\mathbb R\times\Sigma\).
+
+There are no spacetime Killing fields. The universal cover is the future
+Minkowski cone, and its deck group is a torsion-free cocompact lattice
+\(\Gamma<SO^+(3,1)\). A Killing field on the cone is the restriction of a
+Minkowski Killing field \(X(x)=a+Bx\), with \(a\in\mathbb R^{3,1}\) and
+\(B\in\mathfrak{so}(3,1)\). To descend to the quotient it must be
+\(\Gamma\)-invariant, hence \(a=\gamma a\) and \(B\gamma=\gamma B\) for
+every \(\gamma\in\Gamma\). By the Borel density theorem, \(\Gamma\) is
+Zariski dense in \(SO^+(3,1)\); the standard representation has no
+nonzero invariant vector and the Lie algebra \(\mathfrak{so}(3,1)\) has
+zero centre. Therefore \(a=B=0\). Moncrief's KID theorem then gives
+\(\ker D\Phi^*=0\) on every compact Cauchy slice.
+
+The stabilizer in the identity component of the spacetime diffeomorphism
+group is also trivial. A time-orientation-preserving spacetime isometry
+preserves the CMC value \(\pm3/t\), hence preserves each \(t\)-slice. Its
+restriction is an isometry of \((\Sigma,h_{-1})\). If the spacetime
+isometry is isotopic to the identity, that restriction is homotopic to the
+identity; Mostow rigidity forces it to be the identity. Thus there is no
+residual discrete stabilizer inside \(\mathcal G_0\), even though the full
+isometry group of \(\Sigma\) need not be trivial.
+
+This gives a concrete background on which the analytic regularity and
+stabilizer conditions are simultaneously satisfied. The remaining
+qualification is the same as above: the smooth structure/topology on the
+spacetime diffeomorphism group used by the CMC slice theorem must be checked
+against the compact-open jointly smooth cutoff isotopies used to represent
+arbitrary infinitesimal gauge fields.
+
 ## Killing fields and the regular stratum
 
 For vacuum spacetimes with compact Cauchy surfaces, Moncrief identifies the
@@ -406,6 +456,8 @@ rephrasing of the formal reduction.
 - T. J. R. Hughes, T. Kato and J. E. Marsden, “Well-posed quasi-linear second-order hyperbolic systems with applications to nonlinear elastodynamics and general relativity,” *Arch. Rational Mech. Anal.* **63** (1977), 273--294, DOI: 10.1007/BF00251584.
 - A. Carlotto, “The general relativistic constraint equations,” *Living Reviews in Relativity* **24** (2021), article 2, DOI: 10.1007/s41114-020-00030-z; see the discussion of KIDs and Theorem 4.6.
 - A. E. Fischer and J. E. Marsden, “Linearization stability of nonlinear partial differential equations,” *Proc. Sympos. Pure Math.* **27** (1975), 219--263.
+- G. D. Mostow, *Strong Rigidity of Locally Symmetric Spaces*, Annals of Mathematics Studies **78**, Princeton University Press (1973).
+- A. Borel, “Density properties for certain subgroups of semisimple groups without compact components,” *Annals of Mathematics* **72** (1960), 179--188.
 - O. L. Petersen, “On the Cauchy problem for the linearised Einstein equation,” arXiv:1802.06028 (2018), especially Theorems 4.7 and 4.18, Lemma 4.13, and Corollary 4.22.
 - P. W. Michor, “Manifolds of smooth maps, II: The Lie group of diffeomorphisms of a non-compact smooth manifold,” *Cahiers de topologie et géométrie différentielle catégoriques* **21** (1980), 63--86.
 - J.-P. Magnot, “The group of diffeomorphisms of a non-compact manifold is not regular,” *Demonstratio Mathematica* **51** (2018), 8--16, DOI: 10.1515/dema-2018-0001; arXiv:1101.2370.
