@@ -16,9 +16,15 @@ by themselves exclude residual discrete stabilizers. For the slice/quotient
 results, also assume the existence of a constant-mean-curvature (CMC)
 foliation, as in the Isenberg--Marsden construction.
 
-Use \(K_{ij}=-\frac12\mathcal L_n h_{ij}\) and the momentum convention
+Fix the Einstein--Hilbert normalization
 \[
-\pi^{ij}=\sqrt h\,(K h^{ij}-K^{ij}).
+S_{\rm EH}=\frac{1}{\kappa}\int_M R[g]\,\boldsymbol\epsilon,
+\qquad \kappa:=16\pi G,
+\]
+and use \(K_{ij}=-\frac12\mathcal L_n h_{ij}\). After the standard temporal
+boundary term in the ADM decomposition, the canonical momentum is
+\[
+\pi^{ij}=\frac{\sqrt h}{\kappa}\,(K h^{ij}-K^{ij}).
 \]
 The canonical potential and symplectic form are
 \[
@@ -27,13 +33,14 @@ The canonical potential and symplectic form are
 \Omega_{\rm ADM}=\delta\Theta_{\rm ADM}
 =\int_\Sigma \delta\pi^{ij}\wedge\delta h_{ij},
 \]
-which matches the work-note convention \(\Omega=\int\delta p\wedge\delta q\).
-The ADM initial data are \((h_{ij},\pi^{ij})\), subject to the Hamiltonian and
-momentum constraints
+which matches the work-note convention \(\Omega=\int\delta p\wedge\delta q\)
+and the Harlow--Wu convention (their Eq. (16)). The ADM initial data are
+\((h_{ij},\pi^{ij})\), subject to
 \[
 \mathcal H=
-\frac{1}{\sqrt h}\left(\pi_{ij}\pi^{ij}-\frac12\pi^2\right)
--\sqrt h\,{}^{(3)}R,
+\frac{\kappa}{\sqrt h}
+\left(\pi_{ij}\pi^{ij}-\frac12\pi^2\right)
+-\frac{\sqrt h}{\kappa}\,{}^{(3)}R,
 \qquad
 \mathcal H_i=-2h_{ij}D_k\pi^{jk}.
 \]
