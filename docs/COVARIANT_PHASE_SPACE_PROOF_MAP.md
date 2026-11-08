@@ -115,6 +115,8 @@ by Isenberg--Marsden, not a generic theorem on all Lorentzian metrics.
 
 - Lee--Wald / Iyer--Wald: covariant symplectic potential and current.
 - Harlow--Wu: boundary-aware covariant phase space and symplectic reduction.
+- Petersen (arXiv:1802.06028): linearized Einstein Cauchy uniqueness up to gauge, gauge-producing initial-data directions, and the quotient-level Cauchy map.
+- Carlotto (Living Rev. Relativ. 24 (2021) 2): KIDs, surjectivity of the linearized constraint map, and linearization stability.
 - Arms--Marsden--Moncrief: linearization stability and conical singularities at
   symmetric compact-Cauchy vacuum solutions.
 - Isenberg--Marsden: spacetime-diffeomorphism slice theorem for spatially
