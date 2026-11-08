@@ -361,4 +361,46 @@ theorem sphere_scalar_curvature_injective
 
 end FourDimensionalSphereCounterexample
 
+section TwoDimensionalSphereCounterexample
+
+/-- The original work note's scalar curvature 2/a² on R × S² is
+injective in the positive scale factor. -/
+theorem two_sphere_scalar_curvature_injective
+    {a b : ℝ} (ha : 0 < a) (hb : 0 < b)
+    (hR : 2 / a ^ 2 = 2 / b ^ 2) :
+    a = b := by
+  have ha0 : a ≠ 0 := ne_of_gt ha
+  have hb0 : b ≠ 0 := ne_of_gt hb
+  have hsquare : a ^ 2 = b ^ 2 := by
+    have h := hR
+    field_simp [ha0, hb0] at h
+    nlinarith
+  nlinarith [sq_nonneg (a - b)]
+
+end TwoDimensionalSphereCounterexample
+
+section GaugeInvariantObservable
+
+variable {K V G : Type*}
+variable [Field K]
+variable [AddCommGroup V] [Module K V]
+variable [AddCommGroup G] [Module K G]
+
+/-- An invariant linearized observable separates a tangent direction
+from all gauge directions whenever its variation is nonzero. -/
+theorem invariant_observable_excludes_gauge
+    (I : V →ₗ[K] K)
+    (R : G →ₗ[K] V)
+    (hGauge : ∀ ξ, I (R ξ) = 0)
+    (u : V)
+    (hObservable : I u ≠ 0) :
+    ¬ ∃ ξ, u = R ξ := by
+  rintro ⟨ξ, hξ⟩
+  apply hObservable
+  calc
+    I u = I (R ξ) := by rw [hξ]
+    _ = 0 := hGauge ξ
+
+end GaugeInvariantObservable
+
 end CovariantPhaseSpaceAudit
