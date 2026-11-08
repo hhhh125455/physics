@@ -123,6 +123,8 @@ theorem higherOrderMomentum_recursion
   have hnorm : n - 1 + 1 - 1 = n - 1 := by omega
   rw [hnorm]
   rw [hsum, hnext]
+  have hpow : n - 2 = n - 1 - 1 := by omega
+  rw [hpow]
   rw [hlast]
   simp [sub_eq_add_neg, add_comm, add_left_comm, add_assoc]
 
