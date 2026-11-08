@@ -17,25 +17,40 @@ specific field theory.
 ## Literature overlap and novelty risk
 
 Khavkine, *Covariant phase space, constraints, gauge and the Peierls formula*
-(arXiv:1402.1282, 2014), is a close prior result. In Def. 3.4, global
-parametrizability means nondegeneracy of a pairing between two vertical
-cohomologies associated with the constrained hyperbolic system. In Def. 3.6,
-global recognizability means nondegeneracy of a pairing between cohomologies
-associated with the gauge complex. These are not literally the same as H1's
-ADM annihilator factorization or H4's nonlinear parameterized same-data
-uniqueness; they are cohomological, linearized hypotheses. Under them,
-Lemma 3.17 proves nondegeneracy of the formal pairing on gauge-invariant
-solution tangent/cotangent spaces, and Corollary 3.39 descends the formal
-presymplectic form to the formal gauge quotient. This overlaps substantially
-with the purpose of D2--D4.
+(arXiv:1402.1282, 2014), is a close prior result. The exact numbering is:
+
+- **Definition 3.2 (global parametrizability of constraints):** nondegeneracy
+  of the natural pairing between the vertical cohomologies in solutions
+  associated with the constrained hyperbolic system.
+- **Definition 3.3 (global recognizability of gauge transformations):**
+  nondegeneracy of the natural pairing between the gauge cohomologies defined
+  by the gauge complex and its adjoint.
+- **Lemma 3.5:** under those two hypotheses, the natural pairing between the
+  formal gauge-invariant solution tangent and cotangent spaces is
+  nondegenerate.
+- **Lemma 3.11 and Corollary 3.1:** the covariant presymplectic form is
+  independent of the Cauchy surface, formally closed, and descends to the
+  formal gauge quotient.
+- **Theorem 3.2:** the Peierls formula is a two-sided inverse of the descended
+  formal covariant symplectic form.
+
+These hypotheses are not literally the same as H1's ADM annihilator
+factorization or H4's nonlinear parameterized same-data uniqueness. They are
+cohomological conditions on the linearized constrained hyperbolic system and
+gauge complex. Nevertheless, the overlap with D2--D4 is substantial and must
+be addressed theorem by theorem.
 
 The present route is organized differently: it uses the Cauchy-data map,
 canonical constraint surface, ADM constraint generators, and a smooth
 solution-space quotient. That difference is not by itself enough to establish
-novelty. A paper must compare the H1--H5 conditions explicitly with
-Khavkine's hypotheses, identify which condition is weaker/stronger or easier
-to verify, and prove a genuinely new GR or higher-derivative application.
-The general covariant/canonical equivalence of symplectic forms is also already
+novelty. Khavkine develops formal tangent/cotangent quotients and a formal
+reduced symplectic structure; the present note additionally asks for an
+actual smooth quotient with local sections and a local-product/submersion
+property under H2/H5. A paper must prove that this is a genuinely stronger
+geometric result in a precisely specified function-space category, rather
+than simply restating the same nondegeneracy argument in ADM language.
+
+The general covariant/canonical equivalence of symplectic forms is also
 addressed by Margalef-Bentabol--Villaseñor (arXiv:2204.06383).
 
 Petersen, *On the Cauchy problem for the linearised Einstein equation*
@@ -45,34 +60,29 @@ with zero induced first and second fundamental-form variations is pure gauge;
 Lemma 4.13 identifies gauge-producing initial-data variations with induced
 spacetime gauge variations; Theorem 4.18 proves the quotient-level linearized
 Cauchy map is an isomorphism of locally convex topological vector spaces.
-Thus tangent-level PU and CP are already established in vacuum GR, and the
-linearized quotient Cauchy map is already well-posed. The remaining possible
-contribution is the nonlinear symplectic reduction/local-product theorem and
-its relation to Khavkine's cohomological criterion, not the linearized Cauchy
-uniqueness statement itself.
-
+Thus tangent-level PU and the geometric CP formula are already established
+in vacuum GR, and the linearized quotient Cauchy map is already well-posed.
+The remaining possible contribution is the nonlinear symplectic
+reduction/local-product theorem and its relation to Khavkine's cohomological
+criterion, not the linearized Cauchy uniqueness statement itself.
 
 A useful first-pass correspondence is:
 
 | This note | Khavkine 2014 | Difference that must be demonstrated |
 |---|---|---|
-| H1: annihilator/conormal completeness | Global parametrizability of constraints (Def. 3.4) | Analogy only: the note uses a Cauchy/ADM annihilator identity; Khavkine uses nondegeneracy of a pairing between vertical cohomologies of the constrained hyperbolic system. |
+| H1: annihilator/conormal completeness | Global parametrizability of constraints (Def. 3.2) | Analogy only: the note uses a Cauchy/ADM annihilator identity; Khavkine uses nondegeneracy of a pairing between vertical cohomologies of the constrained hyperbolic system. |
 | H2/H3: Cauchy map and constraint generators | Hyperbolizability plus the constraint complex | The note requires an actual local Cauchy-data map and identifies its constraint generators with spacetime diffeomorphisms. |
-| H4: same-data solution curves are gauge | Global recognizability of gauge transformations (Def. 3.6) | Analogy only: H4 is nonlinear and parameterized; Khavkine's condition is nondegeneracy of a linearized gauge-cohomology pairing, not the same-data uniqueness statement. |
-| D2--D4: kernel equality and descent | Lemma 3.17 and Corollary 3.39 | The note aims at a smooth geometric quotient under H5; Khavkine constructs formal tangent/cotangent quotients and a formal reduced symplectic structure. |
+| H4: same-data solution curves are gauge | Global recognizability of gauge transformations (Def. 3.3) | Analogy only: H4 is nonlinear and parameterized; Khavkine's condition is nondegeneracy of a linearized gauge-cohomology pairing, not the same-data uniqueness statement. |
+| D2--D4: kernel equality and descent | Lemma 3.5, Lemma 3.11, Corollary 3.1, and Theorem 3.2 | The note aims at a smooth geometric quotient under H5; Khavkine constructs formal tangent/cotangent quotients and a formal reduced symplectic structure with Peierls inverse. |
 | H5: smooth quotient/local slices | Not the same as the cohomological nondegeneracy conditions | A smooth finite-regularity quotient, including stabilizers and strata, is an additional global geometric result. |
 
-Khavkine's Lemma 3.17 proves nondegeneracy of the pairing on gauge-invariant
-solution tangent/cotangent spaces under global parametrizability and
-recognizability; Corollary 3.39 then descends the presymplectic form. This is
-too close to ignore. The strongest defensible positioning for the present
-work would be: a nonlinear Cauchy/ADM symplectic-reduction theorem that
-combines the known linearized Cauchy result of Petersen with a precise
-constraint-annihilator criterion and a smooth quotient/slice construction,
-and that proves a concrete result not already covered by Khavkine or
-Isenberg--Marsden. That claim is not established until the H1--H5 comparison
-and a nontrivial GR application are completed.
-
+This comparison makes the novelty bar more precise. The strongest defensible
+positioning would be a nonlinear Cauchy/ADM symplectic-reduction theorem that
+combines known linearized Cauchy results with a precise admissible-dual
+annihilator criterion and a smooth quotient/slice construction, and proves a
+concrete result not already covered by Khavkine or Isenberg--Marsden. That
+claim is not established until the H1--H5 comparison and a nontrivial GR
+application are completed.
 
 ## Global proof boundary
 
