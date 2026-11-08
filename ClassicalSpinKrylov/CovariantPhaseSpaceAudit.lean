@@ -94,10 +94,12 @@ The fields encode well-definedness, surjectivity, and injectivity of the
 induced quotient map, without constructing quotient types explicitly.
 They capture only the algebraic content: the locally convex topology and
 continuity of the inverse in Petersen's Theorem 4.18 are not formalized.
-Moreover, R is an infinitesimal gauge generator. Identifying its image with
-the tangent space to an actual nonlinear diffeomorphism-group orbit requires
-a separate choice of diffeomorphism group and an integrability result for
-the allowed vector fields; this file does not prove that identification. -/
+Moreover, R is an infinitesimal gauge generator. In the GR specialization
+on M = ℝ × Σ with compact Σ, a cutoff-flow lemma (recorded in the GR audit)
+constructs a jointly smooth path of compactly supported diffeomorphisms
+tangent to any smooth vector field, provided the chosen G₀ contains those
+isotopies. That analytic lemma and the compatibility of its compact-open
+smoothness with the H5 slice-group topology are not formalized here. -/
 structure LinearizedCauchyQuotientMapProperties
     (r : S →ₗ[K] C) (R : G →ₗ[K] S) (X : M →ₗ[K] C) : Prop where
   map_gauge_to_gauge : ∀ ξ, ∃ μ, r (R ξ) = X μ
@@ -192,10 +194,12 @@ quotients, together with CP, implies surjectivity of the unquotiented
 linearized initial-data map and the infinitesimal PU inclusion used in D3B.
 
 This formalizes only the algebraic consequence of a result such as Petersen's
-Theorem 4.18. It does not formalize the topological-vector-space isomorphism,
-linearization stability of the nonlinear solution space, or the integration
-of every infinitesimal gauge generator to a curve in the chosen nonlinear
-diffeomorphism group. -/
+Theorem 4.18. It does not formalize the topological-vector-space isomorphism
+or linearization stability of the nonlinear solution space. The GR audit
+gives a cutoff-flow construction that can integrate each smooth infinitesimal
+gauge generator to a jointly smooth path of compactly supported
+diffeomorphisms on ℝ × Σ with compact Σ; matching this path topology to the
+group used in the nonlinear slice theorem remains an external hypothesis. -/
 theorem full_kernel_eq_from_quotient_cauchy_map_properties
     (ωS : S →ₗ[K] S →ₗ[K] K)
     (ωC : C →ₗ[K] C →ₗ[K] K)
