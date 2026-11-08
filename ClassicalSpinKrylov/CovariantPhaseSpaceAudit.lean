@@ -117,9 +117,11 @@ theorem higherOrderMomentum_recursion
   have hlast :
       ((-D) ^ (n - 1 - (n - 1))) (F (k - (n - 1))) =
         F (j + 1) := by
-    rw [Nat.sub_self, pow_zero, LinearMap.one_apply, hlastIndex]
+    simp [hlastIndex]
   unfold higherOrderMomentum
   rw [show k - j = n by rfl, hnEq, Finset.sum_range_succ]
+  have hnorm : n - 1 + 1 - 1 = n - 1 := by omega
+  rw [hnorm]
   rw [hsum, hnext]
   rw [hlast]
   simp [sub_eq_add_neg, add_comm, add_left_comm, add_assoc]
