@@ -32,6 +32,27 @@ to verify, and prove a genuinely new GR or higher-derivative application.
 The general covariant/canonical equivalence of symplectic forms is also already
 addressed by Margalef-Bentabol--Villaseñor (arXiv:2204.06383).
 
+A useful first-pass correspondence is:
+
+| This note | Khavkine 2014 | Difference that must be demonstrated |
+|---|---|---|
+| H1: annihilator/conormal completeness | Global parametrizability of constraints (Def. 3.4) | The note uses a Cauchy/ADM annihilator identity; Khavkine uses nondegeneracy of a cohomological pairing. |
+| H2/H3: Cauchy map and constraint generators | Hyperbolizability plus the constraint complex | The note requires an actual local Cauchy-data map and identifies its constraint generators with spacetime diffeomorphisms. |
+| H4: same-data solution curves are gauge | Global recognizability of gauge transformations (Def. 3.6) | The note's PU is a nonlinear, parameterized uniqueness statement; Khavkine's condition is formulated at the linearized/cohomological level. |
+| D2--D4: kernel equality and descent | Lemma 3.17 and Corollary 3.39 | The note aims at a smooth geometric quotient under H5; Khavkine constructs formal tangent/cotangent quotients and a formal reduced symplectic structure. |
+| H5: smooth quotient/local slices | Not the same as the cohomological nondegeneracy conditions | A smooth finite-regularity quotient, including stabilizers and strata, is an additional global geometric result. |
+
+Khavkine's Lemma 3.17 proves nondegeneracy of the pairing on gauge-invariant
+solution tangent/cotangent spaces under global parametrizability and
+recognizability; Corollary 3.39 then descends the presymplectic form. This is
+too close to ignore. The strongest defensible positioning for the present
+work would be: a Cauchy/ADM criterion that turns these abstract cohomological
+requirements into concrete regularity, constraint, and uniqueness conditions,
+and that additionally addresses the smooth solution-space quotient. That
+claim is not established until the H1--H5 comparison and a nontrivial GR
+application are completed.
+
+
 ## Global proof boundary
 
 For a specifically four-dimensional GR presentation, use
