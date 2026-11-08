@@ -10,18 +10,24 @@ specific field theory.
 | D1 | Not formalized | Conservation of the covariant symplectic current and the time-cutoff argument are geometric/analytic inputs. |
 | D2 | `constraint_kernel_eq`, `linearFunctional_factors_through_surjective`, `constraint_kernel_eq_of_surjective` | `constraint_kernel_eq` assumes annihilator factorization; `linearFunctional_factors_through_surjective` and `constraint_kernel_eq_of_surjective` derive it algebraically from a surjective constraint map, with multipliers in the dual of the constraint-value space. To match the work-note notation \(D\chi:V\to\Lambda^*\) and multipliers \(\lambda\in\Lambda\), one still needs the reflexive/Riesz identification \(\Lambda\simeq\Lambda^{**}\). The original constraint_kernel_eq hypothesis is stated over the algebraic dual; the continuous dual version and its Sobolev closed-range hypotheses are not formalized. |
 | D3A | `higherOrderMomentum_recursion`, `iterated_integration_by_parts`, `finite_order_variation_identity`, `higherOrderEuler_eq_F0_sub_D_momentum`, `totalBoundary_eq_endpointMomentum_pairing` | Finite-order momentum recursion, repeated integration by parts, summed first-variation identity, and the identity E = F_0 - D p_0. The direct m-indexed endpointMomentum coefficient is now proved to satisfy totalBoundary = sum_j p_j D^j(q). The reversed-index vector-valued momentum formula and its recursion are also proved; their explicit reindexing equivalence is not separately formalized. The spatial integration-by-parts step and the realization of D as a spacetime differential operator remain outside Lean. The general higher-order momentum recursion and canonical/covariant symplectic equivalence are independently derived in Margalef-Bentabol--Villaseñor, arXiv:2204.06383, Sec. VI; the precise notation map remains to be written. |
-| D3B | `reverse_kernel_inclusion`, `full_kernel_eq_from_bridge` | Abstract bridge from constraint-kernel directions to solution-space gauge directions, conditional on pullback compatibility, surjectivity, CP, and PU. The covariant/canonical symplectic-form equivalence is established in Margalef-Bentabol--Villaseñor (arXiv:2204.06383), subject to their good-variational-principle and boundary hypotheses; the exact GR normalization still needs specialization. |
+| D3B | `reverse_kernel_inclusion`, `full_kernel_eq_from_bridge` | Abstract bridge conditional on pullback compatibility, surjectivity, CP, and **tangent-level** PU: `ker Dr` is assumed to lie in `im R`. It does not derive this from the work note's nonlinear, parameterized H4. Differentiating H4 along a smooth same-data curve and a smooth diffeomorphism family should yield tangent-level PU, but that infinite-dimensional chain-rule step is not formalized. The covariant/canonical symplectic-form equivalence is established in Margalef-Bentabol--Villaseñor (arXiv:2204.06383), subject to their hypotheses; the exact GR normalization still needs specialization. |
 | D4 | `pairing_independent_of_lifts`, `quotient_pairing_nondegenerate`, `quotient_pairing_unique`, `cartan_invariance_of_horizontal_closed_form`, `closedness_descends` | Algebraic consequences for quotient pairings and descent. Smooth quotient existence and the geometric Cartan formula are assumptions, not Lean results. |
 | D5 | `sphere_scalar_curvature_injective`, `two_sphere_scalar_curvature_injective`, `invariant_observable_excludes_gauge` | Injectivity of the displayed scalar-curvature functions and the abstract invariant-observable separation argument. The metric-curvature calculation and naturality under diffeomorphisms are checked separately. |
 
 ## Literature overlap and novelty risk
 
 Khavkine, *Covariant phase space, constraints, gauge and the Peierls formula*
-(arXiv:1402.1282, 2014), is a close prior result. Its conditions of global
-parametrizability of constraints and global recognizability of gauge
-transformations lead to nondegeneracy of the natural pairing on gauge-invariant
-solution tangent/cotangent spaces and to a nondegenerate reduced symplectic
-structure. This overlaps substantially with the purpose of D2--D4.
+(arXiv:1402.1282, 2014), is a close prior result. In Def. 3.4, global
+parametrizability means nondegeneracy of a pairing between two vertical
+cohomologies associated with the constrained hyperbolic system. In Def. 3.6,
+global recognizability means nondegeneracy of a pairing between cohomologies
+associated with the gauge complex. These are not literally the same as H1's
+ADM annihilator factorization or H4's nonlinear parameterized same-data
+uniqueness; they are cohomological, linearized hypotheses. Under them,
+Lemma 3.17 proves nondegeneracy of the formal pairing on gauge-invariant
+solution tangent/cotangent spaces, and Corollary 3.39 descends the formal
+presymplectic form to the formal gauge quotient. This overlaps substantially
+with the purpose of D2--D4.
 
 The present route is organized differently: it uses the Cauchy-data map,
 canonical constraint surface, ADM constraint generators, and a smooth
@@ -36,9 +42,9 @@ A useful first-pass correspondence is:
 
 | This note | Khavkine 2014 | Difference that must be demonstrated |
 |---|---|---|
-| H1: annihilator/conormal completeness | Global parametrizability of constraints (Def. 3.4) | The note uses a Cauchy/ADM annihilator identity; Khavkine uses nondegeneracy of a cohomological pairing. |
+| H1: annihilator/conormal completeness | Global parametrizability of constraints (Def. 3.4) | Analogy only: the note uses a Cauchy/ADM annihilator identity; Khavkine uses nondegeneracy of a pairing between vertical cohomologies of the constrained hyperbolic system. |
 | H2/H3: Cauchy map and constraint generators | Hyperbolizability plus the constraint complex | The note requires an actual local Cauchy-data map and identifies its constraint generators with spacetime diffeomorphisms. |
-| H4: same-data solution curves are gauge | Global recognizability of gauge transformations (Def. 3.6) | The note's PU is a nonlinear, parameterized uniqueness statement; Khavkine's condition is formulated at the linearized/cohomological level. |
+| H4: same-data solution curves are gauge | Global recognizability of gauge transformations (Def. 3.6) | Analogy only: H4 is nonlinear and parameterized; Khavkine's condition is nondegeneracy of a linearized gauge-cohomology pairing, not the same-data uniqueness statement. |
 | D2--D4: kernel equality and descent | Lemma 3.17 and Corollary 3.39 | The note aims at a smooth geometric quotient under H5; Khavkine constructs formal tangent/cotangent quotients and a formal reduced symplectic structure. |
 | H5: smooth quotient/local slices | Not the same as the cohomological nondegeneracy conditions | A smooth finite-regularity quotient, including stabilizers and strata, is an additional global geometric result. |
 
@@ -68,9 +74,11 @@ but the \(S^3\) version is preferable when explaining the point in 3+1 GR.
 
 The Lean development does **not** formalize the infinite-dimensional
 Fréchet-manifold/PDE hypotheses, the ADM tensor-calculus identities, Stokes'
-theorem on the spacetime field bundle, parameterized Cauchy uniqueness,
-or the existence and regularity of the quotient by spacetime
-diffeomorphisms.
+theorem on the spacetime field bundle, or the existence and regularity of the
+quotient by spacetime diffeomorphisms. In D3B, the Lean hypothesis `hPU` is
+the tangent-level inclusion `ker Dr ⊆ im R`; the nonlinear H4 statement and
+the differentiation of a parameterized diffeomorphism family that would
+imply `hPU` remain outside Lean.
 
 For spatially compact, globally hyperbolic vacuum GR, the classical
 Isenberg--Marsden slice theorem uses a constant-mean-curvature (CMC) foliation
