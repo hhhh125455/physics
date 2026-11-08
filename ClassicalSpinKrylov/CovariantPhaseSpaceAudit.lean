@@ -77,6 +77,87 @@ theorem constraint_kernel_eq
 
 end ConstraintKernel
 
+section SolutionConstraintBridge
+
+variable {K S C G M : Type*}
+variable [Field K]
+variable [AddCommGroup S] [Module K S]
+variable [AddCommGroup C] [Module K C]
+variable [AddCommGroup G] [Module K G]
+variable [AddCommGroup M] [Module K M]
+
+/-- Abstract form of the reverse-inclusion argument D3B.
+
+Here S is the tangent space to the actual solution space, C is the tangent
+space to the initial-data constraint surface, r is the linearized initial-data
+map, R generates spacetime gauge directions, and X generates constraint
+directions on C.
+
+The assumptions encode:
+* pullback compatibility of the two presymplectic forms;
+* surjectivity of the initial-data map;
+* the already-established constraint-kernel characterization on C;
+* CP: each constraint direction is realized by a spacetime gauge direction;
+* PU: every vertical initial-data variation is a spacetime gauge direction.
+
+This proves the reverse inclusion without assuming the target kernel equality. -/
+theorem reverse_kernel_inclusion
+    (ωS : S →ₗ[K] S →ₗ[K] K)
+    (ωC : C →ₗ[K] C →ₗ[K] K)
+    (r : S →ₗ[K] C)
+    (R : G →ₗ[K] S)
+    (X : M →ₗ[K] C)
+    (hPullback : ∀ u v, ωS u v = ωC (r u) (r v))
+    (hSurjective : Function.Surjective r)
+    (hConstraintKernel :
+      ∀ c, (∀ d, ωC c d = 0) → ∃ μ, c = X μ)
+    (hCP : ∀ μ, ∃ ξ, r (R ξ) = X μ)
+    (hPU : ∀ u, r u = 0 → ∃ η, u = R η) :
+    ∀ u, (∀ v, ωS u v = 0) → ∃ ξ, u = R ξ := by
+  intro u hu
+  have hC : ∀ c, ωC (r u) c = 0 := by
+    intro c
+    obtain ⟨v, hv⟩ := hSurjective c
+    calc
+      ωC (r u) c = ωC (r u) (r v) := by rw [← hv]
+      _ = ωS u v := (hPullback u v).symm
+      _ = 0 := hu v
+  obtain ⟨μ, hμ⟩ := hConstraintKernel (r u) hC
+  obtain ⟨ξ, hξ⟩ := hCP μ
+  have hVertical : r (u - R ξ) = 0 := by
+    rw [map_sub, hξ, hμ]
+    simp
+  obtain ⟨η, hη⟩ := hPU (u - R ξ) hVertical
+  refine ⟨ξ + η, ?_⟩
+  calc
+    u = R ξ + (u - R ξ) := by abel
+    _ = R ξ + R η := by rw [hη]
+    _ = R (ξ + η) := (map_add R ξ η).symm
+
+/-- Combining D1 with the bridge theorem gives the full kernel equality. -/
+theorem full_kernel_eq_from_bridge
+    (ωS : S →ₗ[K] S →ₗ[K] K)
+    (ωC : C →ₗ[K] C →ₗ[K] K)
+    (r : S →ₗ[K] C)
+    (R : G →ₗ[K] S)
+    (X : M →ₗ[K] C)
+    (hD1 : ∀ ξ v, ωS (R ξ) v = 0)
+    (hPullback : ∀ u v, ωS u v = ωC (r u) (r v))
+    (hSurjective : Function.Surjective r)
+    (hConstraintKernel :
+      ∀ c, (∀ d, ωC c d = 0) → ∃ μ, c = X μ)
+    (hCP : ∀ μ, ∃ ξ, r (R ξ) = X μ)
+    (hPU : ∀ u, r u = 0 → ∃ η, u = R η) :
+    ∀ u, (∀ v, ωS u v = 0) ↔ ∃ ξ, u = R ξ := by
+  intro u
+  constructor
+  · exact reverse_kernel_inclusion ωS ωC r R X hPullback hSurjective
+      hConstraintKernel hCP hPU u
+  · rintro ⟨ξ, rfl⟩
+    exact hD1 ξ
+
+end SolutionConstraintBridge
+
 section HigherDerivativeMomentum
 
 variable {K V : Type*}
