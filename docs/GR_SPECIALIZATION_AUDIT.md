@@ -587,6 +587,76 @@ constraint-map linearization-stability criterion. The precise Sobolev
 indices and dual identifications are still to be fixed for the chosen
 canonical phase space; the symbol calculation alone does not choose them.
 
+## Candidate Sobolev realization of H1 and the admissible dual
+
+A useful way to avoid demanding that every element of the full continuous
+dual be a smooth constraint smearing is to choose the admissible dual to be
+the image of the weak symplectic flat map. For \(s>7/2\), a natural
+constraint-map scale on a closed three-manifold is
+\[
+\mathcal X_s=
+H^s(S^2T^*\Sigma)\times H^{s-1}(S^2T^*\Sigma),\qquad
+\mathcal Y_s=
+H^{s-2}(\Sigma)\times H^{s-2}(T^*\Sigma).
+\]
+The vacuum constraint map \(\Phi:\mathcal X_s\to\mathcal Y_s\) is smooth
+on the open set of positive-definite metrics. Its continuous duals are
+\[
+\mathcal X_s^*
+=H^{-s}(S^2T^*\Sigma)\times H^{1-s}(S^2T^*\Sigma),\qquad
+\mathcal Y_s^*
+=H^{2-s}(\Sigma)\times H^{2-s}(T^*\Sigma),
+\]
+using the \(L^2\) density pairings.
+
+The ADM form is weak: its flat map
+\(\Omega_{\rm ADM}^{\flat}:T\mathcal I_s\to\mathcal X_s^*\) is injective
+but not onto. Set
+\[
+\mathcal A_s:=\operatorname{im}\Omega_{\rm ADM}^{\flat}
+\subset\mathcal X_s^*.
+\]
+For \(v=(u,w)\in\mathcal X_s\), the covector
+\(\Omega_{\rm ADM}^{\flat}v\) has components represented by \(w\) and
+\(-u\), hence has the stronger regularity
+\(H^{s-1}\times H^s\), not merely the generic
+\(H^{-s}\times H^{1-s}\) regularity of \(\mathcal X_s^*\).
+
+If \(\alpha=\Omega_{\rm ADM}^{\flat}v\) annihilates
+\(\ker D\Phi\), surjectivity of \(D\Phi\) gives an initial multiplier
+\(\lambda=(N,X)\in\mathcal Y_s^*\) with
+\[
+D\Phi^*\lambda=\alpha.
+\]
+The operator \(D\Phi^*\) is the mixed-order elliptic system described
+above: second order in \(N\), first order in \(X\). Its
+Douglis--Nirenberg elliptic regularity should upgrade this distributional
+multiplier to
+\[
+(N,X)\in H^{s+1}(\Sigma)\times H^{s+1}(T\Sigma)
+\]
+when the right-hand side has the \(H^{s-1}\times H^s\) regularity
+coming from \(\Omega_{\rm ADM}^{\flat}v\). At a smooth background this
+regularity is sufficient for the lapse-shift Hamiltonian vector field
+\(X_\lambda\) to lie in \(\mathcal X_s\). Thus the natural target statement
+for H1 is
+\[
+\operatorname{Ann}_{\mathcal A_s}(T_z\mathcal C)
+=\operatorname{im}\big(D\Phi_z^*|_{\Lambda_s}\big),
+\qquad
+\Lambda_s:=H^{s+1}(\Sigma)\times H^{s+1}(T\Sigma).
+\]
+
+This is a concrete route to the work note's admissible-dual hypothesis:
+first use the open mapping theorem in the full continuous dual, then use
+mixed-order elliptic regularity to show that the multiplier is in the
+positive-regularity lapse-shift space actually needed to generate a
+tangent vector. The remaining technical task is to write the precise
+Douglis--Nirenberg estimate for the coupled adjoint, including its lower
+order lapse/shift couplings and the chosen tensor-density pairings. Until
+that estimate is written, this is a candidate Sobolev realization, not a
+completed proof of H1.
+
 ## Killing fields and the regular stratum
 
 For vacuum spacetimes with compact Cauchy surfaces, Moncrief identifies the
