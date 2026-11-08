@@ -22,9 +22,29 @@ theorem on the spacetime field bundle, parameterized Cauchy uniqueness,
 or the existence and regularity of the quotient by spacetime
 diffeomorphisms.
 
-For compact-Cauchy vacuum GR, backgrounds with Killing fields require
-separate treatment: linearization stability can fail and the solution space
-can have conical singularities. The regular-manifold argument must therefore
-be restricted to a suitable regular stratum (for example, under the standard
-compact-Cauchy hypotheses, a background with no Killing fields), or replaced
-by a singular/stratified reduction.
+For spatially compact, globally hyperbolic vacuum GR, the classical
+Isenberg--Marsden slice theorem uses a constant-mean-curvature (CMC) foliation
+and yields a stratified solution space whose regular strata are symplectic.
+Backgrounds with spacetime symmetries (Killing fields) can produce conical
+singularities; the ordinary smooth-manifold argument must not be applied
+there. The GR specialization should therefore either restrict to a suitable
+regular stratum (with no Killing initial data under the relevant compact-Cauchy
+regularity hypotheses) or use singular/stratified reduction.
+
+Do not infer H5 from Ebin's Riemannian slice theorem: the diffeomorphism action
+on the full space of Lorentzian metrics need not be proper. The relevant
+reference is the slice theorem on the *solution space* of Einstein's equations
+by Isenberg--Marsden, not a generic theorem on all Lorentzian metrics.
+
+## Literature anchors
+
+- Lee--Wald / Iyer--Wald: covariant symplectic potential and current.
+- Harlow--Wu: boundary-aware covariant phase space and symplectic reduction.
+- Arms--Marsden--Moncrief: linearization stability and conical singularities at
+  symmetric compact-Cauchy vacuum solutions.
+- Isenberg--Marsden: spacetime-diffeomorphism slice theorem for spatially
+  compact globally hyperbolic Einstein solutions with CMC foliations.
+- Choquet-Bruhat--Geroch: uniqueness of maximal globally hyperbolic
+  developments up to data-fixing isometry.
+- Mounoud: nonproperness phenomena for diffeomorphism actions on spaces of
+  Lorentzian metrics.
