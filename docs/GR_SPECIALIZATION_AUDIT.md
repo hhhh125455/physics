@@ -18,6 +18,14 @@ Use \(K_{ij}=-\frac12\mathcal L_n h_{ij}\) and the momentum convention
 \[
 \pi^{ij}=\sqrt h\,(K h^{ij}-K^{ij}).
 \]
+The canonical potential and symplectic form are
+\[
+\Theta_{\rm ADM}=\int_\Sigma \pi^{ij}\,\delta h_{ij},
+\qquad
+\Omega_{\rm ADM}=\delta\Theta_{\rm ADM}
+=\int_\Sigma \delta\pi^{ij}\wedge\delta h_{ij},
+\]
+which matches the work-note convention \(\Omega=\int\delta p\wedge\delta q\).
 The ADM initial data are \((h_{ij},\pi^{ij})\), subject to the Hamiltonian and
 momentum constraints
 \[
