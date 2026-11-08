@@ -52,7 +52,8 @@ theorem higherOrderEuler_eq_F0_sub_D_momentum
     have hrlt : r < k := Finset.mem_range.mp hr
     have hidx : k - r = (k - 1 - r) + 1 := by omega
     rw [hidx]
-    exact D_apply_neg_pow D (k - 1 - r) (F (k - r))
+    have hderiv := D_apply_neg_pow D (k - 1 - r) (F (k - r))
+    simpa using (congrArg (fun z : V => -z) hderiv).symm
   calc
     F 0 + (∑ r ∈ Finset.range k, ((-D) ^ (k - r)) (F (k - r))) =
         F 0 + -(∑ r ∈ Finset.range k,
