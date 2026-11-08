@@ -86,14 +86,19 @@ variable [AddCommGroup C] [Module K C]
 variable [AddCommGroup G] [Module K G]
 variable [AddCommGroup M] [Module K M]
 
-/-- Algebraic data for the induced linearized Cauchy map on gauge
-quotients to be well-defined and bijective.
+/-- Algebraic properties of the induced linearized Cauchy map on
+quotients by infinitesimal gauge directions and constraint-generated
+initial-data directions.
 
-The first field says that spacetime gauge directions map to
-constraint-generated initial-data directions. The second and third fields
-are, respectively, surjectivity and injectivity of the induced map on
-quotients, written without constructing quotient types explicitly. -/
-structure LinearizedCauchyQuotientEquiv
+The fields encode well-definedness, surjectivity, and injectivity of the
+induced quotient map, without constructing quotient types explicitly.
+They capture only the algebraic content: the locally convex topology and
+continuity of the inverse in Petersen's Theorem 4.18 are not formalized.
+Moreover, R is an infinitesimal gauge generator. Identifying its image with
+the tangent space to an actual nonlinear diffeomorphism-group orbit requires
+a separate choice of diffeomorphism group and an integrability result for
+the allowed vector fields; this file does not prove that identification. -/
+structure LinearizedCauchyQuotientMapProperties
     (r : S →ₗ[K] C) (R : G →ₗ[K] S) (X : M →ₗ[K] C) : Prop where
   map_gauge_to_gauge : ∀ ξ, ∃ μ, r (R ξ) = X μ
   quotient_surjective : ∀ c, ∃ s μ, r s = c + X μ
@@ -176,13 +181,16 @@ theorem full_kernel_eq_from_bridge
   · rintro ⟨ξ, rfl⟩
     exact hD1 ξ
 
-/-- A quotient-level linearized Cauchy isomorphism, together with CP,
-implies the tangent-level surjectivity and PU hypotheses used in D3B.
+/-- Algebraic bijectivity of the linearized Cauchy map on gauge
+quotients, together with CP, implies surjectivity of the unquotiented
+linearized initial-data map and the infinitesimal PU inclusion used in D3B.
 
-This is the algebraic passage from a theorem such as Petersen's
-Theorem 4.18 (solution space modulo gauge is isomorphic to initial data
-modulo gauge-producing data) to the concrete tangent-map hypotheses. -/
-theorem full_kernel_eq_from_quotient_cauchy_equiv
+This formalizes only the algebraic consequence of a result such as Petersen's
+Theorem 4.18. It does not formalize the topological-vector-space isomorphism,
+linearization stability of the nonlinear solution space, or the integration
+of every infinitesimal gauge generator to a curve in the chosen nonlinear
+diffeomorphism group. -/
+theorem full_kernel_eq_from_quotient_cauchy_map_properties
     (ωS : S →ₗ[K] S →ₗ[K] K)
     (ωC : C →ₗ[K] C →ₗ[K] K)
     (r : S →ₗ[K] C)
@@ -190,7 +198,7 @@ theorem full_kernel_eq_from_quotient_cauchy_equiv
     (X : M →ₗ[K] C)
     (hD1 : ∀ ξ v, ωS (R ξ) v = 0)
     (hPullback : ∀ u v, ωS u v = ωC (r u) (r v))
-    (hQuotient : LinearizedCauchyQuotientEquiv r R X)
+    (hQuotient : LinearizedCauchyQuotientMapProperties r R X)
     (hCP : ∀ μ, ∃ ξ, r (R ξ) = X μ)
     (hConstraintKernel :
       ∀ c, (∀ d, ωC c d = 0) → ∃ μ, c = X μ) :
