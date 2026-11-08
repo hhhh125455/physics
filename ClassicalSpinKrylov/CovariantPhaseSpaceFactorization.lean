@@ -105,7 +105,6 @@ theorem constraint_kernel_eq_of_surjective
         _ = 0 - X μ := by rw [hzero]
         _ = -X μ := by simp
     refine ⟨-μ, ?_⟩
-    change X (-μ) = v
     rw [map_neg]
     exact hvneg.symm
   · rintro ⟨μ, rfl⟩
