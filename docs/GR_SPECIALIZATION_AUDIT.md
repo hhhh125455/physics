@@ -80,7 +80,7 @@ transformations non-null.
 |---|---|---|
 | H0: diffeomorphism-covariant local action, no fixed background | Einstein--Hilbert action, with boundary terms treated consistently; compact \(\Sigma\) has no spatial boundary | Standard. Boundary conventions must be fixed before comparing symplectic potentials. |
 | H1: canonical flat map injective; constraint annihilator is conormal image | ADM phase space \(T^*\mathrm{Riem}(\Sigma)\) with canonical symplectic form; \(\Phi\) is the ADM constraint map | The canonical pairing is weakly nondegenerate. At a compact-Cauchy vacuum background, \(\ker D\Phi^*\) corresponds to spacetime Killing fields. With no Killing fields, the constraint map is a submersion in the standard split Sobolev setting; the elliptic/splitting result supplies the relevant annihilator factorization. To identify the multiplier space with the dual of the constraint-value space in the work-note notation, choose compatible Hilbert Sobolev spaces and use the Riesz/reflexivity identification. This is not a theorem about arbitrary Fréchet spaces without specifying function spaces. |
-| H2: solution-to-initial-data map is a local submersion/product | Cauchy data satisfying \(\Phi=0\) determine a maximal globally hyperbolic development up to isometry; the regular solution space is smooth near a no-Killing background | The cited regularity theorem gives a smooth solution space near a no-Killing background, and the Cauchy problem gives local developments from constrained data. However, H2 is a map-level statement: one must still prove that the particular (r_\\Sigma) is a surjective submersion and has the required local product structure in the chosen gauge-fixed Sobolev charts. The no-Killing criterion alone is not a substitute for that proof. |
+| H2: solution-to-initial-data map is a local submersion/product | Cauchy data satisfying \(\Phi=0\) determine a maximal globally hyperbolic development up to isometry; the regular solution space is smooth near a no-Killing background | The equivalence of covariant and canonical symplectic forms is established in general by Margalef-Bentabol--Villaseñor (2022), including higher-order theories and boundaries, subject to a good variational principle. For Einstein--Hilbert gravity on a closed Cauchy surface, this supports the pullback compatibility Ω_CPS = r_Σ^* Ω_ADM once the boundary potential and normalization are matched. The separate map-level part of H2 still requires a smooth gauge-fixed development section and a local product proof using Cauchy uniqueness and the slice theorem. |
 | H3 / CP: each constraint-generated initial-data direction is induced by a spacetime diffeomorphism | A lapse-shift \((N,X)\) is the normal/tangential deformation of the Cauchy embedding, \(\xi=Nn+X\) | Supported by the ADM/embedding formulation. The Hamiltonian flow of the smeared constraints is the induced deformation of \((h,\pi)\); see the formula below. Sign conventions must match the chosen \(\iota_{X_H}\Omega=-\delta H\). |
 | H4 / PU: a smooth family of solutions with identical initial data is a smooth diffeomorphism family | Uniqueness of maximal globally hyperbolic developments up to a data-fixing isometry | Choquet-Bruhat--Geroch gives an isometry for each member of a same-data family. On the no-Killing regular stratum, the Isenberg--Marsden slice theorem supplies local smooth orbit coordinates; together these should yield a smoothly parameterized family of diffeomorphisms. The proof must explicitly identify the data-fixing isometries with the local identity-component action and use the slice coordinate to establish smooth dependence. Pointwise uniqueness alone does not prove parameterized PU. |
 | H5: regular quotient by spacetime diffeomorphisms has local slices | Isenberg--Marsden spacetime-diffeomorphism slice theorem for spatially compact globally hyperbolic Einstein solutions, using CMC foliations | The quotient is stratified symplectic. The ordinary smooth quotient applies on a regular symmetry stratum; symmetric solutions have conical singularities and must be treated by singular/stratified reduction. |
@@ -200,14 +200,15 @@ version instead.
    convention \(\iota_{X_H}\Omega=-\delta H\).
 3. Prove the parameterized smooth PU statement using a fixed hyperbolic gauge
    and smooth dependence on the external parameter.
-4. Match the covariant symplectic current derived from the Einstein--Hilbert
-   action to the ADM canonical symplectic form, including all boundary
-   conventions.
+4. Specialize the general covariant/canonical symplectic-equivalence theorem
+   to the chosen Einstein--Hilbert boundary potential and verify the exact
+   16πG normalization and sign convention used in the note.
 5. Restrict H5 to the CMC setting of the slice theorem, or separately justify
    a different regular quotient construction.
 
 ## Primary references
 
+- J. Margalef-Bentabol and E. J. S. Villaseñor, “Proof of the equivalence of the symplectic forms derived from the canonical and the covariant phase space formalisms,” arXiv:2204.06383 (2022).
 - J. Isenberg and J. E. Marsden, “A Slice Theorem for the Space of Solutions
   of Einstein's Equations,” *Physics Reports* **89** (1982), 179--222,
   DOI: 10.1016/0370-1573(82)90066-7.
