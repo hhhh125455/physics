@@ -46,29 +46,29 @@ theorem constraint_kernel_eq
     (χ : V →ₗ[K] W)
     (X : (W →ₗ[K] K) →ₗ[K] V)
     (hωInjective : Function.Injective ω)
-    (hFirstClass : ∀ λ, χ (X λ) = 0)
-    (hHamilton : ∀ λ, ω (X λ) = -(λ.comp χ))
+    (hFirstClass : ∀ μ, χ (X μ) = 0)
+    (hHamilton : ∀ μ, ω (X μ) = -(μ.comp χ))
     (hAnnihilatorComplete :
       ∀ α : V →ₗ[K] K,
         (∀ v, χ v = 0 → α v = 0) →
-          ∃ λ : W →ₗ[K] K, α = λ.comp χ) :
-    ∀ u, IsConstraintKernel ω χ u ↔ ∃ λ, u = X λ := by
+          ∃ μ : W →ₗ[K] K, α = μ.comp χ) :
+    ∀ u, IsConstraintKernel ω χ u ↔ ∃ μ, u = X λ := by
   intro u
   constructor
   · rintro ⟨huConstraint, huRadical⟩
-    obtain ⟨λ, hλ⟩ := hAnnihilatorComplete (ω u) (by
+    obtain ⟨μ, hλ⟩ := hAnnihilatorComplete (ω u) (by
       intro v hv
       exact huRadical v hv)
-    refine ⟨-λ, ?_⟩
+    refine ⟨-μ, ?_⟩
     apply hωInjective
     calc
-      ω u = λ.comp χ := hλ
-      _ = ω (X (-λ)) := by
+      ω u = μ.comp χ := hλ
+      _ = ω (X (-μ)) := by
         rw [hHamilton]
         ext v
         simp [LinearMap.comp_apply]
-  · rintro ⟨λ, rfl⟩
-    refine ⟨hFirstClass λ, ?_⟩
+  · rintro ⟨μ, rfl⟩
+    refine ⟨hFirstClass μ, ?_⟩
     intro v hv
     rw [hHamilton]
     simp [LinearMap.comp_apply, hv]
@@ -108,8 +108,9 @@ theorem pairing_independent_of_lifts
   have hRadU := (hRadical (u - u')).mp hdu
   have hRadV := (hRadical (v - v')).mp hdv
   have hzeroRight : ω u' (v - v') = 0 := by
-    rw [hSkew]
-    simp [hRadV]
+    calc
+      ω u' (v - v') = -ω (v - v') u' := hSkew u' (v - v')
+      _ = 0 := by rw [hRadV u']; simp
   calc
     ω u v = ω (u' + (u - u')) (v' + (v - v')) := by
       congr 1 <;> abel
@@ -118,7 +119,8 @@ theorem pairing_independent_of_lifts
       simp only [map_add, LinearMap.add_apply]
       ring
     _ = ω u' v' := by
-      simp [hzeroRight, hRadU]
+      rw [hzeroRight, hRadU v', hRadU (v - v')]
+      ring
 
 /-- Nondegeneracy of the descended pairing, expressed without choosing
 coordinates on the quotient: if a class pairs to zero with every quotient
@@ -126,16 +128,18 @@ class, then it is the zero class. -/
 theorem quotient_pairing_nondegenerate
     (ω : V →ₗ[K] V →ₗ[K] K)
     (π : V →ₗ[K] Q)
-    (hSurjective : Function.Surjective π)
+    (hSkew : ∀ x y, ω x y = -ω y x)
     (hRadical : ∀ x, π x = 0 ↔ IsRadical ω x)
     (u : V)
-    (hPairZero :
-      ∀ q : Q, ∀ v : V, π v = q → ω u v = 0) :
+    (hPairZero : ∀ q : Q, ∃ v : V, π v = q ∧ ω u v = 0) :
     π u = 0 := by
   apply (hRadical u).2
   intro v
-  obtain ⟨w, hw⟩ := hSurjective (π v)
-  exact hPairZero (π v) w hw
+  obtain ⟨w, hw, hω⟩ := hPairZero (π v)
+  have hsame : ω u v = ω u w := by
+    exact pairing_independent_of_lifts ω π hSkew hRadical rfl hw.symm
+  rw [hsame]
+  exact hω
 
 end QuotientPairing
 
