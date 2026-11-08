@@ -134,6 +134,95 @@ theorem finite_order_variation_identity
         D (∑ m ∈ Finset.range (k + 1), ibpBoundary D (F m) q m) := by
           rw [← Finset.sum_mul, ← map_sum]
 
+
+/-- The endpoint momentum coefficient, written with the derivative order m
+as the summation index:
+p_j = sum_{m=j+1}^k (-D)^(m-j-1) F_m. -/
+def endpointMomentum (D : R →+ R) (F : ℕ → R) (k j : ℕ) : R :=
+  ∑ m ∈ Finset.range (k + 1),
+    if j < m then negIterD D (m - 1 - j) (F m) else 0
+
+/-- Extending a sum over range m to range n with an indicator. -/
+lemma sum_range_extend_if_lt
+    {A : Type*} [AddCommMonoid A]
+    (m n : ℕ) (hmn : m ≤ n) (f : ℕ → A) :
+    (∑ j ∈ Finset.range m, f j) =
+      ∑ j ∈ Finset.range n, if j < m then f j else 0 := by
+  classical
+  have hsubset : Finset.range m ⊆ Finset.range n := by
+    intro j hj
+    exact Finset.mem_range.mpr
+      (lt_of_lt_of_le (Finset.mem_range.mp hj) hmn)
+  have hzero : ∀ j ∈ Finset.range n, j ∉ Finset.range m →
+      (if j < m then f j else 0) = 0 := by
+    intro j hj hnot
+    have hnotlt : ¬ j < m := by
+      intro h
+      exact hnot (Finset.mem_range.mpr h)
+    simp [hnotlt]
+  calc
+    (∑ j ∈ Finset.range m, f j) =
+        ∑ j ∈ Finset.range m, (if j < m then f j else 0) := by
+          apply Finset.sum_congr rfl
+          intro j hj
+          have hjlt : j < m := Finset.mem_range.mp hj
+          simp [hjlt]
+    _ = ∑ j ∈ Finset.range n, if j < m then f j else 0 :=
+      Finset.sum_subset hsubset hzero
+
+/-- The total endpoint term obtained by repeated integration by parts is
+exactly the canonical momentum pairing sum_j p_j D^j(q), with p_j in the
+direct m-indexed Ostrogradsky form. -/
+theorem totalBoundary_eq_endpointMomentum_pairing
+    (D : R →+ R) (F : ℕ → R) (q : R) (k : ℕ) :
+    totalBoundary D F q k =
+      ∑ j ∈ Finset.range (k + 1),
+        endpointMomentum D F k j * iterD D j q := by
+  unfold totalBoundary ibpBoundary
+  calc
+    (∑ m ∈ Finset.range (k + 1),
+      ∑ j ∈ Finset.range m,
+        negIterD D (m - 1 - j) (F m) * iterD D j q) =
+      ∑ m ∈ Finset.range (k + 1),
+        ∑ j ∈ Finset.range (k + 1),
+          (if j < m then
+            negIterD D (m - 1 - j) (F m) * iterD D j q
+           else 0) := by
+        apply Finset.sum_congr rfl
+        intro m hm
+        have hmn : m ≤ k + 1 :=
+          Nat.le_of_lt (Finset.mem_range.mp hm)
+        exact sum_range_extend_if_lt m (k + 1) hmn _
+    _ =
+      ∑ j ∈ Finset.range (k + 1),
+        ∑ m ∈ Finset.range (k + 1),
+          (if j < m then
+            negIterD D (m - 1 - j) (F m) * iterD D j q
+           else 0) := by
+        rw [Finset.sum_comm]
+    _ =
+      ∑ j ∈ Finset.range (k + 1),
+        endpointMomentum D F k j * iterD D j q := by
+        apply Finset.sum_congr rfl
+        intro j hj
+        unfold endpointMomentum
+        calc
+          (∑ m ∈ Finset.range (k + 1),
+            (if j < m then
+              negIterD D (m - 1 - j) (F m) * iterD D j q
+             else 0)) =
+          ∑ m ∈ Finset.range (k + 1),
+            (if j < m then negIterD D (m - 1 - j) (F m) else 0) *
+              iterD D j q := by
+                apply Finset.sum_congr rfl
+                intro m hm
+                by_cases h : j < m <;> simp [h]
+          _ =
+            (∑ m ∈ Finset.range (k + 1),
+              if j < m then negIterD D (m - 1 - j) (F m) else 0) *
+              iterD D j q := by
+                rw [Finset.sum_mul]
+
 end D3A
 
 end CovariantPhaseSpaceAudit
