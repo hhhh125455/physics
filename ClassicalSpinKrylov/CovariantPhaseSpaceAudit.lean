@@ -335,11 +335,11 @@ theorem closedness_descends
     (hClosed : dTotal formTotal = 0) :
     dBase formBase = 0 := by
   apply hPullbackInjective
-  calc
+  simpa using (calc
     pullbackNext (dBase formBase) = dTotal (pullback formBase) :=
       hCommute formBase
     _ = dTotal formTotal := by rw [hPullback]
-    _ = 0 := hClosed
+    _ = 0 := hClosed)
 
 end DifferentialFormConsequences
 
