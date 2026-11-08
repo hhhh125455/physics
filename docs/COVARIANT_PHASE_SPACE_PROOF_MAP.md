@@ -148,6 +148,17 @@ the actual nonlinear tangent spaces has two independent inputs:
    is tangent to an actual (G_0)-orbit. The construction is not formalized
    in Lean.
 
+Marsden, *Lectures on Geometric Methods in Mathematical Physics*, Lecture 9,
+Theorem 9.1, gives the direct spacetime statement: for a globally
+hyperbolic vacuum solution with compact Cauchy surface, the actual solution
+space is a smooth manifold near the background with tangent equal to the
+linearized Einstein solutions iff there are no Killing fields. This is the
+spacetime linearization-stability input used here; Carlotto's Theorem 4.6
+is the corresponding constraint-map criterion. Marsden's Theorem 9.3
+expresses the ADM evolution through spacelike embeddings and the adjoint
+linearized constraint map, while noting that the embedding space is not
+itself a group.
+
 The group topology still matters for H5. In the standard convenient
 manifold model for diffeomorphisms of a noncompact manifold, the Lie algebra
 is the compactly supported vector fields (Michor, 1980), while the cutoff
@@ -200,6 +211,7 @@ group topology to the functional-diffeology cutoff paths used for H4.
 - Carlotto (Living Rev. Relativ. 24 (2021) 2): KIDs, surjectivity of the linearized constraint map, and linearization stability.
 - A. E. Fischer and J. E. Marsden, “Linearization stability of nonlinear partial differential equations,” *Proc. Sympos. Pure Math.* **27** (1975), 219--263.
 - A. Borel, “Density properties for certain subgroups of semisimple groups without compact components,” *Annals of Mathematics* **72** (1960), 179--188.
+- J. E. Marsden, *Lectures on Geometric Methods in Mathematical Physics*, Lecture 9, Theorems 9.1 and 9.3 (online version modified 22 July 2009).
 - G. D. Mostow, *Strong Rigidity of Locally Symmetric Spaces*, Annals of Mathematics Studies **78**, Princeton University Press (1973).
 - Arms--Marsden--Moncrief: linearization stability and conical singularities at
   symmetric compact-Cauchy vacuum solutions.
