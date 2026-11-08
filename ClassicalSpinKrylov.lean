@@ -2,6 +2,7 @@ import Mathlib
 import ClassicalSpinKrylov.CovariantPhaseSpaceAudit
 import ClassicalSpinKrylov.CovariantPhaseSpaceD3A
 import ClassicalSpinKrylov.CovariantPhaseSpaceMomentum
+import ClassicalSpinKrylov.CovariantPhaseSpaceFactorization
 import ClassicalSpinKrylov.Dynamics
 import ClassicalSpinKrylov.ODE
 
