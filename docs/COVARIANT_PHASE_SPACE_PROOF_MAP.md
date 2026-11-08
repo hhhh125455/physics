@@ -176,6 +176,20 @@ on the full space of Lorentzian metrics need not be proper. The relevant
 reference is the slice theorem on the *solution space* of Einstein's equations
 by Isenberg--Marsden, not a generic theorem on all Lorentzian metrics.
 
+A concrete point on the regular stratum is the compact Milne quotient
+\(M=(0,\infty)\times\Sigma\), \(g=-dt^2+t^2h_{-1}\), where
+\(\Sigma=\mathbb H^3/\Gamma\) is closed hyperbolic. The metric is vacuum,
+globally hyperbolic and CMC. A Killing field lifts to an affine Minkowski
+Killing field \(a+Bx\) on the future cone; Borel density of the cocompact
+lattice forces \(a=B=0\), so there are no KIDs. A time-orientation-preserving
+isometry preserves the strictly monotone CMC value \(3/t\), and hence
+restricts to an isometry of \(\Sigma\) on every slice. If it is isotopic to
+the identity, that isometry is homotopic to the identity and Mostow rigidity
+makes it trivial. Thus the stabilizer in \(\mathcal G_0\) is trivial.
+This demonstrates that the no-KID/free-stabilizer regular stratum is
+nonempty; it does not remove the need to match the slice theorem's precise
+group topology to the functional-diffeology cutoff paths used for H4.
+
 ## Literature anchors
 
 - Lee--Wald / Iyer--Wald: covariant symplectic potential and current.
@@ -185,6 +199,8 @@ by Isenberg--Marsden, not a generic theorem on all Lorentzian metrics.
 - Magnot, *Demonstratio Mathematica* **51** (2018), 8--16, arXiv:1101.2370: nonregularity of the full noncompact diffeomorphism group with compact-open functional diffeology.
 - Carlotto (Living Rev. Relativ. 24 (2021) 2): KIDs, surjectivity of the linearized constraint map, and linearization stability.
 - A. E. Fischer and J. E. Marsden, “Linearization stability of nonlinear partial differential equations,” *Proc. Sympos. Pure Math.* **27** (1975), 219--263.
+- A. Borel, “Density properties for certain subgroups of semisimple groups without compact components,” *Annals of Mathematics* **72** (1960), 179--188.
+- G. D. Mostow, *Strong Rigidity of Locally Symmetric Spaces*, Annals of Mathematics Studies **78**, Princeton University Press (1973).
 - Arms--Marsden--Moncrief: linearization stability and conical singularities at
   symmetric compact-Cauchy vacuum solutions.
 - Isenberg--Marsden: spacetime-diffeomorphism slice theorem for spatially
