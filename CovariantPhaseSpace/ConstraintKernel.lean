@@ -75,14 +75,15 @@ theorem constraint_kernel_eq_generator_range
   · rintro ⟨hv_tangent, hv_annihilates⟩
     obtain ⟨lam, hlam⟩ := h_annihilator_complete v hv_annihilates
     have hsum : ω (v + X lam) = 0 := by
-      ext w
-      change ω v w + ω (X lam) w = 0
-      rw [hlam, h_hamiltonian lam]
+      rw [map_add, hlam, h_hamiltonian lam]
       simp
     have hzero : v + X lam = 0 :=
       hω_injective (v + X lam) 0 (by simpa using hsum)
     have hvneg : v = - X lam := by
-      simpa using congrArg (fun z : V => z - X lam) hzero
+      calc
+        v = (v + X lam) - X lam := by simp
+        _ = 0 - X lam := by rw [hzero]
+        _ = - X lam := by simp
     refine ⟨-lam, ?_⟩
     change X (-lam) = v
     rw [map_neg]
@@ -91,9 +92,8 @@ theorem constraint_kernel_eq_generator_range
     constructor
     · exact h_first_class lam
     · intro w hw_tangent
-      have h := congrArg (fun f : Module.Dual K V => f w)
-        (h_hamiltonian lam)
-      simpa [conormal, hw_tangent] using h
+      rw [h_hamiltonian lam]
+      simp [conormal, hw_tangent]
 
 end ConstraintKernel
 
