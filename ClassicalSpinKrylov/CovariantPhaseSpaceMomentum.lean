@@ -62,7 +62,8 @@ theorem higherOrderEuler_eq_F0_sub_D_momentum
           D (((-D) ^ (k - 1 - r)) (F (k - r))) ) :=
       congrArg (fun x => F 0 + x) hsum
     _ = F 0 - (∑ r ∈ Finset.range k,
-          D (((-D) ^ (k - 1 - r)) (F (k - r))) ) := by simp
+          D (((-D) ^ (k - 1 - r)) (F (k - r))) ) := by
+          rw [sub_eq_add_neg]
 
 end HigherDerivativeEulerIdentity
 
