@@ -460,9 +460,11 @@ For the vacuum constraints on a compact \(n\)-dimensional Cauchy surface,
 \mathcal H(\gamma,K)=R[\gamma]+K^2-K_{ij}K^{ij},\qquad
 \mathcal M_i(\gamma,K)=\nabla^j(K_{ij}-K\gamma_{ij}),
 \]
-the highest-order terms in the formal adjoint \(D\Phi^*(N,X)\) are
-triangular in the lapse \(N\) and shift \(X\). Up to an overall sign and
-nonzero numerical factors, the lapse symbol in the metric component is
+the formal adjoint \(D\Phi^*(N,X)\) is a mixed-order
+(Douglis--Nirenberg) overdetermined elliptic system: the lapse enters at
+order two and the shift at order one. Its mixed principal symbol is
+triangular in \(N\) and \(X\). Up to an overall sign and nonzero numerical
+factors, the lapse symbol in the metric component is
 \[
 \sigma_\zeta(D_\gamma\mathcal H)^*N
 =N(\zeta_i\zeta_j-|\zeta|_\gamma^2\gamma_{ij}),
