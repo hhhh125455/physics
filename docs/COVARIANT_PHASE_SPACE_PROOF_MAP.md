@@ -151,12 +151,14 @@ the actual nonlinear tangent spaces has two independent inputs:
 The group topology still matters for H5. In the standard convenient
 manifold model for diffeomorphisms of a noncompact manifold, the Lie algebra
 is the compactly supported vector fields (Michor, 1980), while the cutoff
-path above is smooth in the compact-open (C^\infty) sense but its supports
-expand as (s\to0). With the compact-open functional diffeology, the full
-diffeomorphism group is nonregular (Magnot, 2018), so one cannot assume that
-arbitrary Lie-algebra paths integrate. This does not obstruct the specific
-cutoff-flow construction; it means that the group model used for H5 must be
-matched to the jointly smooth isotopies used here.
+path above is smooth in the compact-open (C^\\infty) functional-diffeology
+sense but its supports expand as (s\\to0). By definition of functional
+diffeology, joint smoothness of (s,x)↦f_s(x) makes this particular family a
+smooth plot and places its velocity V in the corresponding tangent space.
+Magnot's nonregularity theorem says that arbitrary smooth Lie-algebra paths
+need not integrate; it does not obstruct this explicitly constructed plot.
+The group model used for H5 must nevertheless be matched to the jointly
+smooth isotopies used here.
 
 For spatially compact, globally hyperbolic vacuum GR, the classical
 Isenberg--Marsden slice theorem uses a constant-mean-curvature (CMC) foliation
