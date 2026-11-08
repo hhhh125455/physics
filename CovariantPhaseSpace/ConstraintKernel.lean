@@ -79,7 +79,8 @@ theorem constraint_kernel_eq_generator_range
       change ω v w + ω (X λ) w = 0
       rw [hλ, h_hamiltonian λ]
       simp
-    have hzero : v + X λ = 0 := hω_injective hsum
+    have hzero : v + X λ = 0 :=
+      hω_injective (v + X λ) 0 (by simpa using hsum)
     have hvneg : v = - X λ := by
       simpa using congrArg (fun z : V => z - X λ) hzero
     refine ⟨-λ, ?_⟩
