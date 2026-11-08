@@ -58,13 +58,13 @@ theorem constraint_kernel_eq
   intro u
   constructor
   · rintro ⟨huConstraint, huRadical⟩
-    obtain ⟨μ, hλ⟩ := hAnnihilatorComplete (ω u) (by
+    obtain ⟨μ, hfactor⟩ := hAnnihilatorComplete (ω u) (by
       intro v hv
       exact huRadical v hv)
     refine ⟨-μ, ?_⟩
     apply hωInjective
     calc
-      ω u = μ.comp χ := hλ
+      ω u = μ.comp χ := hfactor
       _ = ω (X (-μ)) := by
         rw [hHamilton]
         ext v
