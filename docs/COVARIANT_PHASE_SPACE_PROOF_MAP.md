@@ -111,6 +111,16 @@ identity-component diffeomorphism group and integrates to a smooth path in
 that group. Thus it does not identify `im R` with `T(G_0·φ)` without those
 additional hypotheses. The nonlinear H4 statement is not formalized.
 
+The group-topology issue is substantive. In the standard convenient
+manifold model for diffeomorphisms of a noncompact manifold, the Lie algebra
+is the compactly supported vector fields (Michor, 1980), whereas Petersen's
+gauge vector field is only spatially compact. With the compact-open
+\(C^\infty\) functional diffeology, the full diffeomorphism group is
+nonregular (Magnot, 2018), so arbitrary Lie-algebra paths need not integrate.
+The exact topology/group model used by the Isenberg--Marsden spacetime slice
+theorem must therefore be matched to Petersen's function spaces before
+identifying \(\operatorname{im}R\) with a nonlinear orbit tangent.
+
 For spatially compact, globally hyperbolic vacuum GR, the classical
 Isenberg--Marsden slice theorem uses a constant-mean-curvature (CMC) foliation
 and yields a stratified solution space whose regular strata are symplectic.
@@ -132,6 +142,8 @@ by Isenberg--Marsden, not a generic theorem on all Lorentzian metrics.
 - Lee--Wald / Iyer--Wald: covariant symplectic potential and current.
 - Harlow--Wu: boundary-aware covariant phase space and symplectic reduction.
 - Petersen (arXiv:1802.06028): linearized Einstein Cauchy uniqueness up to gauge, gauge-producing initial-data directions, and the quotient-level Cauchy map.
+- Michor, *Manifolds of smooth maps, II* (1980): the standard convenient Lie-group model for diffeomorphisms of a noncompact manifold and its compactly supported Lie algebra.
+- Magnot, *Demonstratio Mathematica* **51** (2018), 8--16, arXiv:1101.2370: nonregularity of the full noncompact diffeomorphism group with compact-open functional diffeology.
 - Carlotto (Living Rev. Relativ. 24 (2021) 2): KIDs, surjectivity of the linearized constraint map, and linearization stability.
 - Arms--Marsden--Moncrief: linearization stability and conical singularities at
   symmetric compact-Cauchy vacuum solutions.
