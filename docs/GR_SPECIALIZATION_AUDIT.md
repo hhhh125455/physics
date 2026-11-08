@@ -223,6 +223,91 @@ warning that the embedding space is not itself a group. This is useful
 background for CP, but it is not a substitute for the separate
 lapse-shift/ADM-generator calculation in this audit.
 
+## Tangent-level GR kernel theorem: replace nonlinear H2/H4 by linearized inputs
+
+The preceding results give a cleaner GR-specific route than the general
+H2/H4 hypotheses in the work note. Let \((M,g)\) be a globally hyperbolic
+vacuum spacetime with compact Cauchy surface \(\Sigma\), and suppose:
+
+1. \(g\) has no spacetime Killing fields, so the actual solution space
+   \(\mathcal E\) is smooth near \(g\) and
+   \(T_g\mathcal E=\mathrm{Sol}_{\mathrm{lin}}(g)\) (Marsden, Lecture 9,
+   Theorem 9.1).
+2. The vacuum constraint map is realized in compatible Sobolev Hilbert
+   spaces, its formal adjoint has the injective mixed-order symbol above,
+   and there are no KIDs. Then \(D\Phi\) is split-surjective and
+   \(\operatorname{Ann}(T_z\mathcal C)=\operatorname{im}D\Phi_z^*\);
+   with the weak ADM symplectic form this gives
+   \[
+   \ker\big(\Omega_{\mathrm{ADM}}|_{T_z\mathcal C}\big)
+   =\operatorname{im}X_z.
+   \]
+3. The linearized Cauchy map induces the quotient isomorphism
+   \[
+   \mathrm{Sol}_{\mathrm{lin}}(g)/\operatorname{im}R_g
+   \ \xrightarrow{\;\simeq\;}\
+   T_z\mathcal C/\operatorname{im}X_z,
+   \]
+   as in Petersen, Theorem 4.18, and the ADM/spacetime gauge directions
+   are identified by CP (Petersen, Lemma 4.13 plus the lapse-shift
+   constraint-generator calculation).
+4. The covariant form and the ADM form obey the pullback identity
+   \[
+   \Omega_{\mathrm{CPS},g}
+   =D r_\Sigma^*
+     \big(\Omega_{\mathrm{ADM}}|_{T_z\mathcal C}\big),
+   \]
+   with the Einstein--Hilbert potential, orientation, and normalization
+   translated consistently.
+5. The selected identity-component diffeomorphism group has a smooth
+   action compatible with the compact-open cutoff paths, and its local
+   solution-space quotient has a slice at \(g\). The CMC
+   Isenberg--Marsden theorem supplies the relevant slice result; the
+   precise group-topology match remains an explicit hypothesis until
+   checked against its function-space model.
+
+Then the tangent-level kernel identity follows:
+\[
+\boxed{\quad
+\ker\Omega_{\mathrm{CPS},g}
+=\operatorname{im}R_g
+=T_g(\mathcal G_0\!\cdot g).
+\quad}
+\]
+Indeed, the quotient Cauchy isomorphism together with CP gives the
+unquotiented linearized initial-data surjectivity and the infinitesimal
+zero-data uniqueness inclusion. These are precisely the algebraic
+hypotheses extracted by Lean theorem
+\`full_kernel_eq_from_quotient_cauchy_map_properties\`. If
+\(u\in\ker\Omega_{\mathrm{CPS},g}\), surjectivity of \(D r_\Sigma\) and
+the pullback identity imply that \(D r_\Sigma u\) lies in the kernel of
+the restricted ADM form. By item 2 it is a constraint-generated
+direction; CP lifts that direction to \(R_g\xi\). The difference
+\(u-R_g\xi\) has zero linearized Cauchy data, so quotient injectivity
+(or Petersen's Theorem 4.7) makes it infinitesimally gauge. This proves
+\(\ker\Omega_{\mathrm{CPS},g}\subseteq\operatorname{im}R_g\).
+The reverse inclusion is the diffeomorphism-degeneracy statement D1.
+The cutoff-flow lemma identifies these infinitesimal gauge vectors with
+actual orbit tangents in the chosen compact-open smooth group model.
+
+On a regular CMC slice with trivial \(\mathcal G_0\)-stabilizer, the
+Isenberg--Marsden slice gives a local smooth quotient. The descended
+two-form is closed and weakly nondegenerate: if a quotient tangent class
+pairs to zero with all classes, any lift lies in
+\(\ker\Omega_{\mathrm{CPS},g}\), hence is vertical and represents zero.
+Thus the local quotient carries the unique weak symplectic form whose
+pullback is \(\Omega_{\mathrm{CPS}}\).
+
+**Scope.** This tangent-level GR theorem does not prove the full nonlinear
+initial-data map is a submersion with a local product structure, nor the
+general nonlinear parameterized H4 statement. Those stronger hypotheses
+are unnecessary for this pointwise kernel identity once the actual
+solution tangent is identified by the no-Killing theorem and the
+linearized Cauchy quotient isomorphism is used. The group-topology
+compatibility in item 5 and the exact Einstein--Hilbert sign/normalization
+translation in item 4 remain to be completed. The theorem is at present a
+literature-backed synthesis, not yet a novelty claim.
+
 ## Linearized Cauchy uniqueness: what Petersen proves and what it does not
 
 Petersen, *On the Cauchy problem for the linearised Einstein equation*
