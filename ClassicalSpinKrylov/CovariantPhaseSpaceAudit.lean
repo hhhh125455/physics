@@ -77,6 +77,55 @@ theorem constraint_kernel_eq
 
 end ConstraintKernel
 
+section HigherDerivativeMomentum
+
+variable {K V : Type*}
+variable [Field K]
+variable [AddCommGroup V] [Module K V]
+
+/-- Finite-sum form of the higher-derivative Ostrogradsky momentum.
+The index r runs backwards from the highest derivative order k. -/
+def higherOrderMomentum
+    (D : V →ₗ[K] V) (F : ℕ → V) (k j : ℕ) : V :=
+  ∑ r ∈ Finset.range (k - j),
+    ((-D) ^ (k - j - 1 - r)) (F (k - r))
+
+/-- The finite-sum momentum obeys p_j = F_{j+1} - D p_{j+1}.
+This is the algebraic recursion underlying the endpoint momentum formula. -/
+theorem higherOrderMomentum_recursion
+    (D : V →ₗ[K] V) (F : ℕ → V)
+    {k j : ℕ} (hjk : j < k) :
+    higherOrderMomentum D F k j =
+      F (j + 1) - D (higherOrderMomentum D F k (j + 1)) := by
+  let n := k - j
+  have hn : 0 < n := by dsimp [n]; omega
+  have hnEq : n = (n - 1) + 1 := by omega
+  have hnext : k - (j + 1) = n - 1 := by dsimp [n]; omega
+  have hlastIndex : k - (n - 1) = j + 1 := by dsimp [n]; omega
+  have hsum :
+      (∑ r ∈ Finset.range (n - 1),
+        ((-D) ^ (n - 1 - r)) (F (k - r))) =
+      (-D) (∑ r ∈ Finset.range (n - 1),
+        ((-D) ^ (n - 2 - r)) (F (k - r))) := by
+    rw [map_sum]
+    apply Finset.sum_congr rfl
+    intro r hr
+    have hr' : r < n - 1 := Finset.mem_range.mp hr
+    have hexp : n - 1 - r = (n - 2 - r) + 1 := by omega
+    rw [hexp, pow_succ']
+    rfl
+  have hlast :
+      ((-D) ^ (n - 1 - (n - 1))) (F (k - (n - 1))) =
+        F (j + 1) := by
+    rw [Nat.sub_self, pow_zero, LinearMap.one_apply, hlastIndex]
+  unfold higherOrderMomentum
+  rw [show k - j = n by rfl, hnEq, Finset.sum_range_succ]
+  rw [hsum, hnext]
+  rw [hlast]
+  simp [sub_eq_add_neg, add_comm, add_left_comm, add_assoc]
+
+end HigherDerivativeMomentum
+
 section QuotientPairing
 
 variable {K V Q : Type*}
