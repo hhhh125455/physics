@@ -308,16 +308,6 @@ theorem sphere_scalar_curvature_injective
     nlinarith
   nlinarith [sq_nonneg (a - b)]
 
-theorem sphere_scalar_curvature_hasDerivAt
-    (a : ℝ) (ha : a ≠ 0) :
-    HasDerivAt (fun x : ℝ => 6 / x ^ 2) (-12 / a ^ 3) a := by
-  have hden : HasDerivAt (fun x : ℝ => x ^ 2) (2 * a) a := by
-    convert (hasDerivAt_id a).pow 2 using 1 <;> norm_num
-  have hnum : HasDerivAt (fun _ : ℝ => (6 : ℝ)) 0 a := by
-    simpa using (hasDerivAt_const a (6 : ℝ))
-  have h := hnum.div hden (pow_ne_zero 2 ha)
-  convert h using 1 <;> norm_num <;> field_simp [ha] <;> ring
-
 end FourDimensionalSphereCounterexample
 
 end CovariantPhaseSpaceAudit
