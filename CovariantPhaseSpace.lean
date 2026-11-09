@@ -3,6 +3,7 @@ import CovariantPhaseSpace.H1AdmissibleDual
 import CovariantPhaseSpace.IntegrationByParts
 import CovariantPhaseSpace.D3AIntegrationByParts
 import CovariantPhaseSpace.D3AGeneralIBP
+import CovariantPhaseSpace.D3AFiniteOrderVariation
 import CovariantPhaseSpace.D3BKernelBridge
 import CovariantPhaseSpace.D4ReducedPairing
 import CovariantPhaseSpace.D5ZeroActionCounterexample
