@@ -31,7 +31,7 @@ def admLegendre3 (K : Matrix (Fin 3) (Fin 3) ℝ) :
     Matrix (Fin 3) (Fin 3) ℝ :=
   fun i j => K i j - (if i = j then admTrace3 K else 0)
 
-def admInverse3 (P : Matrix (Fin 3) (Fin 3) ℝ) :
+noncomputable def admInverse3 (P : Matrix (Fin 3) (Fin 3) ℝ) :
     Matrix (Fin 3) (Fin 3) ℝ :=
   fun i j => P i j - (if i = j then admTrace3 P / 2 else 0)
 
