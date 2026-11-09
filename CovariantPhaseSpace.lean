@@ -1,8 +1,10 @@
 import CovariantPhaseSpace.ConstraintKernel
+import CovariantPhaseSpace.H1AdmissibleDual
 import CovariantPhaseSpace.IntegrationByParts
 import CovariantPhaseSpace.D3AIntegrationByParts
 import CovariantPhaseSpace.D3AGeneralIBP
 import CovariantPhaseSpace.D3BKernelBridge
 import CovariantPhaseSpace.D4ReducedPairing
+import CovariantPhaseSpace.D5ZeroActionCounterexample
 
 /-! Entry point for the covariant phase-space formalization. -/
