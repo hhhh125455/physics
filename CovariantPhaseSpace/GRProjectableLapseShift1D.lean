@@ -31,8 +31,7 @@ theorem projectable_lapse_variation_1d
         N * (alphat / N - alpha * Nt / N ^ 2) -
         N * B * (alphax / N - alpha * Nx / N ^ 2) =
       alphat + beta * Nx - B * alphax := by
-  field_simp
-  ring
+  field_simp [hN] <;> ring
 
 /-- Equation (3.9) of Pons--Salisbury--Shepley; the time
 derivatives Nt and Bt cancel exactly. The symbol hinv denotes
@@ -51,8 +50,7 @@ theorem projectable_shift_variation_1d
         B * (alphax / N - alpha * Nx / N ^ 2)) =
       betat + beta * Bx - B * betax +
         hinv * (alpha * Nx - N * alphax) := by
-  field_simp
-  ring
+  field_simp [hN] <;> ring
 
 end ADMProjectableDescriptors1D
 
