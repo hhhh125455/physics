@@ -4,6 +4,7 @@ import CovariantPhaseSpace.H2InitialDataPullback
 import CovariantPhaseSpace.H2HigherDerivativeExample
 import CovariantPhaseSpace.GRADMDeWittLegendre
 import CovariantPhaseSpace.GRSpatialGaugeGenerator
+import CovariantPhaseSpace.GRNormalConstraintKinetic
 import CovariantPhaseSpace.IntegrationByParts
 import CovariantPhaseSpace.D3AIntegrationByParts
 import CovariantPhaseSpace.D3AGeneralIBP
