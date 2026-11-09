@@ -6,6 +6,7 @@ import CovariantPhaseSpace.GRADMDeWittLegendre
 import CovariantPhaseSpace.GRSpatialGaugeGenerator
 import CovariantPhaseSpace.GRNormalConstraintKinetic
 import CovariantPhaseSpace.GRProjectableLapseShift1D
+import CovariantPhaseSpace.GREHADMPotentialAmbiguity
 import CovariantPhaseSpace.IntegrationByParts
 import CovariantPhaseSpace.D3AIntegrationByParts
 import CovariantPhaseSpace.D3AGeneralIBP
