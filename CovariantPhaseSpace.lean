@@ -6,5 +6,6 @@ import CovariantPhaseSpace.D3AGeneralIBP
 import CovariantPhaseSpace.D3BKernelBridge
 import CovariantPhaseSpace.D4ReducedPairing
 import CovariantPhaseSpace.D5ZeroActionCounterexample
+import CovariantPhaseSpace.D5CurvatureDerivative
 
 /-! Entry point for the covariant phase-space formalization. -/
