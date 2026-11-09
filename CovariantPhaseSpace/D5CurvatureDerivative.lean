@@ -21,7 +21,14 @@ theorem product_sphere_curvature_radius_hasDerivAt
   have hdiv :
       HasDerivAt (fun x : ℝ => (2 : ℝ) / x ^ 2)
         ((0 * a ^ 2 - 2 * (2 * a)) / (a ^ 2) ^ 2) a := by
-    simpa using (hc.div hpow (pow_ne_zero 2 ha))
+    have hquot := hc.div hpow (pow_ne_zero 2 ha)
+    have heq :
+        ((fun _ : ℝ => (2 : ℝ)) / (fun x : ℝ => x ^ 2)) =
+          (fun x : ℝ => (2 : ℝ) / x ^ 2) := by
+      funext x
+      simp
+    rw [heq] at hquot
+    simpa using hquot
   have hid : (0 * a ^ 2 - 2 * (2 * a)) / (a ^ 2) ^ 2 =
       -(4 : ℝ) / a ^ 3 := by
     field_simp [ha]
