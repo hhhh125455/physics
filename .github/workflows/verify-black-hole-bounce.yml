@@ -1,0 +1,24 @@
+name: Verify black-hole bounce moment algebra
+
+on:
+  push:
+    branches: [research/lean-bounce-20261116]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  lean-bounce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and audit Lean proofs
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: research/black-hole-bounce
+          build: true
+          axiom-audit: true
+          axiom-audit-root: BouncePartial
+      - name: Explicitly typecheck proof module
+        working-directory: research/black-hole-bounce
+        run: lake env lean BouncePartial.lean
