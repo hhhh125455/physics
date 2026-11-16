@@ -128,9 +128,11 @@ theorem prony_recovers_sum_product (x y r s : ℂ)
         (x * r + y * s) ^ 2) = r * s := by
   constructor
   · rw [prony_sum_numerator, prony_determinant]
-    field_simp [hD]
+    apply (div_eq_iff hD).2
+    ring
   · rw [prony_product_numerator, prony_determinant]
-    field_simp [hD]
+    apply (div_eq_iff hD).2
+    ring
 
 theorem bounce_mode_sum (i : ℂ) :
     (((3 : ℂ) + 4 * i) / 25) +
