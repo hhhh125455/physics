@@ -90,5 +90,74 @@ theorem pole_equation
       field_simp [hp]
     _ = 0 := by rw [hi]; ring
 
+/-!
+### Prony reconstruction from four consecutive moments
+
+These are exact finite-dimensional algebra identities.  The variables x,y
+represent the two mode amplitudes at index n; r,s are characteristic roots.
+Using the results with an asymptotic moment expansion additionally requires
+a separate proof that the remainder is sufficiently small.
+-/
+
+theorem prony_determinant (x y r s : ℂ) :
+    (x + y) * (x * r ^ 2 + y * s ^ 2) -
+      (x * r + y * s) ^ 2 = x * y * (r - s) ^ 2 := by
+  ring
+
+theorem prony_sum_numerator (x y r s : ℂ) :
+    (x + y) * (x * r ^ 3 + y * s ^ 3) -
+      (x * r + y * s) * (x * r ^ 2 + y * s ^ 2) =
+        (r + s) * (x * y * (r - s) ^ 2) := by
+  ring
+
+theorem prony_product_numerator (x y r s : ℂ) :
+    (x * r + y * s) * (x * r ^ 3 + y * s ^ 3) -
+      (x * r ^ 2 + y * s ^ 2) ^ 2 =
+        (r * s) * (x * y * (r - s) ^ 2) := by
+  ring
+
+theorem prony_recovers_sum_product (x y r s : ℂ)
+    (hD : x * y * (r - s) ^ 2 ≠ 0) :
+    ((x + y) * (x * r ^ 3 + y * s ^ 3) -
+      (x * r + y * s) * (x * r ^ 2 + y * s ^ 2)) /
+      ((x + y) * (x * r ^ 2 + y * s ^ 2) -
+        (x * r + y * s) ^ 2) = r + s ∧
+    ((x * r + y * s) * (x * r ^ 3 + y * s ^ 3) -
+      (x * r ^ 2 + y * s ^ 2) ^ 2) /
+      ((x + y) * (x * r ^ 2 + y * s ^ 2) -
+        (x * r + y * s) ^ 2) = r * s := by
+  constructor
+  · rw [prony_sum_numerator, prony_determinant]
+    field_simp [hD]
+  · rw [prony_product_numerator, prony_determinant]
+    field_simp [hD]
+
+theorem bounce_mode_sum (i : ℂ) :
+    (((3 : ℂ) + 4 * i) / 25) +
+      (((3 : ℂ) - 4 * i) / 25) = (6 : ℂ) / 25 := by
+  ring
+
+theorem bounce_mode_product (i : ℂ) (hi : i * i = -1) :
+    (((3 : ℂ) + 4 * i) / 25) *
+      (((3 : ℂ) - 4 * i) / 25) = (1 : ℂ) / 25 := by
+  calc
+    (((3 : ℂ) + 4 * i) / 25) *
+        (((3 : ℂ) - 4 * i) / 25) =
+        ((9 : ℂ) - 16 * (i * i)) / 625 := by ring
+    _ = (1 : ℂ) / 25 := by rw [hi]; ring
+
+theorem bounce_mode_reveals_denominator (i : ℂ) (hi : i * i = -1) :
+    (((3 : ℂ) + 4 * i) / 25) * (2 - i) ^ 2 = 1 := by
+  have hsq : (2 - i) ^ 2 = (3 : ℂ) - 4 * i := by
+    calc
+      (2 - i) ^ 2 = 4 - 4 * i + i * i := by ring
+      _ = 3 - 4 * i := by rw [hi]; ring
+  rw [hsq]
+  calc
+    (((3 : ℂ) + 4 * i) / 25) * (3 - 4 * i) =
+      (25 - 16 * (i * i + 1)) / 25 := by ring
+    _ = 1 := by rw [hi]; ring
+
+
 end
 end BouncePartial
