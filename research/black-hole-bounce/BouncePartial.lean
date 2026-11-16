@@ -88,7 +88,6 @@ theorem pole_equation
   calc
     A + i * (i * p * A) / p = A * (1 + i * i) := by
       field_simp [hp]
-      ring
     _ = 0 := by rw [hi]; ring
 
 end
