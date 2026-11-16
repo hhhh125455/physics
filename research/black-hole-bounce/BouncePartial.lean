@@ -1,3 +1,5 @@
+import Mathlib
+
 /-!
   AdS5 R-current: elementary algebra associated with the bouncing-pole mode.
 
@@ -11,7 +13,6 @@
   No `sorry`, `axiom`, or `admit` are used.
 -/
 
-import Mathlib
 
 namespace BouncePartial
 
