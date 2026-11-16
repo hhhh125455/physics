@@ -21,4 +21,6 @@ jobs:
           axiom-audit-root: BouncePartial
       - name: Explicitly typecheck proof module
         working-directory: research/black-hole-bounce
-        run: lake env lean BouncePartial.lean
+        run: |
+          lake env lean BouncePartial.lean
+          lake env lean JacobiMoment.lean
